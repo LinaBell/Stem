@@ -374,12 +374,12 @@ var artistMenu = [
 var creatorMenu = [
 	{
 		pageID: 10,
-		text: "Creator Home",
+		text: "Home",
 		icon: "icon-home"
 	},
 	{
 		pageID: 11,
-		text: "Creator Profile",
+		text: "Profile",
 		icon: "icon-user"
 	},
 	{
@@ -399,7 +399,7 @@ var creatorMenu = [
 	},
 	{
 		pageID: 15,
-		text: "Creator Account Settings",
+		text: "Account Settings",
 		icon: "icon-cog-2"
 	}
 	{
