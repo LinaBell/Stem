@@ -4,7 +4,7 @@ var PlaylistTable = ReactRedux.connect(null, function(dispatch) {
 				dispatch({
 					type: 'GoToPage',
 					data: {
-						currentPage: 9,
+						currentPage: 115,
 						pageParams: { creatorId: 5 }
 					}
 				});

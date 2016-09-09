@@ -251,7 +251,7 @@ var App = React.createClass({
 
 				{ this.props.currentPage == 11 ?
 					<div className="wrapper">
-						<CreatorProfileMain creatorId={this.props.pageParams} />
+						<CreatorProfileMain creatorId={this.props.userInfo} />
 						<Footer />
 					</div>
 				: null}
@@ -260,6 +260,20 @@ var App = React.createClass({
 					<div className="wrapper">
 						<FilterNav />
 						<CreatorSpinHistoryMain />
+						<Footer />
+					</div>
+				: null}
+
+				{ this.props.currentPage == 15 ?
+					<div className="wrapper">
+						<ArtistSettings />
+						<Footer />
+					</div>
+				: null} 
+
+				{ this.props.currentPage == 16 ?
+					<div className="wrapper">
+						<CreatorBookmarkMain />
 						<Footer />
 					</div>
 				: null}
@@ -319,16 +333,16 @@ var App = React.createClass({
 					</div>
 				: null}
 
-				{ this.props.currentPage == 108 ?
+				{ this.props.currentPage === 110 ? 
 					<div className="wrapper">
-						<CreatorBookmarkMain />
+						<ArtistProfile artistId={this.props.pageParams.artistId} />
 						<Footer />
 					</div>
 				: null}
 
-				{ this.props.currentPage === 110 ? 
+				{ this.props.currentPage == 115 ?
 					<div className="wrapper">
-						<ArtistProfile artistId={this.props.pageParams.artistId} />
+						<CreatorProfileMain creator={this.props.pageParams} />
 						<Footer />
 					</div>
 				: null}
@@ -401,7 +415,7 @@ var creatorMenu = [
 		pageID: 15,
 		text: "Account Settings",
 		icon: "icon-cog-2"
-	}
+	},
 	{
 		pageID: 16,
 		text: "Creator Bookmarks",

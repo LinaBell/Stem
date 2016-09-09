@@ -1,7 +1,6 @@
 var CreatorProfileMain = ReactRedux.connect(function(state) {
   return {
-    creatorId: state.pageParams.creatorId,
-    userInfo: state.userInfo
+    creatorIdExt: state.appState.pageParams || {}
   };
 })(React.createClass({
   getInitialState: function() {
@@ -24,12 +23,12 @@ var CreatorProfileMain = ReactRedux.connect(function(state) {
   render: function () {
     return (
       <div>
-        <CreatorProfileHeader creator={this.state.creator} />
+        <CreatorProfileHeader creator={this.props.creatorId} />
         <div className="pad-box-lg bg-white">
           <h3>My Latest Videos</h3>
           <a>youtube.com/things</a>
           <CreatorProfileYouTube />
-          <CreatorProfileTags creator={this.state.creator} />
+          <CreatorProfileTags creator={this.props.creatorId} />
           <div className="pad-box-md">
             <h3>My Activity</h3>
             <p>My latest plays and loves</p>
