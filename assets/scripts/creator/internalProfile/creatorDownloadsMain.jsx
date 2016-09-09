@@ -15,7 +15,7 @@ var CreatorDownloadsMain = ReactRedux.connect(function(state) {
 		.then(function(response) {
 			this.setState({downloads: response})
 		}.bind(this), function(error) {
-			console.log('Creator Downloads Error: ' + JSON.stringify(error));
+			console.error('Creator Downloads Error: ' + JSON.stringify(error));
 		}); 
 	},
 	render: function() {

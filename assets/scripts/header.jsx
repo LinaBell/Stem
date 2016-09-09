@@ -182,7 +182,7 @@ var Header = (function() {
 
 	function mapStateToProps(state) {
 		return {
-			isLoggedIn: state.authState.isLoggedIn,
+			isLoggedIn: state.userState.isLoggedIn,
 			currentPage: state.appState.currentPage
 		};
 	}

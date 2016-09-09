@@ -21,8 +21,6 @@ var ArtistInternalAnalyticsPlays = React.createClass({
     },
 
   render: function () {
-    console.log("butterfingers");
-    console.log(this.state.valueArray);
     return (
       <div className="artist-internal-analytics-plays-wrapper col-xs-12 content">
         <div className=" col-lg-12">

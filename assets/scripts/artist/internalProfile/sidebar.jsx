@@ -18,7 +18,7 @@ var ArtistInternalSideBar = ReactRedux.connect(function(state) {
 		.then(function(response) {
 			this.setState({dashboardData: response})
 		}.bind(this), function(error) {
-			console.log('Artist Dashboard Data Error:' + JSON.stringify(error));
+			console.error('Artist Dashboard Data Error:' + JSON.stringify(error));
 		});
 	},
   render: function () {
