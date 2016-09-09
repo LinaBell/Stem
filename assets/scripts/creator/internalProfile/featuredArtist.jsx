@@ -1,7 +1,7 @@
 var FeaturedArtist = React.createClass({
   getInitialState: function() {
     return {
-      selectedArtist: {}
+      selectedArtist: []
     }
   },
   componentDidMount: function(){

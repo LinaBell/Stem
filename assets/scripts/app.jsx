@@ -261,7 +261,7 @@ var App = React.createClass({
 
 				{ this.props.currentPage == 16 ?
 					<div className="wrapper">
-						<CreatorBookmarkMain />
+						<CreatorBookmarkMain creator={this.props.userInfo} />
 						<Footer />
 					</div>
 				: null}

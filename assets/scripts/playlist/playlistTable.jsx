@@ -22,8 +22,14 @@ var PlaylistTable = ReactRedux.connect(null, function(dispatch) {
 			displayUploadSuccess: false,
 			displaySongDetail: false,
 			displayCreatorDownloadsMain: false,
-			primary: false
+			primary: false,
+
+			songs: []
 		}
+	},
+	componentDidMount: function() {
+		this.setState({ songs: this.props.creator });
+		console.log(this.state.songs, "hi hello");
 	},
 
 	showHidePlayer: function() {
@@ -132,141 +138,10 @@ var PlaylistTable = ReactRedux.connect(null, function(dispatch) {
 						</tr>	
 					</thead>
 					<tbody>
-						<tr>
-							<td className="col-md-3">
-								<img className="mobile-img-thumbnail mar-r-md" src="https://yt3.ggpht.com/-5VV8GnLPUmA/AAAAAAAAAAI/AAAAAAAAAAA/DymHh0I91f0/s900-c-k-no-rj-c0xffffff/photo.jpg" />
-								<div className="playlist-detail-info">
-									<h4>Cool Kids</h4>
-									<p>Echosmith</p>
-								</div> 
-							</td>
 
-							<td className="col-md-2">
-								<p>Talking Dreams</p>              
-							</td>
-
-							<td className="col-md-1">
-								<p>3:26</p>              
-							</td>
-
-							<td className="col-md-1">
-								<p>1,266</p>              
-							</td>
-
-							<td className="col-md-1">
-								<p>1,266 <i className="icon-up-open"></i></p>
-							</td>
-
-							<td className="col-md-1">
-								<span onClick={this.handleLike} className={ this.state.red ? "icon-bookmark-2 red fa-2x" : "icon-bookmark-empty fa-2x"}></span>            
-							</td>
-
-							<td className="col-md-1">
-								<a className="color-grey" ><span className="icon-down-circled fa-2x"></span></a>
-							</td>
-						</tr>
-
-						<tr>
-							<td className="col-md-3">
-								<img className="mobile-img-thumbnail mar-r-md" src="https://yt3.ggpht.com/-5VV8GnLPUmA/AAAAAAAAAAI/AAAAAAAAAAA/DymHh0I91f0/s900-c-k-no-rj-c0xffffff/photo.jpg" />
-								<div className="playlist-detail-info">
-									<h4>Cool Kids</h4>
-									<p>Echosmith</p>
-								</div> 
-							</td>
-
-							<td className="col-md-2">
-								<p>Talking Dreams</p>              
-							</td>
-
-							<td className="col-md-1">
-								<p>3:26</p>              
-							</td>
-
-							<td className="col-md-1">
-								<p>1,266</p>              
-							</td>
-
-							<td className="col-md-1">
-								<p>1,266 <i className="icon-up-open"></i></p>
-							</td>
-
-							<td className="col-md-1">
-								<span onClick={this.handleLike} className={ this.state.red ? "icon-bookmark-2 red fa-2x" : "icon-bookmark-empty fa-2x"}></span>            
-							</td>
-
-							<td className="col-md-1">
-								<a className="color-grey" ><span className="icon-down-circled fa-2x"></span></a>
-							</td>
-						</tr>
-						<tr>
-							<td className="col-md-3">
-								<img className="mobile-img-thumbnail mar-r-md" src="https://yt3.ggpht.com/-5VV8GnLPUmA/AAAAAAAAAAI/AAAAAAAAAAA/DymHh0I91f0/s900-c-k-no-rj-c0xffffff/photo.jpg" />
-								<div className="playlist-detail-info">
-									<h4>Cool Kids</h4>
-									<p>Echosmith</p>
-								</div> 
-							</td>
-
-							<td className="col-md-2">
-								<p>Talking Dreams</p>              
-							</td>
-
-							<td className="col-md-1">
-								<p>3:26</p>              
-							</td>
-
-							<td className="col-md-1">
-								<p>1,266</p>              
-							</td>
-
-							<td className="col-md-1">
-								<p>1,266 <i className="icon-up-open"></i></p>
-							</td>
-
-							<td className="col-md-1">
-								<span onClick={this.handleLike} className={ this.state.red ? "icon-bookmark-2 red fa-2x" : "icon-bookmark-empty fa-2x"}></span>            
-							</td>
-
-							<td className="col-md-1">
-								<a className="color-grey" ><span className="icon-down-circled fa-2x"></span></a>
-							</td>
-						</tr>
-						<tr>
-							<td className="col-md-3">
-								<img className="mobile-img-thumbnail mar-r-md" src="https://yt3.ggpht.com/-5VV8GnLPUmA/AAAAAAAAAAI/AAAAAAAAAAA/DymHh0I91f0/s900-c-k-no-rj-c0xffffff/photo.jpg" />
-								<div className="playlist-detail-info">
-									<h4>Cool Kids</h4>
-									<p>Echosmith</p>
-								</div> 
-							</td>
-
-							<td className="col-md-2">
-								<p>Talking Dreams</p>              
-							</td>
-
-							<td className="col-md-1">
-								<p>3:26</p>              
-							</td>
-
-							<td className="col-md-1">
-								<p>1,266</p>              
-							</td>
-
-							<td className="col-md-1">
-								<p>1,266 <i className="icon-up-open"></i></p>
-							</td>
-
-							<td className="col-md-1">
-								<span onClick={this.handleLike} className={ this.state.red ? "icon-bookmark-2 red fa-2x" : "icon-bookmark-empty fa-2x"}></span>            
-							</td>
-
-							<td className="col-md-1">
-								<a className="color-grey" ><span className="icon-down-circled fa-2x"></span></a>
-							</td>
-						</tr>
 					</tbody>
 				</table>
+
 				<div>
 					<a onClick={this.showHidePlayer}>play test</a>
 					<br />
@@ -307,3 +182,46 @@ var PlaylistTable = ReactRedux.connect(null, function(dispatch) {
 		)
 	}
 }));
+
+var CreatorBookMarkItems = React.createClass({
+	render: function() {
+		var creatorBookMarks = this.props.songs
+		return(
+			<div>
+				<tr>
+					<td className="col-md-3">
+						<img className="mobile-img-thumbnail mar-r-md" src="https://yt3.ggpht.com/-5VV8GnLPUmA/AAAAAAAAAAI/AAAAAAAAAAA/DymHh0I91f0/s900-c-k-no-rj-c0xffffff/photo.jpg" />
+						<div className="playlist-detail-info">
+							<h4>{creatorBookMarks.artistName}</h4>
+							<p>Echosmith</p>
+						</div> 
+					</td>
+
+					<td className="col-md-2">
+						<p>Talking Dreams</p>              
+					</td>
+
+					<td className="col-md-1">
+						<p>3:26</p>              
+					</td>
+
+					<td className="col-md-1">
+						<p>1,266</p>              
+					</td>
+
+					<td className="col-md-1">
+						<p>1,266 <i className="icon-up-open"></i></p>
+					</td>
+
+					<td className="col-md-1">
+						<span onClick={this.handleLike} className={ this.state.red ? "icon-bookmark-2 red fa-2x" : "icon-bookmark-empty fa-2x"}></span>            
+					</td>
+
+					<td className="col-md-1">
+						<a className="color-grey" ><span className="icon-down-circled fa-2x"></span></a>
+					</td>
+				</tr>
+			</div>
+		)
+	}
+});
