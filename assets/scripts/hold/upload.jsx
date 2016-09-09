@@ -66,28 +66,6 @@ var ArtistUploadForm = React.createClass({
         }
      }
   },
-
-  // handlePopulateAlbumName: function() {
-
-    // $.ajax({
-    //   type: 'GET', // rest verb (GET, POST, PUT, DEL)
-    //   url: this.context.baseAPI + '/song/artist/AQAAANCMnd8BFdERjHoAwE_Cl-sBAAAArzxDmskNMEeWM8nzSfsNZQAAAAACAAAAAAAQZgAAAAEAACAAAADHNI5nQkF9G5O4P2MazMUipTjpwoIG3OL2N9FdPFHf6wAAAAAOgAAAAAIAACAAAAAHc2eP6u5H_LnInNgHFcqDjPMExAjA4-xkSiBzvY81seAAAAD4JU0N4czhXGzC5zx1UUxhZuwKn5LlSiZJZZolZ98aBLsnsEC5rLyBZ7DUfJpjig5UXGGt1Oe12LDWyTVxALQKLJS4Uprjt0hIObBGob3qgIC04C-xcgdwTtr7wVZv6mw-_vO_bzEkKTCAEzCFEMcRy9z6j_KYXSErNQyOjZlQw_UEF4h18VZa9TuWZdbsi8xIYtRVn0BassDmBagxLKIMg12ThdbO2aIm6maAawh9_K3FUgRYA-C91NbfyTPpQfV3Z9I4TMD2UNcxe-AO2FWqF5Ey3VjmlyoSXSxj-jj7F0AAAAAtnYuYzT1diW528DeOVBY5-_b-GUmiDQk9P8HgG462Hp-2lAV5vFSB5_D1EcW_qAzZPlyev6FxeUlJnkRSWKZt/albums',
-    //   headers: 
-    //     { 
-    //       'Access-Control-Allow-Origin': 
-    //       'http://52.32.255.104/api/song/artist/AQAAANCMnd8BFdERjHoAwE_Cl-sBAAAArzxDms…BY5-_b-GUmiDQk9P8HgG462Hp-2lAV5vFSB5_D1EcW_qAzZPlyev6FxeUlJnkRSWKZt/albums'
-    //     },
-    //   dataType: 'json',
-    //   success: function (response) {
-    //     console.log(JSON.stringify(response, null, 2));
-    //   }
-    // });
-    // console.log('Album Names!');
-  // }, 
-  // selectAlbum: function() {
-  //   this.setState({ albumSelection: e.target.value});
-  //   console.log(this.albumSelection);
-  // }, 
   render: function () {
     var self = this;
     return (

@@ -178,7 +178,7 @@ var Login = React.createClass({
 		   			self.handleCommitSubmit(data);
 				},
 	            error: function (response) {
-					console.log(JSON.stringify(response, null, 2));
+					console.error(JSON.stringify(response, null, 2));
 					if(response.responseJSON.modelState["request.UserName"] != null) {
 						errorMessage = response.responseJSON.modelState["request.UserName"];
 					}
@@ -217,7 +217,7 @@ var Login = React.createClass({
         this.setState({
         	errorMessage: message
         });
-        console.log('message = ' + message)
+        console.error('message = ' + message)
 	},
 	/////// END Registration Form
 
@@ -240,7 +240,7 @@ var Login = React.createClass({
 				self.updateLoginStatus(true, response, page);	
             },
             error: function (response) { 
-            	console.log(JSON.stringify(response, null, 2));
+            	console.error(JSON.stringify(response, null, 2));
 				self.updateLoginStatus(true, null, 100);
              }
         });

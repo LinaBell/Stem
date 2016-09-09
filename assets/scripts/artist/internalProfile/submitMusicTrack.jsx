@@ -57,7 +57,7 @@ var SubmitMusicTrack = React.createClass({
 
 		}.bind(this))
 		.catch(function(reason) {
-			console.log('Error fetching all tag types: ' + Utilities.normalizeError(reason));
+			console.error('Error fetching all tag types: ' + Utilities.normalizeError(reason));
 		});
 
 	},

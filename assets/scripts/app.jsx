@@ -85,14 +85,12 @@ const initialAppState = {
 var appReducer = function(state = initialAppState, action) {
 	switch (action.type) {
 		case 'GoToPage':
-			console.log('GoToPage action.data = ' + JSON.stringify(action.data));
 			return Object.assign({}, state, {
 				pageParams: action.data.pageParams || {},
 				currentPage: action.data.currentPage
 			})
 
 		case 'UpdateSearch':
-			console.log('Equality Check (searchResults): ' + (action.data.results === state.searchResults));
 			return Object.assign({}, state, {
 				searchResults: action.data.results,
 				searchTerms: action.data.terms
@@ -112,7 +110,7 @@ const initialUserState = {
 var userReducer = function(state = initialUserState, action) {
 	switch (action.type) {
 		case 'UpdateLoginStatus':
-			console.log('UpdateLoginStatus Equality Check (isLoggedIn): ' + (action.data.isLoggedIn === state.isLoggedIn));
+			console.log('UpdateLoginStatus Equality Check (userInfo): ' + (action.data.userInfo === state.userInfo));
 			return Object.assign({}, state, {
 				isLoggedIn: action.data.isLoggedIn,
 				userInfo: action.data.userInfo
@@ -136,11 +134,12 @@ const reducers = combineReducers({
 	userState: userReducer
 });
 
+const logger = reduxLogger();
+
 const store = createStore(reducers,
-	applyMiddleware(thunk));
+	applyMiddleware(thunk, logger));
 
 var AppState = function(store) {
-	console.log('state = ' + JSON.stringify(store, null, 2));
 	return {
 		baseAPI: store.appState.baseAPI,
 		isLoggedIn: store.userState.isLoggedIn,

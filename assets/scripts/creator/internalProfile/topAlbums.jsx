@@ -16,7 +16,7 @@ var TopAlbums = React.createClass({
     	// 	this.state.topArtists.push(this.state.topArtists[0]);
     	// }
     }.bind(this), function(error) {
-      console.log('Top Artist Error: ' + JSON.stringify(error));
+      console.error('Top Artist Error: ' + JSON.stringify(error));
     });
 
 		this.slideShow();
