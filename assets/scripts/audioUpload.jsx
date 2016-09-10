@@ -74,7 +74,7 @@ var AudioUpload = React.createClass({
 			zIndex: '-1'
 		};
 
-		var element = <label htmlFor={ this.getId() } className="btn-primary">Browse for file</label>;
+		var element = <label htmlFor={ this.getId() } className="btn-primary browse-btn">Browse for file</label>;
 
 		if (this.state.isUploading) {
 			element = <LoadingButton />;
