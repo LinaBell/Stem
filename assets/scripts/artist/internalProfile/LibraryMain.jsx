@@ -73,6 +73,7 @@ var LibraryMain = ReactRedux.connect(function(state) {
 							{this.getFilterList()}
 						</ul>
 					</div>
+					<LibraryZeroState />
 					<LibraryMainTable songs={this.state.displayedSongs} />
 				</div>  
 			</span>
