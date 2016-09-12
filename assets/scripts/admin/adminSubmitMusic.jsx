@@ -9,7 +9,7 @@ var AdminSubmitMusic = React.createClass({
                     <p>Submit music to be promoted to our creators</p>
                   </div>    
                     <SubmitMusicAlbum />
-                    <SubmitMusicTrack isAdmin="true" />
+                    <SubmitMusicTrack trackId={ this.props.trackId } />
               </div>    
           </div>     
       </div>
