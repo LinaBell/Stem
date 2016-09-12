@@ -9,17 +9,22 @@ var WhoAreYou = React.createClass({
 			success: function(response) {
 				console.log('success!');
 				console.log(JSON.stringify(response, null, 2));
-		 		store.dispatch({
-					type: 'UpdateUserRecord',
-					data: { userInfo: response, currentPage: 4 }
-		 		});
+				store.dispatch((dispatch) => {
+					dispatch({
+						type: 'UpdateUserRecord',
+						data: { userInfo: response }
+			 		})
+					dispatch({
+						type: 'GoToPage',
+						data: { currentPage: 0 }
+			 		})
+		 		})
 			},
 			error: function() {
 				console.error(JSON.stringify(response, null, 2));
 			}
 		});
 	},
-
 
 	render: function() {
 		var self = this;

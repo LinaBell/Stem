@@ -1,17 +1,21 @@
-var ArtistAccountSettings = React.createClass({
+var ArtistAccountSettings = ReactRedux.connect(function(state) {
+    return {
+        userInfo: state.userState.userInfo
+    };
+})(React.createClass({
     getInitialState: function () {
         return {
             characterCount: 0,
             disableButton: false,
             saveSuccessful: false,
-            profileImgURL: this.context.userInfo.profileImageUrl,
-            bannerImgURL: this.context.userInfo.bannerImageUrl,
-            profileName: this.context.userInfo.profileName,
-            customLink: this.context.userInfo.customLink,
-            email: this.context.userInfo.email,
-            country: this.context.userInfo.country,
-            timeZone: this.context.userInfo.timeZone,
-            bio: this.context.userInfo.bio,
+            profileImgURL: this.props.userInfo.profileImageUrl,
+            bannerImgURL: this.props.userInfo.bannerImageUrl,
+            profileName: this.props.userInfo.profileName,
+            customLink: this.props.userInfo.customLink,
+            email: this.props.userInfo.email,
+            country: this.props.userInfo.country,
+            timeZone: this.props.userInfo.timeZone,
+            bio: this.props.userInfo.bio,
             errorMessage: '',
 
             profileImgId: 0,
@@ -181,7 +185,7 @@ var ArtistAccountSettings = React.createClass({
                 });
                 store.dispatch({
                     type: 'UpdateUserRecord',
-                    data: { userInfo: response, currentPage: 5 }
+                    data: { userInfo: response }
                 });
             },
             error: function (response) {
@@ -279,10 +283,4 @@ var ArtistAccountSettings = React.createClass({
 			</div>
 		)
     }
-});
-
-ArtistAccountSettings.contextTypes = {
-    baseAPI: React.PropTypes.string,
-    authToken: React.PropTypes.string,
-    userInfo: React.PropTypes.object
-};
+}));

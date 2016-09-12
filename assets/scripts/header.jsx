@@ -182,8 +182,8 @@ var Header = (function() {
 
 	function mapStateToProps(state) {
 		return {
-			isLoggedIn: state.isLoggedIn,
-			currentPage: state.currentPage
+			isLoggedIn: state.userState.isLoggedIn,
+			currentPage: state.appState.currentPage
 		};
 	}
 

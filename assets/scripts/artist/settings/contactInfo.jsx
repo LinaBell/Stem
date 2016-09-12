@@ -1,15 +1,19 @@
-var ArtistContactInfo = React.createClass({
+var ArtistContactInfo = ReactRedux.connect(function(state) {
+	return {
+		primaryContactInfo: state.userState.userInfo.primaryContact
+	};
+})(React.createClass({
 	getInitialState: function() {
 		return {
 			saveSuccessful: false,
-			firstName: this.context.userInfo.primaryContact.firstName,
-			lastName: this.context.userInfo.primaryContact.lastName,
-			email: this.context.userInfo.primaryContact.email,
-			phone: this.context.userInfo.primaryContact.phone,
-			address: this.context.userInfo.primaryContact.address,
-			city: this.context.userInfo.primaryContact.city,
-			state: this.context.userInfo.primaryContact.state,
-			zip: this.context.userInfo.primaryContact.zip,
+			firstName: this.props.primaryContactInfo.firstName,
+			lastName: this.props.primaryContactInfo.lastName,
+			email: this.props.primaryContactInfo.email,
+			phone: this.props.primaryContactInfo.phone,
+			address: this.props.primaryContactInfo.address,
+			city: this.props.primaryContactInfo.city,
+			state: this.props.primaryContactInfo.state,
+			zip: this.props.primaryContactInfo.zip,
 			errorMessage: ''
 		}
 	},
@@ -44,7 +48,7 @@ var ArtistContactInfo = React.createClass({
 				self.setState({saveSuccessful: true});
 				store.dispatch({
 					type: 'UpdateUserRecord',
-					data: {userInfo: response, currentPage: 5}
+					data: { userInfo: response }
 				});
 			},
             error: function (response) {
@@ -149,10 +153,4 @@ var ArtistContactInfo = React.createClass({
 			</div>
 		)
 	}
-});
-
-ArtistContactInfo.contextTypes = {
-	baseAPI: React.PropTypes.string,
-	authToken: React.PropTypes.string,
-	userInfo: React.PropTypes.object
-};
+}));

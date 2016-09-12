@@ -23,7 +23,7 @@ var SubmitMusicAlbum = React.createClass({
 			albumName: ev.target.value
 		});
 	},
-	albumArtChange: function(image, origImage) {
+	albumArtChange: function(updatedImage, origImage) {
 		// TODO: Use the updated image and not the origImage
 		this.setState({
 			albumArt: origImage
@@ -31,7 +31,6 @@ var SubmitMusicAlbum = React.createClass({
 	},
 	validate: function() {
 		// TODO: Implement visual validation of controls
-		
 		return this.state.artistName && this.state.artistName.length > 0 &&
 			this.state.albumName && this.state.albumName.length > 0 &&
 			this.state.albumArt;
@@ -69,7 +68,7 @@ var SubmitMusicAlbum = React.createClass({
 				return res;
 			}.bind(this));
 		} else {
-			return Promise.reject('The album is not valid, please add/fix fields before continuing');
+			return Promise.reject('The album is not valid, please add an artist name, album title, and album art');
 		}
 	},
 	render: function() {

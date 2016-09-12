@@ -1,5 +1,5 @@
 var ArtistSearchSideBar = ReactRedux.connect(function(state) {
-		var searchTerms = state.searchTerms.length > 0 ? state.searchTerms.split(' ') : [];
+		var searchTerms = state.appState.searchTerms.length > 0 ? state.appState.searchTerms.split(' ') : [];
 		
 		return {
 			tagList: searchTerms

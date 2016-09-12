@@ -1,6 +1,6 @@
 var CreatorDownloadsMain = ReactRedux.connect(function(state) {
 	return {
-		creatorId: state.userInfo.id
+		creatorId: state.userState.userInfo.id
 	};
 })(React.createClass({
 	getInitialState: function () {
@@ -15,7 +15,7 @@ var CreatorDownloadsMain = ReactRedux.connect(function(state) {
 		.then(function(response) {
 			this.setState({downloads: response})
 		}.bind(this), function(error) {
-			console.log('Creator Downloads Error: ' + JSON.stringify(error));
+			console.error('Creator Downloads Error: ' + JSON.stringify(error));
 		}); 
 	},
 	render: function() {

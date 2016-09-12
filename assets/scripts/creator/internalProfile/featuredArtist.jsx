@@ -11,7 +11,7 @@ var FeaturedArtist = React.createClass({
     .then(function(response) {
       this.setState({selectedArtist: response[0]});
     }.bind(this), function(error) {
-      console.log('Top Artist Error: ' + JSON.stringify(error));
+      console.error('Top Artist Error: ' + JSON.stringify(error));
     });
   },
   render: function () {

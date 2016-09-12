@@ -1,7 +1,7 @@
 var ArtistSearch = ReactRedux.connect(function(state) {
 	return {
-		searchResults: state.searchResults,
-		searchTerms: state.searchTerms
+		searchResults: state.appState.searchResults,
+		searchTerms: state.appState.searchTerms
 	};
 })(React.createClass({
 	render: function() {
