@@ -291,6 +291,13 @@ var App = React.createClass({
 					</div>
 				: null}
 
+				{ this.props.currentPage == 107 ?
+					<div className="wrapper">
+						<PromoLandingPageMain />
+						<Footer />
+					</div>
+				: null}
+
 				{ this.props.currentPage === 110 ? 
 					<div className="wrapper">
 						<ArtistProfile artistId={this.props.pageParams.artistId} />
