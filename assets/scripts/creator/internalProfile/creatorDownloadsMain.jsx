@@ -30,6 +30,7 @@ var CreatorDownloadsMain = ReactRedux.connect(function(state) {
 						<CreatorDownloadsCard key={index} download={download} />
 					);
 				})}
+				<CreatorDownloadsZeroState />
 			</div>
 		)
 	}
