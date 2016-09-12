@@ -68,6 +68,7 @@ var LibraryMain = React.createClass({
 							{this.getFilterList()}
 						</ul>
 					</div>
+					<LibraryZeroState />
 					<LibraryMainTable songs={this.state.displayedSongs} />
 				</div>  
 			</span>
