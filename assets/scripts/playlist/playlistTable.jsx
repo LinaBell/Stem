@@ -22,15 +22,58 @@ var PlaylistTable = ReactRedux.connect(null, function(dispatch) {
 			displayUploadSuccess: false,
 			displaySongDetail: false,
 			displayCreatorDownloadsMain: false,
-			primary: false,
+			bookMarked: false,
 
-			songs: []
+			songs: [
+  {
+    "id": 1,
+    "artistId": 1,
+    "trackNumber": 0,
+    "artistName": "Bon Jovi",
+    "name": "You give love",
+    "releaseDate": "2016-09-07T02:49:54.599Z",
+    "additionalCredits": "things",
+    "albumId": "1",
+    "albumName": "The Hits",
+    "albumArtUrl": "http://orig00.deviantart.net/12fd/f/2015/243/0/c/albumcoverfor_benprunty_fragments_sylviaritter_by_faith303-d97uftr.png",
+    "duration": "3:37",
+    "bpm": 120,
+    "playCount": 327,
+    "downloadCount": 10,
+    "bookmarkCount": 5,
+    "isBookmarked": true,
+    "popularity": 7,
+    "isExplicit": true,
+    "status": "Pending"
+  },
+  {
+    "id": 1,
+    "artistId": 2,
+    "trackNumber": 0,
+    "artistName": "Nickelback",
+    "name": "How you remind me",
+    "releaseDate": "2016-09-07T02:49:54.599Z",
+    "additionalCredits": "things",
+    "albumId": "2",
+    "albumName": "No One likes Us",
+    "albumArtUrl": "http://www.jokeblogger.com/sites/default/files/category_pictures/Nickelback1370473510.jpg",
+    "duration": "3:26",
+    "bpm": 120,
+    "playCount": 3,
+    "downloadCount": 1,
+    "bookmarkCount": 200,
+    "isBookmarked": true,
+    "popularity": 2,
+    "isExplicit": true,
+    "status": "Pending"
+  }
+]
 		}
 	},
-	componentDidMount: function() {
-		this.setState({ songs: this.props.creator });
-		console.log(this.state.songs, "hi hello");
-	},
+	// componentDidMount: function() {
+	// 	this.setState({ songs: this.props.creator });
+	// 	console.log(this.state.songs, "hi hello");
+	// },
 
 	showHidePlayer: function() {
 		if(this.state.displayPlayer) {
@@ -121,7 +164,7 @@ var PlaylistTable = ReactRedux.connect(null, function(dispatch) {
 		}
   },
 	render: function() {
-		var self = this;
+		var songs = this.state.songs; ;
 
 		return(
 			<div className="playlist-wrapper pad-l-lg pad-r-lg pad-b-lg">
@@ -138,7 +181,11 @@ var PlaylistTable = ReactRedux.connect(null, function(dispatch) {
 						</tr>	
 					</thead>
 					<tbody>
-
+						{this.state.songs.map(function(songs, index) {
+							return (
+								<CreatorBookMarkItems key={index} songs={songs} />
+							)
+						})}
 					</tbody>
 				</table>
 
@@ -185,43 +232,41 @@ var PlaylistTable = ReactRedux.connect(null, function(dispatch) {
 
 var CreatorBookMarkItems = React.createClass({
 	render: function() {
-		var creatorBookMarks = this.props.songs
+		var creatorBookMarks = this.props.songs;
 		return(
-			<div>
 				<tr>
 					<td className="col-md-3">
-						<img className="mobile-img-thumbnail mar-r-md" src="https://yt3.ggpht.com/-5VV8GnLPUmA/AAAAAAAAAAI/AAAAAAAAAAA/DymHh0I91f0/s900-c-k-no-rj-c0xffffff/photo.jpg" />
+						<img className="mobile-img-thumbnail mar-r-md" src={creatorBookMarks.albumArtUrl} />
 						<div className="playlist-detail-info">
-							<h4>{creatorBookMarks.artistName}</h4>
-							<p>Echosmith</p>
+							<h4>{creatorBookMarks.name}</h4>
+							<p>{creatorBookMarks.artistName}</p>
 						</div> 
 					</td>
 
 					<td className="col-md-2">
-						<p>Talking Dreams</p>              
+						<p>{creatorBookMarks.albumName}</p>              
 					</td>
 
 					<td className="col-md-1">
-						<p>3:26</p>              
+						<p>{creatorBookMarks.duration}</p>              
 					</td>
 
 					<td className="col-md-1">
-						<p>1,266</p>              
+						<p>{creatorBookMarks.downloadCount}</p>              
 					</td>
 
 					<td className="col-md-1">
-						<p>1,266 <i className="icon-up-open"></i></p>
+						<p>{creatorBookMarks.bookmarkCount} <i className="icon-up-open"></i></p>
 					</td>
 
 					<td className="col-md-1">
-						<span onClick={this.handleLike} className={ this.state.red ? "icon-bookmark-2 red fa-2x" : "icon-bookmark-empty fa-2x"}></span>            
+						<span onClick={this.handleLike} className={ creatorBookMarks.isBookmarked ? "icon-bookmark-2 primary fa-2x" : "icon-bookmark-empty fa-2x"}></span>            
 					</td>
 
 					<td className="col-md-1">
 						<a className="color-grey" ><span className="icon-down-circled fa-2x"></span></a>
 					</td>
 				</tr>
-			</div>
 		)
 	}
 });
