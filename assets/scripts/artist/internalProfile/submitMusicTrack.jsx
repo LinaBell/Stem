@@ -254,7 +254,7 @@ var SubmitMusicTrack = React.createClass({
 					<div className="submit-btns">
 						<div className="submit-btns">
 					        <button className="additional-track-btn mar-r-md" onClick={ this.onAddClicked }>
-					        	<i className="icon-plus-circled"></i> Add Additional Tracks
+					        	<i className="icon-plus-circled"></i> Add Tracks
 					        </button>
 
 					        { this.state.isSubmitting ? <LoadingButton /> : 

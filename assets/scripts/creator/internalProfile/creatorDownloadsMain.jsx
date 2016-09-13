@@ -25,13 +25,25 @@ var CreatorDownloadsMain = ReactRedux.connect(function(state) {
 					<h2 className="mar-b-sm">Downloads</h2>
 					<p className="font-light">Your history of downloads</p>
 				</header>
-				{this.state.downloads.map(function(download, index) {
-					return(
-						<CreatorDownloadsCard key={index} download={download} />
-					);
-				})}
-				<CreatorDownloadsZeroState />
+					{this.state.downloads.length <= 0 ? <CreatorDownloadsZeroState /> : <CreatorDownloadsMap downloads={this.state.downloads} />
+					
+				}
+				
 			</div>
 		)
 	}
 }));
+
+var CreatorDownloadsMap = React.createClass({
+	render: function() {
+		return(
+			<div>
+				{this.props.downloads.map(function(download, index) {
+						return(
+							<CreatorDownloadsCard key={index} download={download} />
+						);
+					})}
+			</div>
+		)
+	}
+});

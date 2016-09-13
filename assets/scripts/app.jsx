@@ -195,7 +195,7 @@ var App = React.createClass({
 
 				{ this.props.currentPage == 2 ?
 					<div className="wrapper">
-						<ArtistInternalAnalytics />
+						<ArtistDashboardMain />
 						<Footer />
 					</div>
 				: null} 
@@ -249,8 +249,8 @@ var App = React.createClass({
 						<CreatorDownloadsMain />
 						<Footer />
 					</div>
-				: null} 
-				
+				: null}
+
 				{ this.props.currentPage == 14 ?
 					<div className="wrapper">
 						<FilterNav />

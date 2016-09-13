@@ -257,14 +257,15 @@ var StemApi = (function () {
     	});
     });
 
-    StemApi.prototype.getCreatorDownloads = function (rse) {
+    StemApi.prototype.getCreatorDownloads = Promise.method(function (req) {
     	return $.ajax({
-    		type: 'POST',
-    		url: this.baseUrl + 'creators/' + rse.creatorId + '/downloads',
+    		type: 'GET',
+    		url: this.baseUrl + 'creators/' + req.creatorId + '/downloads',
     		headers: { 'Authorization': this.authorization },
     		contentType: 'application/json; charset=utf-8',
     	});
-    }
+    });
+    
     StemApi.prototype.getArtistsPopular = function (rse) {
         return $.ajax({
             type: 'GET',

@@ -1,14 +1,14 @@
 var PlaylistTable = ReactRedux.connect(null, function(dispatch) { 
 	return {
-		navigateToCreatorProfile: function() {
-				dispatch({
-					type: 'GoToPage',
-					data: {
-						currentPage: 115,
-						pageParams: { creatorId: 5 }
-					}
-				});
-			}
+		// navigateToCreatorProfile: function() {
+		// 		dispatch({
+		// 			type: 'GoToPage',
+		// 			data: {
+		// 				currentPage: 115,
+		// 				pageParams: { creatorId: 5 }
+		// 			}
+		// 		});
+		// 	}
 		};
 	})
 (React.createClass({
@@ -25,10 +25,6 @@ var PlaylistTable = ReactRedux.connect(null, function(dispatch) {
 			bookMarked: false
 		}
 	},
-	// componentDidMount: function() {
-	// 	this.setState({ songs: this.props.creator });
-	// 	console.log(this.state.songs, "hi hello");
-	// },
 
 	showHidePlayer: function() {
 		if(this.state.displayPlayer) {
