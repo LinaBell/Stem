@@ -241,7 +241,7 @@ var Login = React.createClass({
             },
             error: function (response) { 
             	console.error(JSON.stringify(response, null, 2));
-				self.updateLoginStatus(true, null, 100);
+				self.goToWhoAreYou();
              }
         });
 	},
@@ -263,6 +263,13 @@ var Login = React.createClass({
 	        	data: {currentPage: currentPage}
 	    	});
 		})
+    },
+
+    goToWhoAreYou: function() {
+    	store.dispatch({
+        	type: 'GoToPage',
+        	data: {currentPage: 100}
+    	});
     },
 
 //					<a onClick={self.updateLoginStatus(false)}>Logout</a>
