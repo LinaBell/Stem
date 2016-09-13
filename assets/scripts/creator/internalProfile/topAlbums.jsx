@@ -12,9 +12,6 @@ var TopAlbums = React.createClass({
 		stemApi.getArtistsPopular({})
     .then(function(response) {
       this.setState({topArtists: response});
-    	// while (this.state.topArtists.length <= 16) {
-    	// 	this.state.topArtists.push(this.state.topArtists[0]);
-    	// }
     }.bind(this), function(error) {
       console.error('Top Artist Error: ' + JSON.stringify(error));
     });

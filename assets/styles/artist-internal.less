@@ -73,6 +73,28 @@
 		color: @grey-3;
 	}
 }	
+.browse-btn {
+	width: 170px;
+	text-align: center;
+}
+// -- genre selector -- 
+.selectize-input {
+	height: 40px;
+}
+.selectize-control.multi .selectize-input > div {
+    cursor: pointer;
+    margin: 0 3px 3px 0;
+    padding: 5px 15px;
+    background: @primary !important;
+    color: #ffffff;
+    border: none; 
+}
+.selectize-control.plugin-remove_button [data-value] .remove {
+    top: 3px;
+    border-left: none;
+
+}
+// -- genre selector end --
 .upload-album-art-detail {
 	text-align: left;
 	margin: 0 auto;
@@ -99,7 +121,7 @@
 		display: inline-block;
 	}
 	.submit-track-name input {
-		width: 220px;
+		width: 65%;
 	}
 	.submit-track-name button {
 		width: 160px;
@@ -160,10 +182,20 @@
 	.loaded-track {
 		display: inline-block;
 		height: 40px;
+		width: 170px;
+		text-overflow: ellipsis;
+		white-space: nowrap;
 		background-color: @grey-5;
 		padding: @space-sm @space-md;
-		p{
-			text-overflow: ellipsis;
+		p {
+	    width: 110px;
+	    float: left;
+	    white-space: nowrap;
+	    overflow: hidden;
+	    text-overflow: ellipsis;
+		}
+		i {
+			float: right;
 		}
 		p, i {
 			display: inline-block;
