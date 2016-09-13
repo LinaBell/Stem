@@ -88,13 +88,13 @@ var appReducer = function(state = initialAppState, action) {
 			return Object.assign({}, state, {
 				pageParams: action.data.pageParams || {},
 				currentPage: action.data.currentPage
-			})
+			});
 
 		case 'UpdateSearch':
 			return Object.assign({}, state, {
 				searchResults: action.data.results,
 				searchTerms: action.data.terms
-			})
+			});
 
 		default: 
 			return state;
@@ -145,6 +145,7 @@ var AppState = function(store) {
 		isLoggedIn: store.userState.isLoggedIn,
 		userInfo: store.userState.userInfo,
 		currentPage: store.appState.currentPage,
+		pageParams: store.appState.pageParams
 	}
 }
 
@@ -323,7 +324,7 @@ var App = React.createClass({
 				{ this.props.currentPage == 105 ?
 					<div className="wrapper">
 						<AdminHeader />
-						<AdminSubmitMusic />
+						<AdminSubmitMusic albumId={ this.props.pageParams.albumId } />
 						<Footer />
 					</div>
 				: null}

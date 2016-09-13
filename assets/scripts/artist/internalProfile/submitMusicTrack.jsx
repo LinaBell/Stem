@@ -38,7 +38,7 @@ var SubmitMusicTrack = React.createClass({
 		stemApi.getAllTagTypes({
 			systemType: Tag.SystemType.Genre
 		})
-		.then(function(res) {
+		.then((res) => {
 			var genreTag = res[0];
 
 			this.setState({
@@ -49,17 +49,39 @@ var SubmitMusicTrack = React.createClass({
 				tagTypeId: genreTag.id
 			});
 
-		}.bind(this))
-		.then(function(res) {
+		})
+		.then((res) => {
 			this.setState({
 				genreTagValues: res
 			});
 
-		}.bind(this))
-		.catch(function(reason) {
-			console.error('Error fetching all tag types: ' + Utilities.normalizeError(reason));
+			// Edit mode
+			if (this.props.albumId) {
+				return stemApi.getSongsByAlbum({ id: this.props.albumId });
+			}
+		})
+		.then((res) => {
+			if (res) {
+				this.setState({
+					addedTracks: res.map((item) => {
+						return {
+							id: item.id,
+							trackName: item.name,
+							isExplicit: item.isExplicit,
+	  						releaseDate: Date.parse(item.releaseDate),
+	  						additionalCredits: item.additionalCredits,
+	  						audioFile:  '', // TODO: Wire this up
+	  						selectedGenres: [], // TODO: Wire this up
+	  						lyrics: '', // TODO: Wire this up
+	  						youTubeShareLink: '' // TODO: Wire this up
+						};
+					})
+				});
+			}
+		})
+		.catch((reason) => {
+			console.error('Error initializing SubmitMusicTrack page: ' + Utilities.normalizeError(reason));
 		});
-
 	},
 	onAudioChanged: function(file) {
 		this.setState({

@@ -185,21 +185,14 @@ var StemApi = (function () {
         });
     };
 
-    StemApi.prototype.getSong = function (rse) {
-        var _this = this;
-        $.ajax({
+    StemApi.prototype.getSong = Promise.method(function (req) {
+        return $.ajax({
             type: 'GET',
-            url: _this.baseUrl + 'songs/' + rse.request.id,
-            headers: { 'Authorization': _this.authorization },
-            contentType: 'application/json; charset=utf-8',
-            error: function (response) {
-                rse.error(response);
-            },
-            success: function (response) {
-                rse.success(response);
-            }
+            url: this.baseUrl + 'songs/' + req.id,
+            headers: { 'Authorization': this.authorization },
+            contentType: 'application/json; charset=utf-8'
         });
-    };
+    });
 
     StemApi.prototype.getSongsByArtist = Promise.method(function (req) {
         return $.ajax({
@@ -208,6 +201,15 @@ var StemApi = (function () {
             headers: { 'Authorization': this.authorization },
             contentType: 'application/json; charset=utf-8'
         });
+    });
+
+    StemApi.prototype.getSongsByAlbum = Promise.method(function (req) {
+    	return $.ajax({
+    		type: 'GET',
+    		url: this.baseUrl + 'albums/' + req.id + '/songs',
+    		headers: { 'Authorization': this.authorization },
+            contentType: 'application/json; charset=utf-8'
+    	});
     });
 
     StemApi.prototype.getAlbumsByArtist = function (rse) {
