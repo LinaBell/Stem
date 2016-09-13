@@ -244,6 +244,13 @@ var App = React.createClass({
 					</div>
 				: null}
 
+				{ this.props.currentPage == 13 ?
+					<div className="wrapper">
+						<CreatorDownloadsMain />
+						<Footer />
+					</div>
+				: null}
+
 				{ this.props.currentPage == 14 ?
 					<div className="wrapper">
 						<FilterNav />

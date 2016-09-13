@@ -1,4 +1,11 @@
 var CreatorProfileTags = React.createClass({
+  getInitialState: function() {
+    return {
+      tags: []
+    }
+  },
+  // componentDidMount: function() {
+  // },
   render: function() {
     return(
       <div className="creator-profile-tags-wrapper pad-box-md">

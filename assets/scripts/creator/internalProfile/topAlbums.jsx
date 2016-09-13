@@ -12,6 +12,7 @@ var TopAlbums = React.createClass({
 		stemApi.getArtistsPopular({})
     .then(function(response) {
       this.setState({topArtists: response});
+      console.log(this.state.topArtists);
     }.bind(this), function(error) {
       console.error('Top Artist Error: ' + JSON.stringify(error));
     });
@@ -37,7 +38,7 @@ var TopAlbums = React.createClass({
 
 	slideShow: function(){
 		var self = this;
-		setInterval(this.moveRight, 5000);
+		// setInterval(this.moveRight, 5000);
 	},
 	moveLeft: function() {
 		var w = this.state.albumItemWidth;
