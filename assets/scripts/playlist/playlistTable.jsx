@@ -25,10 +25,6 @@ var PlaylistTable = ReactRedux.connect(null, function(dispatch) {
 			bookMarked: false
 		}
 	},
-	// componentDidMount: function() {
-	// 	this.setState({ songs: this.props.creator });
-	// 	console.log(this.state.songs, "hi hello");
-	// },
 
 	showHidePlayer: function() {
 		if(this.state.displayPlayer) {
