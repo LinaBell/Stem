@@ -1,20 +1,19 @@
 var CreatorProfileMain = ReactRedux.connect(function(state) {
   return {
-    creatorIdExt: state.appState.pageParams
+    // creatorIdExt: state.appState.pageParams
   };
 })(React.createClass({
   getInitialState: function() {
     return {
-      creator: {}
+      songs: []
     };     
   },
   componentDidMount: function() {
-
     stemApi.getCreatorProfile({
-      creatorId: this.props.creatorId.id
+      creatorId: this.props.creator.id
     })
     .then(function(response) {
-      this.setState({creator: response});
+      this.setState({songs: response});
     }.bind(this))
     .catch(function(error) {
       console.log('Creator Profile Error: ' + JSON.stringify(error));
@@ -23,7 +22,7 @@ var CreatorProfileMain = ReactRedux.connect(function(state) {
   render: function () {
     return (
       <div>
-        <CreatorProfileHeader creator={this.props.creatorId} />
+        <CreatorProfileHeader creator={this.props.creator} />
         <div className="pad-box-lg bg-white">
           <h3>My Latest Videos</h3>
           <a>youtube.com/things</a>
@@ -33,7 +32,7 @@ var CreatorProfileMain = ReactRedux.connect(function(state) {
             <h3>My Activity</h3>
             <p>My latest plays and loves</p>
           </div>
-          <PlaylistTable />
+          <PlaylistTable songs={this.state.songs} />
           <div className="text-center">
             <a><h3>Load More</h3></a>
           </div>  

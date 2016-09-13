@@ -239,7 +239,7 @@ var App = React.createClass({
 
 				{ this.props.currentPage == 11 ?
 					<div className="wrapper">
-						<CreatorProfileMain creatorId={this.props.userInfo} />
+						<CreatorProfileMain creator={this.props.userInfo} />
 						<Footer />
 					</div>
 				: null}

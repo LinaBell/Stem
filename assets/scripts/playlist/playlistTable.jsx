@@ -22,52 +22,7 @@ var PlaylistTable = ReactRedux.connect(null, function(dispatch) {
 			displayUploadSuccess: false,
 			displaySongDetail: false,
 			displayCreatorDownloadsMain: false,
-			bookMarked: false,
-
-			songs: [
-  {
-    "id": 1,
-    "artistId": 1,
-    "trackNumber": 0,
-    "artistName": "Bon Jovi",
-    "name": "You give love",
-    "releaseDate": "2016-09-07T02:49:54.599Z",
-    "additionalCredits": "things",
-    "albumId": "1",
-    "albumName": "The Hits",
-    "albumArtUrl": "http://orig00.deviantart.net/12fd/f/2015/243/0/c/albumcoverfor_benprunty_fragments_sylviaritter_by_faith303-d97uftr.png",
-    "duration": "3:37",
-    "bpm": 120,
-    "playCount": 327,
-    "downloadCount": 10,
-    "bookmarkCount": 5,
-    "isBookmarked": true,
-    "popularity": 7,
-    "isExplicit": true,
-    "status": "Pending"
-  },
-  {
-    "id": 1,
-    "artistId": 2,
-    "trackNumber": 0,
-    "artistName": "Nickelback",
-    "name": "How you remind me",
-    "releaseDate": "2016-09-07T02:49:54.599Z",
-    "additionalCredits": "things",
-    "albumId": "2",
-    "albumName": "No One likes Us",
-    "albumArtUrl": "http://www.jokeblogger.com/sites/default/files/category_pictures/Nickelback1370473510.jpg",
-    "duration": "3:26",
-    "bpm": 120,
-    "playCount": 3,
-    "downloadCount": 1,
-    "bookmarkCount": 200,
-    "isBookmarked": true,
-    "popularity": 2,
-    "isExplicit": true,
-    "status": "Pending"
-  }
-]
+			bookMarked: false
 		}
 	},
 	// componentDidMount: function() {
@@ -164,7 +119,7 @@ var PlaylistTable = ReactRedux.connect(null, function(dispatch) {
 		}
   },
 	render: function() {
-		var songs = this.state.songs; ;
+		var songs = this.props.songs;
 
 		return(
 			<div className="playlist-wrapper pad-l-lg pad-r-lg pad-b-lg">
@@ -181,9 +136,9 @@ var PlaylistTable = ReactRedux.connect(null, function(dispatch) {
 						</tr>	
 					</thead>
 					<tbody>
-						{this.state.songs.map(function(songs, index) {
+						{songs.map(function(songs, index) {
 							return (
-								<CreatorBookMarkItems key={index} songs={songs} />
+								<PlaylistItems key={index} songs={songs} />
 							)
 						})}
 					</tbody>
@@ -230,37 +185,37 @@ var PlaylistTable = ReactRedux.connect(null, function(dispatch) {
 	}
 }));
 
-var CreatorBookMarkItems = React.createClass({
+var PlaylistItems = React.createClass({
 	render: function() {
-		var creatorBookMarks = this.props.songs;
+		var playList = this.props.songs;
 		return(
 				<tr>
 					<td className="col-md-3">
-						<img className="mobile-img-thumbnail mar-r-md" src={creatorBookMarks.albumArtUrl} />
+						<img className="mobile-img-thumbnail mar-r-md" src={playList.albumArtUrl} />
 						<div className="playlist-detail-info">
-							<h4>{creatorBookMarks.name}</h4>
-							<p>{creatorBookMarks.artistName}</p>
+							<h4>{playList.name}</h4>
+							<p>{playList.artistName}</p>
 						</div> 
 					</td>
 
 					<td className="col-md-2">
-						<p>{creatorBookMarks.albumName}</p>              
+						<p>{playList.albumName}</p>              
 					</td>
 
 					<td className="col-md-1">
-						<p>{creatorBookMarks.duration}</p>              
+						<p>{playList.duration}</p>              
 					</td>
 
 					<td className="col-md-1">
-						<p>{creatorBookMarks.downloadCount}</p>              
+						<p>{playList.downloadCount}</p>              
 					</td>
 
 					<td className="col-md-1">
-						<p>{creatorBookMarks.bookmarkCount} <i className="icon-up-open"></i></p>
+						<p>{playList.bookmarkCount} <i className="icon-up-open"></i></p>
 					</td>
 
 					<td className="col-md-1">
-						<span onClick={this.handleLike} className={ creatorBookMarks.isBookmarked ? "icon-bookmark-2 primary fa-2x" : "icon-bookmark-empty fa-2x"}></span>            
+						<span onClick={this.handleLike} className={ playList.isBookmarked ? "icon-bookmark-2 primary fa-2x" : "icon-bookmark-empty fa-2x"}></span>            
 					</td>
 
 					<td className="col-md-1">
