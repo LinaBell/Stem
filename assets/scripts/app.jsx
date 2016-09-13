@@ -76,7 +76,7 @@ function beginSearch(searchTerms) {
 // This should be moved to it's own file at some point
 const initialAppState = {
 	baseAPI: 'http://52.32.255.104/api',
-	currentPage: 0,
+	currentPage: 107,
 	pageParams: {},
 	searchTerms: '',
 	searchResults: [],
@@ -243,6 +243,13 @@ var App = React.createClass({
 						<Footer />
 					</div>
 				: null} 
+
+				{ this.props.currentPage == 13 ?
+					<div className="wrapper">
+						<CreatorDownloadsMain />
+						<Footer />
+					</div>
+				: null}
 
 				{ this.props.currentPage == 20 ?
 					<div className="wrapper">
