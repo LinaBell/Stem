@@ -4,8 +4,6 @@ var CreatorProfileTags = React.createClass({
       tags: []
     }
   },
-  // componentDidMount: function() {
-  // },
   render: function() {
     return(
       <div className="creator-profile-tags-wrapper pad-box-md">
