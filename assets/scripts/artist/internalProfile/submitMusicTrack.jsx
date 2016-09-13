@@ -5,6 +5,7 @@ var SubmitMusicTrack = React.createClass({
 		  	genreTagValues: [],
 		  	addedTracks: [],
 		  	isSubmitting: false,
+		  	statusMessage: '',
 
 			id: null,
 			trackName: '',
@@ -14,7 +15,8 @@ var SubmitMusicTrack = React.createClass({
 	  		additionalCredits: '',
 	  		audioFile: null,
 	  		selectedGenres: null,
-	  		lyrics: ''
+	  		lyrics: '',
+	  		youTubeShareLink: ''
 		}
 	},
 	getTrackState: function() {
@@ -28,7 +30,8 @@ var SubmitMusicTrack = React.createClass({
 	  		audioFile: this.state.audioFile,
 	  		selectedGenres: this.state.selectedGenres ? 
 	  			[].concat(this.state.selectedGenres) : null,
-	  		lyrics: this.state.lyrics
+	  		lyrics: this.state.lyrics,
+	  		youTubeShareLink: this.state.youTubeShareLink
 		};
 	},
 	componentDidMount: function() {
@@ -54,7 +57,7 @@ var SubmitMusicTrack = React.createClass({
 
 		}.bind(this))
 		.catch(function(reason) {
-			console.log('Error fetching all tag types: ' + Utilities.normalizeError(reason));
+			console.error('Error fetching all tag types: ' + Utilities.normalizeError(reason));
 		});
 
 	},
@@ -63,13 +66,19 @@ var SubmitMusicTrack = React.createClass({
 			audioFile: file
 		});
 	},
-	handleInputChanged(ev) {
+	onInputChanged: function(ev) {
 		var newState = {};
 
 		newState[ev.target.name] = ev.target.value;
 		this.setState(newState);
 	},
-	genreTagsUpdated: function(selections) {
+	onCheckedChanged: function(ev) {
+		var newState = {};
+
+		newState[ev.target.name] = ev.target.checked;
+		this.setState(newState);
+	},
+	onGenresChanged: function(selections) {
 		this.setState({
 			selectedGenres: selections
 		});
@@ -90,11 +99,21 @@ var SubmitMusicTrack = React.createClass({
 		}
 	},
 	onAddClicked: function() {
+
 		// Make a deep copy of our state
 		var trackCopy = this.getTrackState();
 
+		if (!this.validate(trackCopy)) {
+			this.setState({
+				statusMessage: 'The track is not valid, please add an audio file, title, and genre before adding the track'
+			});
+			return;
+		}
+
 		this.setState({	
 			addedTracks: this.state.addedTracks.concat(trackCopy),
+			statusMessage: '',
+
 			id: null,
 			trackName: '',
 			trackNumber: 0,
@@ -104,7 +123,8 @@ var SubmitMusicTrack = React.createClass({
 	  		additionalCredits: '',
 	  		audioFile: null,
 	  		selectedGenres: null,
-	  		lyrics: ''
+	  		lyrics: '',
+	  		youTubeShareLink: ''
 		});
 	},
 	onEditTrack: function(track) {
@@ -118,7 +138,8 @@ var SubmitMusicTrack = React.createClass({
 	  		additionalCredits: track.additionalCredits,
 	  		audioFile: track.audioFile,
 	  		selectedGenres: track.selectedGenres,
-	  		lyrics: track.lyrics
+	  		lyrics: track.lyrics,
+	  		youTubeShareLink: track.youTubeShareLink
 		});
 
 		var index = this.state.addedTracks.indexOf(track);
@@ -137,7 +158,7 @@ var SubmitMusicTrack = React.createClass({
 	createTracks: function(album, artistName) {
 		return Promise.map(this.state.addedTracks, function(track, index) {
 			if (!this.validate(track)) {
-				return Promise.reject('The track: ' + JSON.stringify(track) + ' is not valid.  Please correct and resubmit');
+				return Promise.reject('The track is not valid, please add an audio file, title, and genre before adding the track');
 			}
 
 			if (!track.id) {
@@ -147,11 +168,14 @@ var SubmitMusicTrack = React.createClass({
 					trackNumber: index + 1,
 					albumId: album.id,
 					songFileId: track.audioFile.response.id,
-					// NOTE: We currently don't have a field for this
-					bpm: 0,
+					additionalCredits: track.additionalCredits,
+					releaseDate: track.releaseDate,
 					tagIds: track.selectedGenres.map(function(genreItem) {
 						return genreItem.id;
-					})
+					}),
+					lyrics: track.lyrics,
+					youTubeShareLink: track.youTubeShareLink,
+					isExplicit: track.isExplicit
 				})
 				.then(function(res) {
 					track.id = res.id;
@@ -174,35 +198,40 @@ var SubmitMusicTrack = React.createClass({
 
 				<div className="submit-track-name col-lg-6">
 					<p>Track Name</p>
-					<input name="trackName" value={ this.state.trackName } onChange={ this.handleInputChanged } />
+					<input name="trackName" value={ this.state.trackName } onChange={ this.onInputChanged } />
 					<AudioUpload value={ this.state.audioFile } onAudioChanged={ this.onAudioChanged } />
 				</div>
 				<div className="col-lg-6">
 					<p>ISRC # <a className="info-tags">Whats an ISRC#?</a></p>
-					<input name="isrc" value={ this.state.isrc } onChange={ this.handleInputChanged } placeholder="( optional )" />
+					<input name="isrc" value={ this.state.isrc } onChange={ this.onInputChanged } placeholder="( optional )" />
 				</div> 
 				<div className="col-lg-6">
 					<p>Release Date - MM/DD/YY</p>
-					<input name="releaseDate" value={ this.state.releaseDate } onChange={ this.handleInputChanged } placeholder="( optional )" />
+					<input name="releaseDate" value={ this.state.releaseDate } onChange={ this.onInputChanged } placeholder="( optional )" />
 				</div>
 				<div className="col-lg-6">
-					<p>Additionl Credits</p>
-					<input name="additionalCredits" value={ this.state.additionalCredits } onChange={ this.handleInputChanged } placeholder="( optional )" />
+					<p>Additional Credits</p>
+					<input name="additionalCredits" value={ this.state.additionalCredits } onChange={ this.onInputChanged } placeholder="( optional )" />
 				</div>
 				<div className="genre-tag-selector-wrapper mar-b-md col-lg-12">
 					<div className="col-lg-6 pad-l-sm">	
-						<TagSelector tag={ this.state.genreTag } tagList={ this.state.genreTagValues } value={ this.state.selectedGenres } onSelectionsChange={ this.genreTagsUpdated } />
-					</div>
-					<div className="col-lg-6">	
-						<TagSelector tag={ this.state.genreTag } tagList={ this.state.genreTagValues } value={ this.state.selectedGenres } onSelectionsChange={ this.genreTagsUpdated } />
+						<TagSelector 
+							tag={ this.state.genreTag } 
+							tagList={ this.state.genreTagValues } 
+							onSelectionsChange={ this.onGenresChanged }
+							values={ this.state.selectedGenres } />
 					</div>	
+					<div className="col-lg-6">
+						<p>YouTube Share Link</p>
+						<input name="youTubeShareLink" value={ this.state.youTubeShareLink } onChange={ this.onInputChanged } placeholder="( optional )" />
+					</div>
 				</div>
 				<div className="pad-b-sm col-xs-12">
 					<p>Lyrics <a className="info-tags"> Why upload lyrics?</a></p>
-					<textarea name="lyrics" value={ this.state.lyrics } onChange={ this.handleInputChanged } placeholder="Paste your lyrics here.." />
+					<textarea name="lyrics" value={ this.state.lyrics } onChange={ this.onInputChanged } placeholder="Paste your lyrics here.." />
 				</div>
 				<div className="explicit-checkbox pad-b-lg col-xs-12 red">
-					<input type="checkbox" name="explicit" onChange={ this.handleInputChanged } />
+					<input type="checkbox" name="isExplicit" onChange={ this.onCheckedChanged } checked={ this.state.isExplicit } />
 				  	<h5 className="pad-l-sm">EXPLICIT</h5>
 				</div> 
 				{ this.props.isAdmin ? 

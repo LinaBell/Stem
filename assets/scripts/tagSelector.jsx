@@ -1,59 +1,52 @@
 var TagSelector = React.createClass({
-	getInitialState: function() {
-		return {
-			selectedValue: null,
-			selectedValues: []
-		};
+	componentDidMount: function() {
+		$(this.refs.selectElement).selectize({
+			plugins: ['remove_button'],
+			create: false,
+			valueField: 'id',
+        	labelField: 'name',
+        	searchField: 'name',
+        	onChange: this.onChange
+		});
 	},
 	componentWillReceiveProps: function(nextProps) {
-		if (nextProps.tagList.length > 0 && !this.state.selectedValue) {
-			this.setState({
-				selectedValue: nextProps.tagList[0]
-			});
+
+		// Populate options when the tag list is first populated
+		if (nextProps.tagList.length > 0 && (!this.props.tagList || this.props.tagList.length === 0)) {
+			$(this.refs.selectElement)
+				.data('selectize')
+				.addOption(nextProps.tagList);
 		}
 
-		if (nextProps.value && !this.value) {
-			this.setState({
-				selectedValues: nextProps.value
-			});
-
-			return;
+		// Clear selected items when the values are cleared
+		if (!nextProps.values && this.props.values) {
+			$(this.refs.selectElement)
+				.data('selectize')
+				.clear(false);
 		}
 
-		if (!nextProps.value) {
-			this.setState({
-				selectedValues: []
+		// Populate selected items when values are loaded
+		if (nextProps.values && !this.props.values) {
+			var selectize = $(this.refs.selectElement).data('selectize');
+
+			nextProps.values.forEach(function(item) {
+				selectize.addItem(item.id.toString(), false);
 			});
 		}
 	},
-	onChange: function(ev) {
-		var id = ev.target.value;
+	onChange: function(selections) {
+		if (this.props.onSelectionsChange) {
 
-		this.setState({
-			selectedValue: this.props.tagList.find(function(item) {
-				return item.id == id;
-			})
-		});
-	},
-	add: function() {
-		var selectedValues = this.state.selectedValues;
+			var selectedTags = null;
 
-		if (selectedValues.indexOf(this.state.selectedValue) === -1) {
-			newState = selectedValues.concat(this.state.selectedValue);
-
-			this.setState({
-				selectedValues: newState
-			});
-
-			if (this.props.onSelectionsChange) {
-				this.props.onSelectionsChange(newState);
+			if (selections) {
+				selectedTags = this.props.tagList.filter(function(item) {
+					return selections.includes(item.id.toString());
+				});
 			}
+
+			this.props.onSelectionsChange(selectedTags);
 		}
-	},
-	reset: function() {
-		this.setState({
-			selectedValues: []
-		});
 	},
 	render: function() {
 		var tagName = this.props.tag ? this.props.tag.name : null;
@@ -61,19 +54,10 @@ var TagSelector = React.createClass({
 		return (
 			<div>
 				<p>{ tagName }</p>
-				<ul>
-					{ this.state.selectedValues.map(function(item) {
-						return (<li key={ item.id }>{ item.name }</li>);
-					})}
-				</ul>
 				
-				<select onChange={ this.onChange } className="btn col-xs-12">
-					{ this.props.tagList.map(function(item) {
-						return (<option key={ item.id } value={ item.id }>{ item.name }</option>);
-					})}
+				<select ref="selectElement" multiple>
 				</select>
 
-				<a onClick={ this.add }><i className="icon-plus-circled fa-2x"></i>Add { tagName }</a>
 			</div>
 		);
 	}

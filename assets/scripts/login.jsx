@@ -178,7 +178,7 @@ var Login = React.createClass({
 		   			self.handleCommitSubmit(data);
 				},
 	            error: function (response) {
-					console.log(JSON.stringify(response, null, 2));
+					console.error(JSON.stringify(response, null, 2));
 					if(response.responseJSON.modelState["request.UserName"] != null) {
 						errorMessage = response.responseJSON.modelState["request.UserName"];
 					}
@@ -217,7 +217,7 @@ var Login = React.createClass({
         this.setState({
         	errorMessage: message
         });
-        console.log('message = ' + message)
+        console.error('message = ' + message)
 	},
 	/////// END Registration Form
 
@@ -231,7 +231,7 @@ var Login = React.createClass({
 				console.log(JSON.stringify(response, null, 2));
 				var page = 100;
 				if (response.accountType == 'Artist') {
-					page = 0;
+					page = 6;
 				} else if (response.accountType == 'Creator') {
 					page = 10;
 				} else if (response.accountType == 'Admin') {
@@ -240,7 +240,7 @@ var Login = React.createClass({
 				self.updateLoginStatus(true, response, page);	
             },
             error: function (response) { 
-            	console.log(JSON.stringify(response, null, 2));
+            	console.error(JSON.stringify(response, null, 2));
 				self.updateLoginStatus(true, null, 100);
              }
         });
@@ -252,18 +252,16 @@ var Login = React.createClass({
 		store.dispatch((dispatch) => {
 			dispatch({
 				type: 'UpdateLoginStatus',
-				data: {isLoggedIn: isLoggedIn}
-			})	
-			if(userInfo != null) {
-				dispatch({
-		        	type: 'UpdateUserRecord',
-		        	data: {userInfo: userInfo}
-		    	})
-			}
+				data: {
+					isLoggedIn: isLoggedIn,
+					userInfo: userInfo
+				}
+			});
+
 	    	dispatch({
 	        	type: 'GoToPage',
 	        	data: {currentPage: currentPage}
-	    	})
+	    	});
 		})
     },
 

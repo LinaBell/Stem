@@ -51,44 +51,26 @@ function beginSearch(searchTerms) {
             }
         })
 		.then(function(response) {
-			store.dispatch((dispatch) => {
-				dispatch({
-		        	type: 'UpdateSearch',
-        	    	data: {
-            			results: response.songs,
-            			terms: response.terms.join(' ')
-            		}
-            	})
-				dispatch({
-	            	type: 'GoToPage',
-	            	data: {
-	            		// We automatically navigate to the artist search page when a search is initiated
-	            		currentPage: 106
-	            	}
-		    	})
-			})
-		}, function(error) {
-			console.error(JSON.stringify(response, null, 2));
+			dispatch({
+	        	type: 'UpdateSearch',
+    	    	data: {
+        			results: response.songs,
+        			terms: response.terms.join(' ')
+        		}
+        	});
+
+			dispatch({
+            	type: 'GoToPage',
+            	data: {
+            		// We automatically navigate to the artist search page when a search is initiated
+            		currentPage: 106
+            	}
+	    	});
+		})
+		.catch(function(reason) {
+			console.error('Search Error: ' + Utilities.normalizeError(reason));
 		});
 	};
-}
-
-// This should be moved to it's own file at some point
-const initialAuthState = {
-	isLoggedIn: false
-};
-var authReducer = function(state = initialAuthState, action) {
-	switch (action.type) {
-		case 'UpdateLoginStatus':
-			console.log('UpdateLoginStatus Equality Check (isLoggedIn): ' + (action.data.isLoggedIn === state.isLoggedIn));
-			return Object.assign({}, state, {
-				isLoggedIn: action.data.isLoggedIn
-			})
-
-		default: 
-			return state;
-	}
-	return state;
 }
 
 // This should be moved to it's own file at some point
@@ -103,14 +85,12 @@ const initialAppState = {
 var appReducer = function(state = initialAppState, action) {
 	switch (action.type) {
 		case 'GoToPage':
-			console.log('GoToPage action.data = ' + JSON.stringify(action.data));
 			return Object.assign({}, state, {
 				pageParams: action.data.pageParams || {},
 				currentPage: action.data.currentPage
 			})
 
 		case 'UpdateSearch':
-			console.log('Equality Check (searchResults): ' + (action.data.results === state.searchResults));
 			return Object.assign({}, state, {
 				searchResults: action.data.results,
 				searchTerms: action.data.terms
@@ -124,10 +104,18 @@ var appReducer = function(state = initialAppState, action) {
 
 // This should be moved to it's own file at some point
 const initialUserState = {
-	userInfo: {}
+	userInfo: {},
+	isLoggedIn: false
 };
 var userReducer = function(state = initialUserState, action) {
 	switch (action.type) {
+		case 'UpdateLoginStatus':
+			console.log('UpdateLoginStatus Equality Check (userInfo): ' + (action.data.userInfo === state.userInfo));
+			return Object.assign({}, state, {
+				isLoggedIn: action.data.isLoggedIn,
+				userInfo: action.data.userInfo
+			});
+
 		case 'UpdateUserRecord':
 			console.log('UpdateUserRecord Equality Check (userInfo): ' + (action.data.userInfo === state.userInfo));
 			// TODO:  Object.assign is not supported in IE, we may want to use lodash _.assign for compatibility
@@ -142,19 +130,19 @@ var userReducer = function(state = initialUserState, action) {
 }
 
 const reducers = combineReducers({
-	authState: authReducer,
 	appState: appReducer,
 	userState: userReducer
 });
 
+const logger = reduxLogger();
+
 const store = createStore(reducers,
-	applyMiddleware(thunk));
+	applyMiddleware(thunk, logger));
 
 var AppState = function(store) {
-	console.log('state = ' + JSON.stringify(store, null, 2));
 	return {
 		baseAPI: store.appState.baseAPI,
-		isLoggedIn: store.authState.isLoggedIn,
+		isLoggedIn: store.userState.isLoggedIn,
 		userInfo: store.userState.userInfo,
 		currentPage: store.appState.currentPage,
 	}
@@ -194,16 +182,9 @@ var App = React.createClass({
 
 				{ this.props.currentPage == 0 ?
 					<div className="wrapper">
-						{ this.props.isLoggedIn ? 
-							<span>
-								<LibraryMain />
-								<Footer />
-							</span>
-						:
-							<Login /> 
-						}
+						 <Login /> 
 					</div>
-				: null}
+				: null }
 				
 				{ this.props.currentPage == 1 ?
 					<div className="wrapper">
@@ -224,7 +205,7 @@ var App = React.createClass({
 						<ArtistProfile />
 						<Footer />
 					</div>
-				: null} 
+				: null } 
 
 				{ this.props.currentPage == 4 ?
 					<div className="wrapper">
@@ -232,14 +213,21 @@ var App = React.createClass({
 						<PlaylistMain />
 						<Footer />
 					</div>
-				: null} 
+				: null } 
 
 				{ this.props.currentPage == 5 ?
 					<div className="wrapper">
 						<ArtistSettings />
 						<Footer />
 					</div>
-				: null} 
+				: null }
+
+				{ this.props.currentPage === 6 ? 
+					<div className="wrapper">
+						<LibraryMain />
+						<Footer />
+					</div>
+				: null }
 
 				{ this.props.currentPage == 10 ?
 					<div className="wrapper">

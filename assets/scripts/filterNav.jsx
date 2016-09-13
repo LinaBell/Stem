@@ -15,9 +15,8 @@ var FilterNav = React.createClass({
             filterNavWidth = l * w,
             filterItemWidth = this.state.filterItemWidth;
 
-        if(windowWidth > filterNavWidth) {
+        if (windowWidth > filterNavWidth) {
             filterItemWidth = windowWidth / l;
-            console.log('filterItemWidth = ' + filterItemWidth);
         };
 
         this.setState({

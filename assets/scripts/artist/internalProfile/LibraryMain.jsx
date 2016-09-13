@@ -1,4 +1,9 @@
-var LibraryMain = React.createClass({
+var LibraryMain = ReactRedux.connect(function(state) {
+	return {
+		userInfo: state.userState.userInfo
+	};
+}, null)
+(React.createClass({
 	getInitialState: function() {
 		return { 
 			songs: [],
@@ -7,7 +12,7 @@ var LibraryMain = React.createClass({
 		};
 	},
 	componentDidMount: function() {
-		var userInfo = this.context.userInfo;
+		var userInfo = this.props.userInfo;
 
 		stemApi.getSongsByArtist({
 			artistId: userInfo.id
@@ -73,8 +78,4 @@ var LibraryMain = React.createClass({
 			</span>
 		);
 	}
-});
-
-LibraryMain.contextTypes = {
-	userInfo: React.PropTypes.object
-};
+}));
