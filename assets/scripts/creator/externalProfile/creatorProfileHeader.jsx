@@ -1,9 +1,4 @@
 var CreatorProfileHeader = React.createClass({
-  // getInitialState: function() {
-  //   return {
-  //     creatorData: this.props.creator
-  //   }
-  // },
   render: function() {
     var creator = this.props.creator,
         bannerImageStyle = {

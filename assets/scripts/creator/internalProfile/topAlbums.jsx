@@ -38,7 +38,7 @@ var TopAlbums = React.createClass({
 
 	slideShow: function(){
 		var self = this;
-		// setInterval(this.moveRight, 5000);
+		setInterval(this.moveRight, 5000);
 	},
 	moveLeft: function() {
 		var w = this.state.albumItemWidth;
