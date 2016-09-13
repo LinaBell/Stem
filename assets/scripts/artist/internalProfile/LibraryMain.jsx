@@ -39,11 +39,9 @@ var LibraryMain = ReactRedux.connect(function(state) {
 	},
 	getFilterList: function() {
 		var filterList = [
-			'All',
+			'Live',
 			'Approved',
 			'Pending',
-			'Disabled',
-			'Rejected'
 		];
 
 		return filterList.map(function(filter, index) {
