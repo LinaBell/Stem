@@ -12,7 +12,7 @@ var TrackList = React.createClass({
 			<div className="submit-track-edit-wrapper col-xs-12">
 				<p className="order-track">{ this.props.playerStateVisible ? "Order" : null }</p>
 				<p>Track Name</p>
-				<ul>
+				<ul className="tag-list">
 					{ this.props.tracks.map(function(item, index) {
 						return ( 
 							<li key={index} className="pad-b-sm">
@@ -22,7 +22,7 @@ var TrackList = React.createClass({
 								<span>{ item.trackName }</span>
 
 								<div className="loaded-track mar-l-md">
-									{ item.audioFile ? Formatter.formatFileLabel(item.audioFile.data) : 'No file' }
+									{ item.audioFile ? <p>Formatter.formatFileLabel(item.audioFile.data)</p> : 'No file' }
 								</div>
 								
 								<ul className="song-edit-tags">

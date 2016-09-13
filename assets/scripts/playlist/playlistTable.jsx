@@ -1,14 +1,14 @@
 var PlaylistTable = ReactRedux.connect(null, function(dispatch) { 
 	return {
-		navigateToCreatorProfile: function() {
-				dispatch({
-					type: 'GoToPage',
-					data: {
-						currentPage: 115,
-						pageParams: { creatorId: 5 }
-					}
-				});
-			}
+		// navigateToCreatorProfile: function() {
+		// 		dispatch({
+		// 			type: 'GoToPage',
+		// 			data: {
+		// 				currentPage: 115,
+		// 				pageParams: { creatorId: 5 }
+		// 			}
+		// 		});
+		// 	}
 		};
 	})
 (React.createClass({
