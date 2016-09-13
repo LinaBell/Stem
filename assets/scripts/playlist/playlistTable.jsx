@@ -1,4 +1,17 @@
-var PlaylistTable = React.createClass({
+var PlaylistTable = ReactRedux.connect(null, function(dispatch) { 
+	return {
+		navigateToCreatorProfile: function() {
+				dispatch({
+					type: 'GoToPage',
+					data: {
+						currentPage: 115,
+						pageParams: { creatorId: 5 }
+					}
+				});
+			}
+		};
+	})
+(React.createClass({
 	getInitialState: function() {
 		return {
 			displayPlayer: false,
@@ -9,9 +22,13 @@ var PlaylistTable = React.createClass({
 			displayUploadSuccess: false,
 			displaySongDetail: false,
 			displayCreatorDownloadsMain: false,
-			red: false
+			bookMarked: false
 		}
 	},
+	// componentDidMount: function() {
+	// 	this.setState({ songs: this.props.creator });
+	// 	console.log(this.state.songs, "hi hello");
+	// },
 
 	showHidePlayer: function() {
 		if(this.state.displayPlayer) {
@@ -77,6 +94,13 @@ var PlaylistTable = React.createClass({
 			this.setState({ displayWelcomeModal: true });
 		}
 	},
+	showHideCreatorProfile: function() {
+		if(this.state.displayCreatorProfile) {
+			this.setState({ displayCreatorProfile: false });
+		} else {
+			this.setState({ displayCreatorProfile: true });
+		}
+	},
 	showHideCreatorDownloadsMain: function() {
 		this.setState({
 			displayCreatorDownloadsMain: !this.state.displayCreatorDownloadsMain
@@ -90,213 +114,114 @@ var PlaylistTable = React.createClass({
 		}
 	},
 	handleLike: function (event) {
-		if (event.currentTarget.className == "icon-heart-empty fa-2x" ) {
-	  		event.currentTarget.className = "icon-heart red fa-2x";
+		if (event.currentTarget.className == "icon-bookmark-empty fa-2x" ) {
+	  		event.currentTarget.className = "icon-bookmark-2 primary fa-2x";
 		}
   },
 	render: function() {
-		var self = this;
+		var songs = this.props.songs;
 
 		return(
-			<div className="playlist-wrapper content">
+			<div className="playlist-wrapper pad-l-lg pad-r-lg pad-b-lg">
 				<table className="col-xs-12 table no-borders">
 					<thead>
 						<tr>
 							<th className="col-md-3 pad-b-md"><h4>Track/Artist</h4></th>
 							<th className="col-md-2 pad-b-md"><h4>Album</h4></th>
 							<th className="col-md-1 pad-b-md"><h4>Time</h4></th>
-							<th className="col-md-2 pad-b-md"><h4>Downloads</h4></th>
-							<th className="col-md-2 pad-b-md"><h4>Loves</h4></th>
-							<th className="col-md-2 pad-b-md"><h4>Options</h4></th>
+							<th className="col-md-1 pad-b-md"><h4>Downloads</h4></th>
+							<th className="col-md-1 pad-b-md"><h4>Lift</h4></th>
+							<th className="col-md-1 pad-b-md"><h4>Bookmark</h4></th>
+							<th className="col-md-1 pad-b-md"><h4>Download</h4></th>
 						</tr>	
 					</thead>
 					<tbody>
-						<tr>
-							<td className="col-md-3">
-								<img className="mobile-img-thumbnail mar-r-md" src="https://yt3.ggpht.com/-5VV8GnLPUmA/AAAAAAAAAAI/AAAAAAAAAAA/DymHh0I91f0/s900-c-k-no-rj-c0xffffff/photo.jpg" />
-								<div className="playlist-detail-info">
-									<h4>Cool Kids</h4>
-									<p>Echosmith</p>
-								</div> 
-							</td>
-
-							<td className="col-md-2">
-								<p>Talking Dreams</p>              
-							</td>
-
-							<td className="col-md-1">
-								<p>3:26</p>              
-							</td>
-
-							<td className="col-md-1">
-								<p>1,266</p>              
-							</td>
-
-							<td className="col-md-2">
-								<span onClick={this.handleLike} className={ this.state.red ? "icon-heart red fa-2x" : "icon-heart-empty fa-2x"}></span>            
-							</td>
-
-							<td className="col-md-3">
-								<a><span className="icon-heart fa-2x"></span></a>
-								<a><span className="icon-plus-circle fa-2x"></span></a>
-							</td>
-						</tr>
-						<tr>
-							<td className="col-md-3">
-								<img className="mobile-img-thumbnail mar-r-md" src="https://yt3.ggpht.com/-5VV8GnLPUmA/AAAAAAAAAAI/AAAAAAAAAAA/DymHh0I91f0/s900-c-k-no-rj-c0xffffff/photo.jpg" />
-								<div className="playlist-detail-info">
-									<h4>Cool Kids</h4>
-									<p>Echosmith</p>
-								</div> 
-							</td>
-
-							<td className="col-md-2">
-								<p>Talking Dreams</p>              
-							</td>
-
-							<td className="col-md-1">
-								<p>3:26</p>              
-							</td>
-
-							<td className="col-md-1">
-								<p>1,266</p>              
-							</td>
-
-							<td className="col-md-2">
-								<span onClick={this.handleLike} className={ this.state.red ? "icon-heart red fa-2x" : "icon-heart-empty fa-2x"}></span>            
-							</td>
-
-							<td className="col-md-3">
-								<a><span className="icon-heart fa-2x"></span></a>
-								<a><span className="icon-plus-circle fa-2x"></span></a>
-							</td>
-						</tr>
-						<tr>
-							<td className="col-md-3">
-								<img className="mobile-img-thumbnail mar-r-md" src="https://yt3.ggpht.com/-5VV8GnLPUmA/AAAAAAAAAAI/AAAAAAAAAAA/DymHh0I91f0/s900-c-k-no-rj-c0xffffff/photo.jpg" />
-								<div className="playlist-detail-info">
-									<h4>Cool Kids</h4>
-									<p>Echosmith</p>
-								</div> 
-							</td>
-
-							<td className="col-md-2">
-								<p>Talking Dreams</p>              
-							</td>
-
-							<td className="col-md-1">
-								<p>3:26</p>              
-							</td>
-
-							<td className="col-md-1">
-								<p>1,266</p>              
-							</td>
-
-							<td className="col-md-2">
-								<span onClick={this.handleLike} className={ this.state.red ? "icon-heart red fa-2x" : "icon-heart-empty fa-2x"}></span>            
-							</td>
-
-							<td className="col-md-3">
-								<a><span className="icon-heart fa-2x"></span></a>
-								<a><span className="icon-plus-circle fa-2x"></span></a>
-							</td>
-						</tr>
-						<tr>
-							<td className="col-md-3">
-								<img className="mobile-img-thumbnail mar-r-md" src="https://yt3.ggpht.com/-5VV8GnLPUmA/AAAAAAAAAAI/AAAAAAAAAAA/DymHh0I91f0/s900-c-k-no-rj-c0xffffff/photo.jpg" />
-								<div className="playlist-detail-info">
-									<h4>Cool Kids</h4>
-									<p>Echosmith</p>
-								</div> 
-							</td>
-
-							<td className="col-md-2">
-								<p>Talking Dreams</p>              
-							</td>
-
-							<td className="col-md-1">
-								<p>3:26</p>              
-							</td>
-
-							<td className="col-md-1">
-								<p>1,266</p>              
-							</td>
-
-							<td className="col-md-2">
-								<span onClick={this.handleLike} className={ this.state.red ? "icon-heart red fa-2x" : "icon-heart-empty fa-2x"}></span>            
-							</td>
-
-							<td className="col-md-3">
-								<a><span className="icon-heart fa-2x"></span></a>
-								<a><span className="icon-plus-circle fa-2x"></span></a>
-							</td>
-						</tr>
-						<tr>
-							<td className="col-md-3">
-								<img className="mobile-img-thumbnail mar-r-md" src="https://yt3.ggpht.com/-5VV8GnLPUmA/AAAAAAAAAAI/AAAAAAAAAAA/DymHh0I91f0/s900-c-k-no-rj-c0xffffff/photo.jpg" />
-								<div className="playlist-detail-info">
-									<h4>Cool Kids</h4>
-									<p>Echosmith</p>
-								</div> 
-							</td>
-
-							<td className="col-md-2">
-								<p>Talking Dreams</p>              
-							</td>
-
-							<td className="col-md-1">
-								<p>3:26</p>              
-							</td>
-
-							<td className="col-md-1">
-								<p>1,266</p>              
-							</td>
-
-							<td className="col-md-2">
-								<span onClick={this.handleLike} className={ this.state.red ? "icon-heart red fa-2x" : "icon-heart-empty fa-2x"}></span>            
-							</td>
-
-							<td className="col-md-3">
-								<a><span className="icon-heart fa-2x"></span></a>
-								<a><span className="icon-plus-circle fa-2x"></span></a>
-							</td>
-						</tr>
+						{songs.map(function(songs, index) {
+							return (
+								<PlaylistItems key={index} songs={songs} />
+							)
+						})}
 					</tbody>
 				</table>
 
-				<a onClick={this.showHidePlayer}>play test</a>
-				<br />
-				<a onClick={this.showHideNotice}>notice test</a>
-				{ this.state.displayPlayer ? <Player /> : null }
-				{ this.state.displayNotice ? <ArtistDownloadNotice showHideNotice={self.showHideNotice} /> : null }
-				<br />
-				<a onClick={this.showHideEdit}>show edit</a>
-				{ this.state.displayEdit ? <ArtistEditTrack showHideEdit={self.showHideEdit} /> : null }
-				<br />
-				<a onClick={this.showHideAdminDashboard}>show admin dashboard</a>
-				{ this.state.displayAdminDashboard ? <AdminDashboard showHideAdminDashboard={self.showHideAdminDashboard} /> : null }
-				<br />
-				<a onClick={this.showHideUploadSuccess}>show upload success</a>
-				{ this.state.displayUploadSuccess ? <ArtistUploadSuccess showHideUploadSuccess={self.showHideUploadSuccess} /> : null }
-				<br />
-				<a onClick={this.showHidePaymentOptions}>show payment options</a>
-				{ this.state.displayPaymentOptions ? <PaymentOptions showHidePaymentOptions={self.showHidePaymentOptions} /> : null }
-				<br />
-				<a onClick={this.showHidePaymentProcessingPage}>show payment processing</a>
-				{ this.state.displayPaymentProcessingPage ? <PaymentProcessingPage showHidePaymentProcessingPage={self.showHidePaymentProcessingPage} /> : null }
-				<br />
-				<a onClick={this.showHideArtistTaggedSuccess}>show tagged success</a>
-				{ this.state.displayArtistTaggedSuccess ? <ArtistTaggedSuccess showHideArtistTaggedSuccess={self.showHideArtistTaggedSuccess} /> : null }
-				<br />
-				<a onClick={this.showHideWelcomeModal}>show welcome</a>
-				{ this.state.displayWelcomeModal ? <WelcomeModal showHideWelcomeModal={self.showHideWelcomeModal} /> : null }
-				<br />
-				<a onClick={this.showHideCreatorDownloadsMain}>show creator downloads</a>
-				{ this.state.displayCreatorDownloadsMain ? <CreatorDownloadsMain /> : null }
-				<br />
-				<a onClick={this.showHideSongDetail}>show song detail</a>
-				{ this.state.displaySongDetail ? <ArtistSongDetail showHideSongDetail={self.showHideSongDetail} /> : null }
+				<div>
+					<a onClick={this.showHidePlayer}>play test</a>
+					<br />
+					<a onClick={this.showHideNotice}>notice test</a>
+					{ this.state.displayPlayer ? <Player /> : null }
+					{ this.state.displayNotice ? <ArtistDownloadNotice showHideNotice={self.showHideNotice} /> : null }
+					<br />
+					<a onClick={this.showHideEdit}>show edit</a>
+					{ this.state.displayEdit ? <ArtistEditTrack showHideEdit={self.showHideEdit} /> : null }
+					<br />
+					<a onClick={this.showHideAdminDashboard}>show admin dashboard</a>
+					{ this.state.displayAdminDashboard ? <AdminDashboard showHideAdminDashboard={self.showHideAdminDashboard} /> : null }
+					<br />
+					<a onClick={this.showHideUploadSuccess}>show upload success</a>
+					{ this.state.displayUploadSuccess ? <ArtistUploadSuccess showHideUploadSuccess={self.showHideUploadSuccess} /> : null }
+					<br />
+					<a onClick={this.showHidePaymentOptions}>show payment options</a>
+					{ this.state.displayPaymentOptions ? <PaymentOptions showHidePaymentOptions={self.showHidePaymentOptions} /> : null }
+					<br />
+					<a onClick={this.showHidePaymentProcessingPage}>show payment processing</a>
+					{ this.state.displayPaymentProcessingPage ? <PaymentProcessingPage showHidePaymentProcessingPage={self.showHidePaymentProcessingPage} /> : null }
+					<br />
+					<a onClick={this.showHideArtistTaggedSuccess}>show tagged success</a>
+					{ this.state.displayArtistTaggedSuccess ? <ArtistTaggedSuccess showHideArtistTaggedSuccess={self.showHideArtistTaggedSuccess} /> : null }
+					<br />
+					<a onClick={this.showHideWelcomeModal}>show welcome</a>
+					{ this.state.displayWelcomeModal ? <WelcomeModal showHideWelcomeModal={self.showHideWelcomeModal} /> : null }
+					<br />
+					<a onClick={this.showHideCreatorDownloadsMain}>show creator downloads</a>
+					{ this.state.displayCreatorDownloadsMain ? <CreatorDownloadsMain /> : null }
+					<br />
+					<a onClick={this.showHideSongDetail}>show song detail</a>
+					{ this.state.displaySongDetail ? <ArtistSongDetail showHideSongDetail={self.showHideSongDetail} /> : null }
+					<br />
+					<a onClick={this.props.navigateToCreatorProfile}>show creator profile</a>
+				</div>	
 			</div>
+		)
+	}
+}));
+
+var PlaylistItems = React.createClass({
+	render: function() {
+		var playList = this.props.songs;
+		return(
+				<tr>
+					<td className="col-md-3">
+						<img className="mobile-img-thumbnail mar-r-md" src={playList.albumArtUrl} />
+						<div className="playlist-detail-info">
+							<h4>{playList.name}</h4>
+							<p>{playList.artistName}</p>
+						</div> 
+					</td>
+
+					<td className="col-md-2">
+						<p>{playList.albumName}</p>              
+					</td>
+
+					<td className="col-md-1">
+						<p>{playList.duration}</p>              
+					</td>
+
+					<td className="col-md-1">
+						<p>{playList.downloadCount}</p>              
+					</td>
+
+					<td className="col-md-1">
+						<p>{playList.bookmarkCount} <i className="icon-up-open"></i></p>
+					</td>
+
+					<td className="col-md-1">
+						<span onClick={this.handleLike} className={ playList.isBookmarked ? "icon-bookmark-2 primary fa-2x" : "icon-bookmark-empty fa-2x"}></span>            
+					</td>
+
+					<td className="col-md-1">
+						<a className="color-grey" ><span className="icon-down-circled fa-2x"></span></a>
+					</td>
+				</tr>
 		)
 	}
 });

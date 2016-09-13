@@ -5,7 +5,9 @@
   h4 {
     font-size: 14px;
   }
-
+  .content-with-sidebar {
+    padding: @space-md;
+  }
 	/* System Level Nav Menu */
 	.filter-menu {
 		> div {
@@ -294,8 +296,10 @@
     font-size: .8em;
   }
   /* -- Creator Downloads -- */
-    .creator-downloads {
+  .creator-downloads {
     width: 290px;
+    margin: 0 auto;
+    padding: 0;
   }
   .creator-downloads-songs {
     width: 290px;
@@ -386,6 +390,58 @@
   .fancy-font {
     font-size: 3em;
     margin-top: 5px;
+  }
+
+  /* -- PROMO LANDING -- */
+  .promo-landing-main-bottom-mobile {
+    padding: 0;
+  }
+  .promo-background {
+    height: 220px !important;
+  }
+  .promo-song-info {
+    padding: @space-lg 0 0;
+    margin: 0 @space-md;
+    text-align: center;
+    border-bottom: 2px solid @grey-5;
+    h2 {
+      font-size: 1.8em;
+    }
+    h3 {
+      display: block;
+      margin: @space-md 0 @space-sm;
+    }
+  }
+  .promo-artist-img {
+    width: 150px;
+    height: 150px;
+    display: block;
+    float: none !important;
+    margin: 0 auto 50px;
+  }
+  .promo-share-this, .follow-artist-with-links, .promo-landing-header h3 {
+    display: none;
+  }
+  .become-a-patron {
+    width: 100%;
+    transform: scale(1);
+    margin: 0;
+  }
+  .promo-landing-footer {
+    margin-top: 0;
+    h2 {
+      font-size: 1.7em;
+    }
+  }
+  /* -- Zero State -- */
+  .zero-state {
+    width: 350px;
+  }
+  .zero-state-img {
+    width: 100px;
+  }
+  .zero-state-svg {
+    width: 75px;
   }
 }
 
@@ -623,6 +679,29 @@
   /* -- IPSY PAGES -- */
   .ipsy-main-content {
     width: 430px;
+  }
+
+  /* -- BECOME A PATRON -- */
+  .promo-landing-header h3 {
+    display: none;
+  }
+  .promo-song-info h2 {
+    font-size: 1.8em;
+  }
+  .promo-share-this {
+    width: 470px;
+    text-align: center;
+  }
+  .promo-share-link {
+    width: 450px;
+    margin: @space-sm 0;
+  }
+  .follow-this-artist-links li {
+    font-size: 1.8em;
+    margin-right: @space-sm;
+  }
+  .promo-landing-content .follow-artist-with-links {
+    display: none;
   }
 }
 

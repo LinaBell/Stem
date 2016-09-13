@@ -337,6 +337,42 @@
     height: 60px;
     width: 60px;
 	}
+
+	/* -- PROMO LANDING -- */
+	.become-a-patron {
+		width: 450px;
+		margin: @space-md auto;
+	}
+	.become-a-patron button {
+		margin-top: 5px;
+	}
+	.artist-donation-box {
+		background: none;
+		padding-top: 0;
+		margin-top: 0;
+	}
+	.artist-donation-box h4, .artist-donation-box input {
+		display: none;
+	}
+	.promo-artist-bio {
+		font-size: 1.5em;
+	}
+	.promo-landing-footer {
+		height: 250px;
+		h2 {
+			margin-top: 10px;
+		}
+	}
+	/* -- Zero State -- */
+	.zero-state {
+		width: 450px;
+	}
+	.zero-state-img {
+		width: 150px;
+	}
+	.zero-state-svg {
+		width: 100px;
+	}
 }
 
 @media (max-width: 991px) {
@@ -613,6 +649,36 @@
 		font-size: 2.35em;
 		margin-top: 30px;
 	}
+	/* -- PROMO LANDING -- */
+	.promo-landing-main-bottom-mobile {
+		display: block;
+	}
+	.promo-landing-main-bottom-web {
+		display: none;
+	}
+	.become-a-patron {
+		display: block;
+		float: none;
+		position: relative;
+		margin: 60px auto;
+	}
+	.follow-this-artist {
+		margin-top: 40px;
+	}
+	.promo-song-info .follow-this-artist-links li {
+		margin-right: @space-sm;
+		font-size: 2.2em;
+	}
+	.promo-song-info h3 {
+		font-size: 1.3em;
+		text-align: center;
+	}
+	.promo-share-this {
+		width: 735px;
+	}
+	.promo-share-link {
+		width: 460px;
+	}
 }
 
 @media (min-width: 992px) and (max-width: 1199px) {
@@ -672,5 +738,13 @@
 		width: 85px;
 		height: 85px;
 		margin-top: @space-sm;
+	}
+
+	/* -- PROMO LANDING -- */
+	.promo-song-info .follow-this-artist-links li {
+		margin-right: @space-md;
+	}
+	.become-a-patron {
+		transform: scale(0.9);
 	}
 }

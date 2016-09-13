@@ -1,12 +1,12 @@
 var FeaturedArtist = React.createClass({
   getInitialState: function() {
     return {
-      selectedArtist: {}
+      selectedArtist: []
     }
   },
   componentDidMount: function(){
     stemApi.getArtistsPopular({
-
+  
     })
     .then(function(response) {
       this.setState({selectedArtist: response[0]});

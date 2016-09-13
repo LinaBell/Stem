@@ -273,6 +273,14 @@ var StemApi = (function () {
             contentType: 'application/json; charset=utf-8',
         });
     }
+    StemApi.prototype.getCreatorProfile = Promise.method(function (req) {
+        return $.ajax({
+            type: 'GET',
+            url: this.baseUrl + 'creators/' + req.creatorId,
+            headers: { 'Authorization': this.authorization },
+            contentType: 'application/json; charset=utf-8'
+        });
+    }); 
     StemApi.prototype.getArtistDashboard = function (rse) {
         return $.ajax({
             type: 'GET',
@@ -281,5 +289,13 @@ var StemApi = (function () {
             contentType: 'application/json; charset=utf-8',
         });
     }
+    StemApi.prototype.getCreatorBookmarks = Promise.method(function (req) {
+        return $.ajax({
+            type: 'GET',
+            url: this.baseUrl + 'creators/' + req.creatorId + '/bookmarkedsongs',
+            headers: { 'Authorization': this.authorization },
+            contentType: 'application/json; charset=utf-8'
+        });
+    });
     return StemApi;
 }());

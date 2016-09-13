@@ -48,6 +48,22 @@
 }
 
 /*-- Playlist Table --*/
+.playlist-wrapper {
+	color: @grey-3;
+	font-family: @font-reg;
+	.table h4 {
+		color: @grey-2;
+	}
+	.table thead tr th {
+		border-bottom: 2px solid @grey-6; 
+	}
+	.table.no-borders td {
+		vertical-align: middle;
+	}
+	tbody tr:hover {
+		background-color: @grey-6;
+	}
+}
 .playlist-glyph {
 	padding-right: 10px;
 }
@@ -55,5 +71,6 @@
 	display: none;
 }
 .playlist-detail-info {
-	display: inline-block;  
+	display: inline-block; 
+	margin-top: @space-sm; 
 }
