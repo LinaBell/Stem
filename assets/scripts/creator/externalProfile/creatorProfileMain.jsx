@@ -1,8 +1,4 @@
-var CreatorProfileMain = ReactRedux.connect(function(state) {
-  return {
-    // creatorIdExt: state.appState.pageParams
-  };
-})(React.createClass({
+var CreatorProfileMain = React.createClass({
   getInitialState: function() {
     return {
       songs: []
@@ -40,5 +36,5 @@ var CreatorProfileMain = ReactRedux.connect(function(state) {
       </div>
     )
   }
-}));
+});
 
