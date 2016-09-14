@@ -393,6 +393,9 @@
   }
 
   /* -- PROMO LANDING -- */
+  .promo-landing-header button {
+    padding: 5px 20px; 
+  }
   .promo-landing-main-bottom-mobile {
     padding: 0;
   }
@@ -400,10 +403,10 @@
     height: 220px !important;
   }
   .promo-song-info {
-    padding: @space-lg 0 0;
-    margin: 0 @space-md;
+    height: 440px;
+    padding: @space-sm 0 0;
+    margin: 0 @space-md @space-lg;
     text-align: center;
-    border-bottom: 2px solid @grey-5;
     h2 {
       font-size: 1.8em;
     }
@@ -412,12 +415,16 @@
       margin: @space-md 0 @space-sm;
     }
   }
-  .promo-artist-img {
-    width: 150px;
-    height: 150px;
-    display: block;
+  .promo-song-info .follow-this-artist-links li {
+    font-size: 1.5em;
+  }
+  .promo-song-info a {
     float: none !important;
-    margin: 0 auto 50px;
+    width: 170px;
+    height: 170px;
+  }
+  .promo-song-info .right-side-content {
+    margin: 50px 0 0 0;
   }
   .promo-share-this, .follow-artist-with-links, .promo-landing-header h3 {
     display: none;
