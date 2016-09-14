@@ -7,7 +7,7 @@ var ArtistPassword = React.createClass({
 					<h3>Password</h3>
 					<h5>Update your password</h5>
 				</div>
-				<div className="col-xs-12 col-sm-8 col-md-5 col-lg-5">
+				<div className="col-xs-12 col-sm-8 col-md-5 col-lg-5 mar-b-lg">
 					<input placeholder="Current Password" />
 					<input placeholder="New Password" />
 					<input placeholder="New Password Again" />

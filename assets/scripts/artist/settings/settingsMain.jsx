@@ -1,7 +1,7 @@
 var ArtistSettings = React.createClass({
 	render: function() {
 	    return (
-	        <div className="pad-box-lg">
+	        <div>
 				<ArtistAccountSettings />
 				<ArtistContactInfo />
 				<ArtistConnectedAccounts />

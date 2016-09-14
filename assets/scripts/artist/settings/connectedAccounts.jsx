@@ -8,7 +8,7 @@ var ArtistConnectedAccounts = React.createClass({
 					<h5>By connecting your other accounts, we'll be able to help you track your music </h5>
 				</div>
 				<div className="col-xs-12 col-lg-6">
-					<ul className="artist-connected-links col-xs-10 col-sm-8 col-md-12">
+					<ul className="artist-connected-links col-xs-12 col-sm-8 col-md-12">
 						<li className="" id="facebook">
 							<span className="icon-facebook-squared fa-2x col-xs-1"></span>
 							<h3 className="col-xs-3">Connected</h3>
