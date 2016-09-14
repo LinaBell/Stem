@@ -307,12 +307,12 @@
   .content-with-sidebar-settings {
     margin-left: 0;
   }
-  /*-- Admin table --*/    
+  /* -- Admin table -- */    
   .admin-table {
     width: 95%;
     margin: 0 2.5%;
   }
-  /*creator home*/
+  /* -- creator home -- */
   .featured-wrapper {
     background-position: top;
   }
@@ -339,6 +339,37 @@
 	}
 
 	/* -- PROMO LANDING -- */
+	.promo-background {
+		height: 250px !important;
+		opacity: 0.2;
+		// background-image: url(https://a4-images.myspacecdn.com/images03/33/588cae99266a4ae2a9c49c909b02781c/600x600.jpg)
+	}
+	#waveform {
+		width: 100%;
+		margin-bottom: @space-md;
+	}
+	.promo-song-info .right-side-content {
+		margin: 250px 0 0 0;
+	}
+	.promo-song-info {
+		height: 530px;
+		text-align: center;
+		padding: 10px  @space-lg @space-lg;
+		margin: 0 @space-md;
+	}
+	.promo-song-info a {
+		float: none !important;
+		margin-left: -150px;
+		text-align: center;
+		img {
+			width: 200px;
+			height: 200px;
+			margin-bottom: @space-lg
+		}
+	}
+	.promo-song-info .icon-play, .promo-song-info .icon-pause {
+		margin: -45px 0 0 -35px;
+	}
 	.become-a-patron {
 		width: 450px;
 		margin: @space-md auto;
@@ -358,7 +389,7 @@
 		font-size: 1.5em;
 	}
 	.promo-landing-footer {
-		height: 250px;
+		height: 270px;
 		h2 {
 			margin-top: 10px;
 		}
@@ -650,7 +681,7 @@
 		margin-top: 30px;
 	}
 	/* -- PROMO LANDING -- */
-	.promo-landing-main-bottom-mobile {
+	.promo-landing-main-bottom-mobile, .promo-patreon-mobile {
 		display: block;
 	}
 	.promo-landing-main-bottom-web {
@@ -660,7 +691,7 @@
 		display: block;
 		float: none;
 		position: relative;
-		margin: 60px auto;
+		margin: 30px auto;
 	}
 	.follow-this-artist {
 		margin-top: 40px;
@@ -678,6 +709,7 @@
 	}
 	.promo-share-link {
 		width: 460px;
+		font-size: 1.05em !important;
 	}
 }
 

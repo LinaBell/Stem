@@ -60,9 +60,9 @@ var ArtistContactInfo = ReactRedux.connect(function(state) {
 
 	render: function() {
 		return(
-            <div className="content-with-sidebar"> 
+            <div className="artist-account-contact-info pad-box-lg"> 
 				<div className="col-xs-12 divider"></div>
-				<div className="col-xs-12 pad-b-lg">
+				<div className="col-xs-12 pad-b-lg mar-b-md">
 					<h3>Contact Information</h3>
 					<h5>We may contact you occasionally for opportunities</h5>
 				</div>
@@ -73,7 +73,7 @@ var ArtistContactInfo = ReactRedux.connect(function(state) {
 					<input id="firstName" placeholder="First Name" onChange={this.handleFieldChange} value={this.state.firstName} /> 
 					<input id="phone" placeholder="Mobile Number" onChange={this.handleFieldChange} value={this.state.phone} /> 
 					<input id="address" placeholder="Street Address" onChange={this.handleFieldChange} value={this.state.address} /> 
-					<select id="state" className="btn btn-wide" onChange={this.handleFieldChange} value={this.state.state}> 
+					<select id="state" className="btn btn-wide bg-grey-4" onChange={this.handleFieldChange} value={this.state.state}> 
 						<option value="AL">AL</option>
 						<option value="AK">AK</option>
 						<option value="AZ">AZ</option>

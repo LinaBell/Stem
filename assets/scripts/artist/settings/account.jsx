@@ -198,9 +198,9 @@ var ArtistAccountSettings = ReactRedux.connect(function(state) {
         var self = this;
 
         return (
-            <div className="content-with-sidebar">
-				<div className="col-xs-12">
-					<h3>Account</h3>
+            <div className="artist-account-settings pad-box-lg">
+				<div className="col-xs-12 mar-b-md">
+					<h2 className="mar-b-sm">Account</h2>
 					<h5>Update your account settings</h5>
 				</div>
 				<div className="col-xs-12 col-lg-3 pad-box-md">
@@ -238,25 +238,21 @@ var ArtistAccountSettings = ReactRedux.connect(function(state) {
 					</div>
 				</div>
 				<div className="col-xs-12 col-md-6 col-lg-5 pad-t-md">
-					<h5>Profile Name</h5>
+					<h4 className="mar-b-sm">Profile Name</h4>
 					<input id="profileName" onChange={this.handleFieldChange} value={this.state.profileName} />
-					<h5>Custom Link</h5>
+					<h4 className="mar-b-sm">Custom Link</h4>
 					<input id="customLink" onChange={this.handleFieldChange} value={this.state.customLink} />
 					<p>http://stem.com/myprofile</p>
-					<h5>Email</h5>
+					<h4 className="mar-b-sm">Email</h4>
 					<input id="email" type="email" onChange={this.handleFieldChange} value={this.state.email} />
-					<h5 className="strike">Country</h5>
-					<input id="country" onChange={this.handleFieldChange} value={this.state.country} />
-					<h5 className="strike">TimeZone</h5>
-					<input id="timeZone" onChange={this.handleFieldChange} value={this.state.timeZone} />
 				</div>
 
-				<div className="col-xs-12 col-sm-12 col-md-8 pad-t-sm pad-b-sm">
-					<h5>Biography</h5>
+				<div className="col-xs-12 col-md-6 pad-t-md pad-b-sm">
+					<h4 className="mar-b-sm">Biography</h4>
 					<textarea id="bio" className="form-input" onChange={self.handleLineGrow} value={this.state.bio} />
 					<div className="character-count">
-						<p>{this.state.characterCount}/300 Characters</p>
-							<svg height="20" width="400">
+						<p className="display-inlb mar-r-md">{this.state.characterCount}/300 Characters</p>
+							<svg height="20" width="400" className="display-inlb">
 								<line className="svg-line2" x1="300" y='0' />
 								<line className="svg-line" x1={self.state.characterCount} y='0' />
 							</svg>

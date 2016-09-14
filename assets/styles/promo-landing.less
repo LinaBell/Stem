@@ -3,8 +3,10 @@
 
 .promo-landing-main-bottom-mobile {
 	display: none;
+	margin: 50px @space-lg 0;
+	border-top: 2px solid @grey-4;
 }
-.promo-landing-main-bottom {
+.promo-landing-main-bottom-web {
 	margin: 50px @space-lg 0;
 	border-top: 2px solid @grey-4;
 }
@@ -30,13 +32,39 @@
 	opacity: 0.2;
 	// background-image: url(https://a4-images.myspacecdn.com/images03/33/588cae99266a4ae2a9c49c909b02781c/600x600.jpg)
 }
+/* -- Music Player -- */
+#waveform {
+	width: 95%;
+}
+.promo-song-info a {
+	float: left;
+}
+.promo-song-info .play-pause {
+	position: absolute;
+	font-size: 14em;
+	opacity: 0.6;
+	color: white;
+	text-align: center;
+	z-index: 0;
+}
+.promo-song-info .icon-pause {
+	margin: -30px 0 0 -20px;
+	display: none;
+}
+.promo-song-info .icon-play {
+	margin: -33px 0 0 -23px;
+}
 .promo-song-info {
 	height: 400px;
 	padding: 95px 0 0 60px;
 }
 .promo-artist-img {
+	position: absolute;
 	width: 230px;
 	height: 230px;
+}
+.right-side-content {
+	margin-left: 260px
 }
 .promo-share-this {
 	width: 835px;
@@ -48,7 +76,7 @@
 }
 .promo-share-link {
 	width: 560px;
-	overflow: scroll;
+	overflow: hidden;
 	vertical-align: middle;
 	border: 1px solid @grey-5;
 	box-shadow: @drop-7;
@@ -58,10 +86,7 @@
 	vertical-align: middle;
 	margin-left: @space-sm;
 }
-/* -- Music Player -- */
-#waveform {
-	width: 600px;
-}
+
 
 /* -- LANDING CONTENT -- */
 .promo-landing-content {
@@ -81,12 +106,14 @@
 	margin-top: 100px;
 }
 /* -- BECOME A PATRON -- */
-
+.promo-patreon-mobile {
+	display: none;
+}
 .become-a-patron {
 	float: right;
 	width: 500px;
 	text-align: center;
-	margin: 100px @space-lg @space-md @space-sm;
+	margin: 100px @space-md @space-md @space-sm;
 }
 .become-a-patron p {
 	text-align: left;

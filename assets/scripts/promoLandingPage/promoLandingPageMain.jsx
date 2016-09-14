@@ -10,6 +10,8 @@ var PromoLandingPageMain = React.createClass({
 				</div>
 				<div className="promo-landing-main-bottom-mobile pad-box-sm">
 					<PromoLandingContent />
+				</div>
+				<div className="promo-patreon-mobile">
 					<BecomeAPatron />
 				</div>
 				<div className="">
