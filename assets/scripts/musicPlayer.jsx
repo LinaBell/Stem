@@ -10,30 +10,30 @@ var MusicPlayer = React.createClass({
 	componentDidMount: function() {
 		var wavesurfer = WaveSurfer.create({
 		    container: '#waveform',
+		    height: 110,
+		    barWidth: 2,
+		    cursorWidth: 2,
+		    cursorColor: "rgba(82, 84, 95, 0.5)",
 		    scrollParent: true,
-		    barWidth: 4,
+		    hideScrollbar: true,
 		    waveColor: "#50E3C2",
 		    progressColor: "#c9c9c9",
 		});
 		this.setState({player: wavesurfer});
 		wavesurfer.load(this.state.audioSource);
-
-        $('.pause').css("display","none");
-        $('.play').css("display","inline");
     },
 
     playPause: function() {
     	var wavesurfer = this.state.player;
     	wavesurfer.playPause();
 
-
-        if (isPlaying == false) {
-            $('.pause').css("display","inline");
-            $('.play').css("display","none");
+        if (this.state.isPlaying == false) {
+        	$('.icon-pause').css("display", "inline");
+        	$('.icon-play').css("display", "none");
             this.setState({isPlaying: true});
         } else {
-            $('.pause').css("display","none");
-            $('.play').css("display","inline");
+        	$('.icon-play').css("display", "inline");
+        	$('.icon-pause').css("display", "none");
             this.setState({isPlaying: false});
         }
     },
@@ -75,16 +75,17 @@ var MusicPlayer = React.createClass({
 		
 		return(
 			<div className="promo-song-info">
-                <a onClick={this.playPause}>
-                    <i className="play icon-play-outline"></i>
-                    <i className="pause icon-pause"></i>
-					<img className="promo-artist-img pull-left mar-r-lg" src="https://a4-images.myspacecdn.com/images03/33/588cae99266a4ae2a9c49c909b02781c/600x600.jpg"/>
+                <a onClick={this.playPause} className="promo-artist-img-a mar-r-lg">
+					<img className="promo-artist-img" src="https://a4-images.myspacecdn.com/images03/33/588cae99266a4ae2a9c49c909b02781c/600x600.jpg"/>
+					<span className="play-pause icon-pause"></span>
+					<span className="play-pause icon-play"></span>
                 </a>
-
-				<h2 className="mar-t-sm">InMemory - Never forget</h2>
-				<div id="waveform"></div>
-				<h3 className="display-inlb">Follow this artist:</h3>
-				<FollowThisArtistLinks/>
+                <div className="right-side-content">
+					<h2 className="mar-t-sm">InMemory - Never forget</h2>
+					<div id="waveform" className="mar-t-sm mar-b-sm"></div>
+					<h3 className="display-inlb">Follow this artist:</h3>
+					<FollowThisArtistLinks/>
+				</div>
 			</div>
 		);
 	}

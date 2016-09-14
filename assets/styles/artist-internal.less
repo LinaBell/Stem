@@ -733,6 +733,21 @@
 		}
 	}
 }
+.artist-account-settings {
+	h4 {
+		margin-top: @space-md;
+	}
+	h4, p {
+		font-family: @font-reg;
+	}
+	input {
+		height: 55px;
+		padding: 10px;
+	}
+	input, textarea {
+		box-shadow: @drop-8;
+	}
+}
 .artist-upload ul li {
 	padding: @space-sm 0;
 }
@@ -801,12 +816,8 @@
 	text-align: left;
 	vertical-align: bottom;
 
-	svg{
-		padding: 0;
-	}
-	p {
-		max-width: 120px;
-		margin-top: -6px;
+	svg, p {
+		vertical-align: middle
 	}
 }
 
@@ -818,7 +829,7 @@
 .svg-line2 {
 	stroke: @grey-5;
 	stroke-width: 15;
-	opacity: .1;
+	opacity: .6;
 
 } 
 .strike {
@@ -865,8 +876,7 @@
 	select {
 		max-width: 350px;
 		height: 45px;
-		border: 1px solid @grey-6;
-		background-color: white;
+		border: 1px solid @grey-4;
 		
 	}
 }

@@ -1,7 +1,7 @@
 var ArtistConnectedAccounts = React.createClass({
 	render: function() {
 		return(
-            <div className="content-with-sidebar"> 
+            <div className="artist-account-connected-accounts pad-box-lg"> 
 				<div className="divider col-xs-12"></div>
 				<div className="artist-account-contact-header col-xs-12">
 					<h3>Connected Accounts</h3>
