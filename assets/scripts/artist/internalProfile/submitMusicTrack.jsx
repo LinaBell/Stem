@@ -19,7 +19,7 @@ var SubmitMusicTrack = React.createClass({
 	  		youTubeShareLink: ''
 		}
 	},
-	getTrackState: function() {
+	copyTrackState: function() {
 		return {
 			id: this.state.id,
 			trackName: this.state.trackName,
@@ -123,7 +123,7 @@ var SubmitMusicTrack = React.createClass({
 	onAddClicked: function() {
 
 		// Make a deep copy of our state
-		var trackCopy = this.getTrackState();
+		var trackCopy = this.copyTrackState();
 
 		if (!this.validate(trackCopy)) {
 			this.setState({
