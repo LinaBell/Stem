@@ -273,6 +273,14 @@ var App = React.createClass({
 					</div>
 				: null}
 
+				{ this.props.currentPage == 17 ?
+					<div className="wrapper">
+						<FilterNav />
+						<StaffPicksMain />
+						<Footer />
+					</div>
+				: null}
+
 				{ this.props.currentPage == 20 ?
 					<div className="wrapper">
 						<AdminMain />
@@ -422,6 +430,11 @@ var creatorMenu = [
 		pageID: 16,
 		text: "Creator Bookmarks",
 		icon: "icon-cog-2"
+	},
+	{
+		pageID: 17,
+		text: "Staff Picks",
+		icon: "icon-reddit"
 	}
 ]; 
 
