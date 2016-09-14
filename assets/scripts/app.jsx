@@ -195,7 +195,7 @@ var App = React.createClass({
 
 				{ this.props.currentPage == 2 ?
 					<div className="wrapper">
-						<ArtistDashboardMain />
+						<DashboardMain />
 						<Footer />
 					</div>
 				: null} 
