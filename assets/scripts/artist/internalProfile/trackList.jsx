@@ -22,7 +22,7 @@ var TrackList = React.createClass({
 								<span>{ item.trackName }</span>
 
 								<div className="loaded-track mar-l-md">
-									{ item.audioFile ? <p>Formatter.formatFileLabel(item.audioFile.data)</p> : 'No file' }
+									{ item.audioFile ? <p>{ Formatter.formatFileLabel(item.audioFile.data) } </p> : 'No file' }
 								</div>
 								
 								<ul className="song-edit-tags">
