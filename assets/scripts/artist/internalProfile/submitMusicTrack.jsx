@@ -1,11 +1,14 @@
 var SubmitMusicTrack = React.createClass({
 	getInitialState: function() {
+		var statusMessage = this.props.statusMessage && this.props.statusMessage.length > 0 ? 
+			this.props.statusMessage : '';
+
 		return {
 			genreTag: null,
 		  	genreTagValues: [],
 		  	addedTracks: [],
 		  	isSubmitting: false,
-		  	statusMessage: ''
+		  	statusMessage: statusMessage
 		}
 	},
 	createNewTrack: function() {
@@ -188,10 +191,12 @@ var SubmitMusicTrack = React.createClass({
 	render: function() {
 		return (	
 			<div className="submit-track-edit-wrapper col-xs-12">
-				<div className="submit-edit-track-header">
-					<p className="order-track">{ !this.props.isAdmin ? "Order" : null }</p>
-					<p>Track Name</p>
-				</div>	
+				{ this.state.addedTracks.length > 1 ? 
+					<div className="submit-edit-track-header">
+						<p className="order-track">{ !this.props.isAdmin ? "Order" : null }</p>
+						<p>Track Name</p>
+					</div> : null
+				}
 				<ul className="tag-list">
 					{ this.state.addedTracks.map((item, index) => {
 						return ( 
@@ -218,7 +223,7 @@ var SubmitMusicTrack = React.createClass({
 					})}
 				</ul>
 				<p className="bg-danger">
-					{ this.props.statusMessage }
+					{ this.state.statusMessage }
 				</p>
 			</div>		
 		);
