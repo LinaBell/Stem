@@ -295,36 +295,34 @@
   .payment-processing-page label {
     font-size: .8em;
   }
+
   /* -- Creator Downloads -- */
   .creator-downloads {
-    width: 290px;
-    margin: 0 auto;
-    padding: 0;
+    width: 360px;
   }
-  .creator-downloads-songs {
-    width: 290px;
-    height: 145px;
-    margin: 15px 0;
-    display: block;
+  .creator-downloaded-songs {
+    padding: 15px 0;
   }
-  .creator-downloads-song-img {
-    width: 145px;
+  .creator-downloaded-songs .title {
+    margin-top: 10px;
   }
-  .creator-downloads-song-info {
-    width: 145px;
-    padding-left: @space-sm;
-    padding-top: 30px;
-    h2 {font-size: 1.5em;
-        margin-bottom: 30px}
-    h3 {font-size: 1.2em;}
-    h5 {font-size: 0.8em;}
-    p {
-      font-size: 0.7em;
-      margin-top: @space-md;
+  .downloaded-song-img {
+    width: 80px;
+    height: 80px;
+    margin-top: 30px;
+    float: left;
+  }
+  .downloaded-song-details {
+    width: 260px;
+    li {
+      max-height: 62px;
     }
-    .icon-down-circled {
-      display: none;
-    }
+  }
+  .downloaded-song-title , .downloaded-song-artist {
+    width: 120px;
+  }
+  .downloaded-song-extras {
+    margin-top: 0;
   }
 
   /* -- Artist Search No Results -- */
@@ -643,36 +641,31 @@
   .payment-processing-info button {
     margin: -10px 0 0;
   }
+
   /* -- Creator Downloads -- */
-    .creator-downloads {
-    width: 470px;
+  .creator-downloads {
+    width: 480px;
   }
-  .creator-downloads-songs {
-    width: 470px;
-    height: 235px;
-    margin: 15px 0;
-    display: block;
+  .creator-downloaded-songs {
+    padding: 20px 10px;
   }
-  .creator-downloads-song-img {
-    width: 235px;
+  .downloaded-song-img {
+    width: 110px;
+    height: 110px;
+    margin-right: 25px;
   }
-  .creator-downloads-song-info {
-    width: 235px;
-    padding-left: @space-md;
-    h2 {
-      font-size: 2em;
-        margin-top: @space-sm;
-      }
-    h3 {
-      font-size: 1.5em;
-      }
-    h5 {
-      font-size: 1.05em;
-      }
-    p {
-      font-size: 0.8em;
-      margin-top: @space-md;
-    }
+  .downloaded-song-details {
+    width: 315px;
+  }
+  .downloaded-song-details .title {
+    margin-bottom: 2px;
+    font-size: 1em;
+  }
+  .downloaded-song-title, .downloaded-song-artist {
+    width: 145px;
+  }
+  .downloaded-song-promo-link , .downloaded-song-extras{
+    margin-top: 10px;
   }
 
   /* -- Artist Search No Results -- */

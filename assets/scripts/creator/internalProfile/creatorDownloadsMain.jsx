@@ -39,10 +39,12 @@ var CreatorDownloadsMap = React.createClass({
 		return(
 			<div>
 				{this.props.downloads.map(function(download, index) {
-						return(
+					return(
+						<ul className="main-creator-downloads-list">
 							<CreatorDownloadsCard key={index} download={download} />
-						);
-					})}
+						</ul>
+					);
+				})}
 			</div>
 		)
 	}

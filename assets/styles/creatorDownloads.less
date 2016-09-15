@@ -1,28 +1,66 @@
 @import url("variables.less");
 
+/* -- Creator Downloaded New Track Heading -- */
+.downloaded-new-track-heading {
+	width: 90%;
+	margin: 0 auto 40px;
+	h3, span {
+		font-family: @font-md
+	}
+	h4 {
+		font-family: @font-reg
+	}
+	span{
+		text-decoration: underline;
+	}
+}
+
 /* -- Creator Downloads -- */
 .creator-downloads {
-	width: 1180px;
+	width: 1170px;
 	margin: 70px auto;
 }
 .creator-downloads .font-light {
 	font-family: @font-reg;
 }
+.light-grey {
+	color: @grey-3;
+}
 .creator-downloads .font-bold {
 	font-family: @font-bold;
 }
-.creator-downloads-songs {
-	width: 550px;
-	height: 275px;
-	margin: 25px 20px;
-	overflow: hidden;
-	box-shadow: @drop-4;
+.creator-downloaded-songs {
+	padding: 30px;
+	border-bottom: 2px solid @grey-5
 }
-.creator-downloads-song-img {
-	width: 275px;
-	height: 100%;
+.downloaded-song-img {
+	width: 150px;
+	height: 150px;
+	margin-right: @space-sm;
+}
+.downloaded-song-img, .downloaded-song-details {
+	vertical-align: middle;
+}
+.downloaded-song-details li {
+	max-height: 67px;
+	margin-left: 20px;
+	overflow: hidden;
+	word-wrap: break-word;
+	display: inline-block;
 	vertical-align: top;
 }
-.creator-downloads-song-info {
-	width: 275px;
+.downloaded-song-title, .downloaded-song-artist {
+	width: 150px;
+}
+.downloaded-song-promo-link a {
+	width: 260px;
+}
+.downloaded-song-extras {
+	width: 310px;
+}
+.downloaded-song-extras a {
+	margin: 0 25px 0 0;
+}
+.downloaded-song-extras :last-child {
+	margin: 0;
 }
