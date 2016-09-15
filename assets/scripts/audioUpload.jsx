@@ -40,7 +40,7 @@ var AudioUpload = React.createClass({
 			}
 		}.bind(this))
 		.catch(function(error) {
-			console.error('Audio Upload Error: ' + JSON.stringify(error));
+			console.error('Audio Upload Error: ' + Utilities.normalizeError(error));
 		})
 		.finally(function() {
 			this.setState({
