@@ -88,13 +88,13 @@ var appReducer = function(state = initialAppState, action) {
 			return Object.assign({}, state, {
 				pageParams: action.data.pageParams || {},
 				currentPage: action.data.currentPage
-			})
+			});
 
 		case 'UpdateSearch':
 			return Object.assign({}, state, {
 				searchResults: action.data.results,
 				searchTerms: action.data.terms
-			})
+			});
 
 		default: 
 			return state;
@@ -145,6 +145,7 @@ var AppState = function(store) {
 		isLoggedIn: store.userState.isLoggedIn,
 		userInfo: store.userState.userInfo,
 		currentPage: store.appState.currentPage,
+		pageParams: store.appState.pageParams
 	}
 }
 
@@ -195,7 +196,7 @@ var App = React.createClass({
 
 				{ this.props.currentPage == 2 ?
 					<div className="wrapper">
-						<ArtistDashboardMain />
+						<DashboardMain />
 						<Footer />
 					</div>
 				: null} 
@@ -273,6 +274,14 @@ var App = React.createClass({
 					</div>
 				: null}
 
+				{ this.props.currentPage == 17 ?
+					<div className="wrapper">
+						<FilterNav />
+						<StaffPicksMain />
+						<Footer />
+					</div>
+				: null}
+
 				{ this.props.currentPage == 20 ?
 					<div className="wrapper">
 						<AdminMain />
@@ -315,7 +324,7 @@ var App = React.createClass({
 				{ this.props.currentPage == 105 ?
 					<div className="wrapper">
 						<AdminHeader />
-						<AdminSubmitMusic />
+						<AdminSubmitMusic albumId={ this.props.pageParams.albumId } />
 						<Footer />
 					</div>
 				: null}
@@ -422,6 +431,11 @@ var creatorMenu = [
 		pageID: 16,
 		text: "Creator Bookmarks",
 		icon: "icon-cog-2"
+	},
+	{
+		pageID: 17,
+		text: "Staff Picks",
+		icon: "icon-reddit"
 	}
 ]; 
 

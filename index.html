@@ -38,6 +38,8 @@
 
         <link rel="stylesheet/less" type="text/css" href="assets/styles/banner.less">
 
+        <link rel="stylesheet/less" type="text/css" href="assets/styles/staffpicks.less">
+
         <link rel="stylesheet/less" type="text/css" href="assets/styles/dashboard.less">
 
         <link rel="stylesheet/less" type="text/css" href="assets/styles/footer.less">
@@ -93,9 +95,10 @@
         <script type="text/jsx" src="assets/scripts/artist/internalProfile/LibraryMainTable.jsx"> </script>
         <script type="text/jsx" src="assets/scripts/artist/internalProfile/LibraryZeroState.jsx"> </script>
         <script type="text/jsx" src="assets/scripts/artist/internalProfile/submitMusicMain.jsx"> </script>
+        <script type="text/jsx" src="assets/scripts/artist/internalProfile/trackEditor.jsx"></script>
+        <script type="text/jsx" src="assets/scripts/artist/internalProfile/trackItem.jsx"></script>
         <script type="text/jsx" src="assets/scripts/artist/internalProfile/submitMusicAlbum.jsx"> </script>
         <script type="text/jsx" src="assets/scripts/artist/internalProfile/submitMusicTrack.jsx"> </script>
-        <script type="text/jsx" src="assets/scripts/artist/internalProfile/trackList.jsx"> </script>
     
         <script type="text/jsx" src="assets/scripts/artist/internalProfile/uploadSuccess.jsx"> </script>
         <script type="text/jsx" src="assets/scripts/artist/internalProfile/downloadNotice.jsx"> </script>
@@ -138,10 +141,14 @@
         <script type="text/jsx" src="assets/scripts/creator/internalProfile/creatorDownloadsZeroState.jsx"> </script>
         <script type="text/jsx" src="assets/scripts/creator/internalProfile/featuredArtist.jsx"> </script>
         <script type="text/jsx" src="assets/scripts/creator/internalProfile/topAlbums.jsx"> </script>
-        <script type="text/jsx" src="assets/scripts/creator/internalProfile/bookmarksZeroState.jsx"> </script>
+        <script type="text/jsx" src="assets/scripts/creator/internalProfile/bookmarksZeroState.jsx"></script>
         <script type="text/jsx" src="assets/scripts/creator/internalProfile/spinHistoryZeroState.jsx"></script>
         <script type="text/jsx" src="assets/scripts/creator/internalProfile/creatorBookmarkMain.jsx"> </script>
         <script type="text/jsx" src="assets/scripts/creator/internalProfile/creatorSpinHistoryMain.jsx"> </script>
+
+        <!-- Staff Picks -->
+        <script type="text/jsx" src="assets/scripts/creator/internalProfile/staffPicksMain.jsx"> </script>
+        <script type="text/jsx" src="assets/scripts/creator/internalProfile/staffPicksHeader.jsx"> </script>
 
         <!-- Creator External -->
         <script type="text/jsx" src="assets/scripts/creator/externalProfile/creatorProfileMain.jsx"> </script>
@@ -165,8 +172,11 @@
         <script type="text/jsx" src="assets/scripts/playlist/mobile.jsx"> </script>
 
         <!-- Dashboard -->
-        <script type="text/jsx" src="assets/scripts/artistDashboard/artistDashboardMain.jsx"> </script>
-        <script type="text/jsx" src="assets/scripts/artistDashboard/artistDashboardAnalytics.jsx"> </script>
+        <script type="text/jsx" src="assets/scripts/artistDashboard/dashboardMain.jsx"> </script>
+        <script type="text/jsx" src="assets/scripts/artistDashboard/analytics.jsx"> </script>
+        <script type="text/jsx" src="assets/scripts/artistDashboard/creatorPickups.jsx"> </script>
+        <script type="text/jsx" src="assets/scripts/artistDashboard/dma.jsx"> </script>
+        <script type="text/jsx" src="assets/scripts/artistDashboard/topCommunities.jsx"> </script>
 
         <!-- Promo Landing -->
         <script type="text/jsx" src="assets/scripts/promoLandingPage/promoLandingPageMain.jsx"></script>
@@ -202,8 +212,6 @@
         <script src="assets/scripts/d3.v3.min.js" charset="utf-8"></script>
         <script src="assets/scripts/c3.min.js"></script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/wavesurfer.js/1.1.12/wavesurfer.min.js"></script>
-        <!-- <script src="rawgit.com/mspae/react-wavesurfer/master/lib/react-wavesurfer.min.js"></script> -->
-
         <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.3/js/standalone/selectize.js"></script>
 
         <!-- React -->

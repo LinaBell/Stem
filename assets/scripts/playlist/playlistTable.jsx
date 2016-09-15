@@ -9,7 +9,9 @@ var PlaylistTable = React.createClass({
 			displayUploadSuccess: false,
 			displaySongDetail: false,
 			displayCreatorDownloadsMain: false,
-			bookMarked: false
+			bookMarked: false,
+
+			albumId: ''
 		}
 	},
 
@@ -100,7 +102,23 @@ var PlaylistTable = React.createClass({
 		if (event.currentTarget.className == "icon-bookmark-empty fa-2x" ) {
 	  		event.currentTarget.className = "icon-bookmark-2 primary fa-2x";
 		}
-  },
+  	},
+  	testAdminEdit: function() {
+  		store.dispatch({
+  			type: 'GoToPage',
+  			data: {
+  				currentPage: 105,
+  				pageParams: {
+  					albumId: this.state.albumId
+  				}
+  			}
+  		});
+  	},
+  	onAlbumIdChange: function(ev) {
+  		this.setState({
+  			albumId: ev.target.value
+  		});
+  	},
 	render: function() {
 		var songs = this.props.songs;
 
@@ -162,6 +180,9 @@ var PlaylistTable = React.createClass({
 					{ this.state.displaySongDetail ? <ArtistSongDetail showHideSongDetail={self.showHideSongDetail} /> : null }
 					<br />
 					<a onClick={this.props.navigateToCreatorProfile}>show creator profile</a>
+					<br />
+					<input type="text" value={ this.albumId } onChange={ this.onAlbumIdChange } />
+					<a onClick={ this.testAdminEdit }>Test Admin Edit</a>
 				</div>	
 			</div>
 		)

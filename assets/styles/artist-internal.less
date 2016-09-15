@@ -31,8 +31,9 @@
 	border-bottom: 2px solid @grey-5
 }
 .artist-internal-top-interest-img {
-	width: 60px;
-	height: 60px;
+	width: 40px;
+	height: 40px;
+	display: inline-block;
 	-webkit-border-radius: @bd-rad-circle;
 	-moz-border-radius: @bd-rad-circle;
 	border-radius: @bd-rad-circle;
@@ -71,6 +72,11 @@
 		line-height: 5px;
 		font-size: 12px;
 		color: @grey-3;
+	}
+}
+.submit-track-name {
+	p {
+		display: inline;
 	}
 }	
 .browse-btn {
@@ -112,7 +118,7 @@
 	text-align: center;
 }
 .submit-track-wrapper {
-	padding: 0 80px;
+	padding: @space-lg 80px;
 }
 	.submit-track-wrapper input {
 		font-family: @font-reg;
@@ -188,7 +194,7 @@
 		background-color: @grey-5;
 		padding: @space-sm @space-md;
 		p {
-	    width: 110px;
+	    width: 100px;
 	    float: left;
 	    white-space: nowrap;
 	    overflow: hidden;
@@ -203,6 +209,21 @@
 	}
 	.song-edit-tags {
 		vertical-align: top;
+		display: inline-block;
+		margin-left: 40px;
+	    max-width: 730px;
+	    li {
+	    	padding-bottom: @space-sm;
+	    }
+	}
+	.loaded-track-name {
+		p {
+			width: 100px;
+			margin-left: 72px;
+		    white-space: nowrap;
+		    overflow: hidden;
+		    text-overflow: ellipsis;
+		}
 	}
 .artist-upload-btn {
 	height: 50px;
@@ -259,28 +280,33 @@
 		}
 	}
 }
+.tag-list {
+	padding-top: @space-lg;
+}
 // -- submit edit --
 .submit-track-edit-wrapper {
-	border-bottom: 1px solid @grey-5;
 	padding: @space-md 0;
 	margin-bottom: @space-md;
 	p {
 		display: inline-block;
 	}
 	ul li i {
-		margin-right: 80px;
+		margin-right: @space-sm;
 	}
 	ul li input {
-		width: 220px;
 		display: inline-block;
 	}
 }
+.submit-edit-track-header {
+	border-bottom: 1px solid @grey-3;
+}
 .submit-edit-tag-item {
-	color: @white;
+  color: @white;
   padding: 10px;
   background-color: @primary;
   border: none;
   margin-left: @space-sm;
+  margin-bottom: @space-sm;
 }
 .approved-state {
 	color: @white;

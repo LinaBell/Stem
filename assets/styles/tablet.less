@@ -404,6 +404,23 @@
 	.zero-state-svg {
 		width: 100px;
 	}
+
+	// -- staff picks --
+	.staff-picks-header-wrapper {
+		text-align: center;
+		p {
+			padding-left: 0;
+			padding-top: 0;
+		}
+		.staff-profile-album {
+			width: 130px;
+			height: 130px;
+			margin: 0 0 20px;
+		}
+		.staff-picks-header-detail {
+			padding: 0 @space-md;
+		}
+	}
 }
 
 @media (max-width: 991px) {
@@ -714,6 +731,14 @@
 		width: 460px;
 		font-size: 1.05em !important;
 	}
+	.staff-picks-header-detail {
+    h1 {
+			font-size: 2em;
+    }
+    h4 {
+      font-size: 1em;
+    }
+  }
 }
 
 @media (min-width: 992px) and (max-width: 1199px) {
