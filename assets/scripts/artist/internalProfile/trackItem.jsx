@@ -13,7 +13,7 @@ var TrackItem = React.createClass({
 				{ this.props.playerStateVisible ? <i onClick={ this.onDecreaseOrder } className="icon-down-open fa-2x"></i> : null }
 				{ this.props.playerStateVisible ? null : <i className="icon-play-2 primary fa-2x"></i> }
 
-				<span>{ item.trackName }</span>
+				<span className="loaded-track-name"><p>{ item.trackName }</p></span>
 
 				<div className="loaded-track mar-l-md">
 					{ item.audioFile ? <p>{ Formatter.formatFileLabel(item.audioFile.data) } </p> : 'No file' }
