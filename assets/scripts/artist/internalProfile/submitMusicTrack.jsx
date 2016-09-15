@@ -195,8 +195,10 @@ var SubmitMusicTrack = React.createClass({
 	render: function() {
 		return (	
 			<div className="submit-track-edit-wrapper col-xs-12">
-				<p className="order-track">{ !this.props.isAdmin ? "Order" : null }</p>
-				<p>Track Name</p>
+				<div className="submit-edit-track-header">
+					<p className="order-track">{ !this.props.isAdmin ? "Order" : null }</p>
+					<p>Track Name</p>
+				</div>	
 				<ul className="tag-list">
 					{ this.state.addedTracks.map((item, index) => {
 						return ( 

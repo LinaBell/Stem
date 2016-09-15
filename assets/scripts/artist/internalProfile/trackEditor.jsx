@@ -49,7 +49,7 @@ var TrackEditor = React.createClass({
 		return (
 			<div className="submit-track-wrapper">
 				<div className="submit-track-name col-lg-6">
-					<p>Track Name</p>
+					<p className="col-xs-12">Track Name</p>
 					<input name="trackName" value={ this.props.item.trackName } onChange={ this.onInputChanged } />
 					<AudioUpload value={ this.props.item.audioFile } onAudioChanged={ this.onAudioChanged } />
 				</div>
