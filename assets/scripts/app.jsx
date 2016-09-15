@@ -76,7 +76,7 @@ function beginSearch(searchTerms) {
 // This should be moved to it's own file at some point
 const initialAppState = {
 	baseAPI: 'http://52.32.255.104/api',
-	currentPage: 22,
+	currentPage: 0,
 	pageParams: {},
 	searchTerms: '',
 	searchResults: [],
@@ -105,7 +105,7 @@ var appReducer = function(state = initialAppState, action) {
 // This should be moved to it's own file at some point
 const initialUserState = {
 	userInfo: {},
-	isLoggedIn: true
+	isLoggedIn: false
 };
 var userReducer = function(state = initialUserState, action) {
 	switch (action.type) {
