@@ -1,9 +1,4 @@
 var TrackEditor = React.createClass({
-	getInitialState: function() {
-		return {
-			statusMessage: ''
-		};
-	},
 
 	propagateState: function(newState) {
 		if (this.props.onChange) {
@@ -117,10 +112,6 @@ var TrackEditor = React.createClass({
 				      	</div>
 					</div>
 				}
-
-				<p className="bg-danger">
-					{ this.props.statusMessage }
-				</p>
 			</div>
 		);
 	}
