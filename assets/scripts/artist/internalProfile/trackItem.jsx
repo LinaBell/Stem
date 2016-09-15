@@ -2,15 +2,15 @@ var TrackItem = React.createClass({
 	onEditTrack: function() {
 		this.props.onEditTrack(this.props.index);
 	},
-	onDecreaseOrder: function() {
-		this.props.onDecreaseOrder(this.props.index);
+	onIncreaseOrder: function() {
+		this.props.onIncreaseOrder(this.props.index);
 	},
 	render: function() {
 		var item = this.props.item;
 
 		return (
 			<div>
-				{ this.props.playerStateVisible ? <i onClick={ this.onDecreaseOrder } className="icon-down-open fa-2x"></i> : null }
+				{ this.props.playerStateVisible ? <i onClick={ this.onIncreaseOrder } className="icon-down-open fa-2x"></i> : null }
 				{ this.props.playerStateVisible ? null : <i className="icon-play-2 primary fa-2x"></i> }
 
 				<span className="loaded-track-name"><p>{ item.trackName }</p></span>
