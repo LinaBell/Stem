@@ -7,7 +7,6 @@ var SubmitMusicTrack = React.createClass({
 			genreTag: null,
 		  	genreTagValues: [],
 		  	addedTracks: [],
-		  	isSubmitting: false,
 		  	statusMessage: statusMessage
 		}
 	},
@@ -213,7 +212,7 @@ var SubmitMusicTrack = React.createClass({
 										index={ index }
 										onEditTrack={ this.onEditTrack } 
 										onIncreaseOrder={ this.onIncreaseOrder }
-										playerStateVisible={ true } />
+										isAdmin={ this.props.isAdmin } />
 								}
 							</li> 
 						);
@@ -242,7 +241,7 @@ var SubmitMusicTrack = React.createClass({
 				        	<i className="icon-plus-circled"></i> Add Additional Track
 				        </button>
 
-				        { this.state.isSubmitting ? <LoadingButton /> : 
+				        { this.props.isSubmitting ? <LoadingButton /> : 
 					        <button className="btn-primary" onClick={ this.props.onSubmitClicked }>
 					        	<i className="icon-ok-circled2"></i> Submit
 					        </button>

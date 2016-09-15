@@ -23,6 +23,14 @@ var ImageUpload = React.createClass({
 			this.props.onImageChange(imageData, this.state.originalImage);
 		}.bind(this));
 	},
+	componentWillReceiveProps: function(nextProps) {
+
+		if (nextProps.value) {
+			this.setState({
+				imageLoaded: true
+			});
+		}
+	},
 	componentWillUnmount: function() {
 		$(this.refs.imageElement).cropper('destroy');
 	},
@@ -55,7 +63,7 @@ var ImageUpload = React.createClass({
 
 		return (
 			<div>
-				<img ref="imageElement" style={ imageStyles } />
+				<img ref="imageElement" style={ imageStyles } src={ this.props.value } />
 				{ !this.state.imageLoaded ? this.props.children : null }
 				<input onChange={ this.handleChangeFile } type="file" accept="image/*" />
 			</div>

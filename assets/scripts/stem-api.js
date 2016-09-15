@@ -194,6 +194,15 @@ var StemApi = (function () {
         });
     });
 
+    StemApi.prototype.getAlbum = Promise.method(function (req) {
+    	return $.ajax({
+    		type: 'GET',
+    		url: this.baseUrl + 'albums/' + req.id,
+    		headers: { 'Authorization': this.authorization },
+            contentType: 'application/json; charset=utf-8'
+    	});
+    });
+
     StemApi.prototype.getSongsByArtist = Promise.method(function (req) {
         return $.ajax({
             type: 'GET',
