@@ -6,12 +6,28 @@ var TagSelector = React.createClass({
 			valueField: 'id',
         	labelField: 'name',
         	searchField: 'name',
-        	onChange: this.onChange
+        	onChange: this.onChange,
+        	options: this.props.tagList ? this.props.tagList : undefined
+		});
+
+		if (this.props.values) {
+			this.populateSelectedItems(this.props.values);
+		}
+	},
+
+	populateSelectedItems: function(values) {
+		var selectize = $(this.refs.selectElement).data('selectize');
+		selectize.clear(false);
+
+		values.forEach(function(item) {
+			selectize.addItem(item.id.toString(), false);
 		});
 	},
+	
 	componentWillReceiveProps: function(nextProps) {
 
-		// Populate options when the tag list is first populated
+		// Populate options when the tag list is first populated if the initial set of items is not available
+		// when the component is mounted, otherwsise we do this set in componentDidMount
 		if (nextProps.tagList.length > 0 && (!this.props.tagList || this.props.tagList.length === 0)) {
 			$(this.refs.selectElement)
 				.data('selectize')
@@ -23,15 +39,6 @@ var TagSelector = React.createClass({
 			$(this.refs.selectElement)
 				.data('selectize')
 				.clear(false);
-		}
-
-		// Populate selected items when values are loaded
-		if (nextProps.values && !this.props.values) {
-			var selectize = $(this.refs.selectElement).data('selectize');
-
-			nextProps.values.forEach(function(item) {
-				selectize.addItem(item.id.toString(), false);
-			});
 		}
 	},
 	onChange: function(selections) {
