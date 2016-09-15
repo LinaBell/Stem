@@ -1,9 +1,4 @@
 var TrackEditor = React.createClass({
-	getInitialState: function() {
-		return {
-			statusMessage: ''
-		};
-	},
 
 	propagateState: function(newState) {
 		if (this.props.onChange) {
@@ -49,7 +44,7 @@ var TrackEditor = React.createClass({
 		return (
 			<div className="submit-track-wrapper">
 				<div className="submit-track-name col-lg-6">
-					<p>Track Name</p>
+					<p className="col-xs-12">Track Name</p>
 					<input name="trackName" value={ this.props.item.trackName } onChange={ this.onInputChanged } />
 					<AudioUpload value={ this.props.item.audioFile } onAudioChanged={ this.onAudioChanged } />
 				</div>
@@ -86,41 +81,6 @@ var TrackEditor = React.createClass({
 					<input type="checkbox" name="isExplicit" onChange={ this.onCheckedChanged } checked={ this.props.item.isExplicit } />
 				  	<h5 className="pad-l-sm">EXPLICIT</h5>
 				</div> 
-				{ this.props.isAdmin ? 
-					<div className="admin-state-btn-wrapper">
-				        <ul>
-							<li>
-								<div className="pending-state">Pending</div>
-							</li>
-							<li>
-								<div className="approved-state">Approved</div>
-							</li>
-							<li>
-								<div className="live-state">Live</div>
-							</li>
-							<li>
-								<div className="save-state">Save & Close</div>
-							</li>
-				        </ul>
-				    </div> : 
-					<div className="submit-btns">
-						<div className="submit-btns">
-					        <button className="additional-track-btn mar-r-md" onClick={ this.props.onAddClicked }>
-					        	<i className="icon-plus-circled"></i> Add Tracks
-					        </button>
-
-					        { this.props.isLoading ? <LoadingButton /> : 
-						        <button className="btn-primary" onClick={ this.props.onSubmitClicked }>
-						        	<i className="icon-ok-circled2"></i> Submit
-						        </button>
-						    }
-				      	</div>
-					</div>
-				}
-
-				<p className="bg-danger">
-					{ this.props.statusMessage }
-				</p>
 			</div>
 		);
 	}

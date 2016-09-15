@@ -76,7 +76,7 @@ function beginSearch(searchTerms) {
 // This should be moved to it's own file at some point
 const initialAppState = {
 	baseAPI: 'http://52.32.255.104/api',
-	currentPage: 0,
+	currentPage: 22,
 	pageParams: {},
 	searchTerms: '',
 	searchResults: [],
@@ -105,7 +105,7 @@ var appReducer = function(state = initialAppState, action) {
 // This should be moved to it's own file at some point
 const initialUserState = {
 	userInfo: {},
-	isLoggedIn: false
+	isLoggedIn: true
 };
 var userReducer = function(state = initialUserState, action) {
 	switch (action.type) {
@@ -284,10 +284,19 @@ var App = React.createClass({
 
 				{ this.props.currentPage == 20 ?
 					<div className="wrapper">
+						<AdminHeader />
 						<AdminMain />
 						<Footer />
 					</div>
 				: null} 
+
+				{ this.props.currentPage == 22 ?
+					<div className="wrapper">
+						<AdminHeader />
+						<AdminNewArtistMain />
+						<Footer />
+					</div>
+				: null}
 
 				{ this.props.currentPage == 100 ?
 					<div className="wrapper">
