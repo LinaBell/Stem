@@ -19,7 +19,7 @@
 	display: none;
 }
 .admin-side-nav {
-	width: 340px;
+	width: 300px;
 	position: absolute;
 	top: 0;
 	right: 0;
@@ -49,11 +49,8 @@
 .admin-nav-sub-items {
 	padding-left: 65px;
 }
-/* -- Admin Dashboard -- */
-.admin-dash-bottom {
-	width: 100%;
-	padding: 0 12%;
-}
+
+/* -- Admin Time Line -- */
 .timeline-nav {
 	text-align: right;
 	margin-right: 10%;
@@ -65,18 +62,21 @@
 .timeline-nav li:hover {
 	color: @primary;
 }
-.admin-dash-toolboxes {
-	margin: auto;
+
+/* -- Admin Dashboard -- */
+.admin-dashboard {
+	width: 940px;
+	margin: 40px auto;
 }
 .admin-dashboard-box {
-	width: 40%;
-	height: 28%;
-	margin: 2.5% 3%;
+	width: 430px;
+	height: 160px;
+	margin: 20px;
 	border-radius: 0.05rem;
 	box-shadow: @drop-4;
 }
 .admin-dashboard-box .icon {
-	margin: 5%;
+	margin: 15px 20px 15px 10px;
 }
 .admin-dashboard-box .stats {
 	font-size: 3em;
@@ -90,7 +90,7 @@
 	font-size: 2.65em;
 	white-space: nowrap;
 	text-align: center;
-	margin: 9% 0;
+	margin: @space-lg 0;
 }
 /*-- Admin data pages (new submissions, creators, artists) --*/
 .admin-data-pages-title {

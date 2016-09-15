@@ -9,6 +9,7 @@ var StemApi = (function () {
         var _this = this;
         _this.authorization = token_type + ' ' + access_token;
     };
+
     StemApi.prototype.register = function (rse) {
         var _this = this;
         $.ajax({
@@ -25,6 +26,7 @@ var StemApi = (function () {
             }
         });
     };
+
     StemApi.prototype.login = function (rse) {
         var _this = this;
         $.ajax({
@@ -57,7 +59,8 @@ var StemApi = (function () {
                 rse.success(response);
             }
         });
-    }
+    };
+
     StemApi.prototype.updateAccount = function (rse) {
         var _this = this;
         $.ajax({
@@ -74,7 +77,8 @@ var StemApi = (function () {
                 rse.success(response);
             }
         });
-    }
+    };
+
     StemApi.prototype.getAccount = function (rse) {
         var _this = this;
         $.ajax({
@@ -89,91 +93,79 @@ var StemApi = (function () {
                 rse.success(response);
             }
         });
-    }
-
-    // File
-    StemApi.prototype.upload = function (rse) {
-        var _this = this;
-        $.ajax({
-            type: 'POST',
-            url: _this.baseUrl + 'files/upload',
-            headers: { 'Authorization': _this.authorization },
-            contentType: 'application/json; charset=utf-8',
-            data: JSON.stringify({ fileName: rse.request.file.name }),
-            dataType: 'json',
-            error: function (uploadResponse) {
-                rse.error(uploadResponse);
-            },
-            success: function (uploadResponse) {
-                $.ajax({
-                    type: uploadResponse.verb,
-                    url: uploadResponse.url,
-                    contentType: uploadResponse.contentType,
-                    headers: uploadResponse.headers,
-                    // this flag is important, if not set, it will try to send data as a form
-                    processData: false,
-                    // the actual file is sent raw
-                    data: rse.request.file,
-                    error: function (s3Response) {
-                        rse.error(s3Response);
-                    },
-                    success: function (s3Response) {                        
-                        $.ajax({
-                            type: 'PUT',
-                            url: _this.baseUrl + 'files/upload/' + uploadResponse.id,
-                            headers: { 'Authorization': _this.authorization },
-                            contentType: 'application/json; charset=utf-8',
-                            data: JSON.stringify({ isComplete: true }),
-                            dataType: 'json',
-                            success: function (confirmResponse) {
-                                rse.success(confirmResponse);
-                            },
-                            error: function (confirmResponse) {
-                                rse.error(confirmResponse)
-                            }
-                        })
-                    }
-                });
-            }
-        });
     };
 
-    //Song
-    StemApi.prototype.createSong = function (rse) {
-        var _this = this;
-        $.ajax({
-            type: 'POST',
-            url: _this.baseUrl + 'songs',
-            headers: { 'Authorization': _this.authorization },
-            contentType: 'application/json; charset=utf-8',
-            data: JSON.stringify(rse.request),
-            dataType: 'json',
-            error: function (response) {
-                rse.error(response);
-            },
-            success: function (response) {
-                rse.success(response);
-            }
-        });
-    },
+    StemApi.prototype.cancelUpload = Promise.method(function(req) {
+    	return $.ajax({
+	        type: 'PUT',
+	        url: this.baseUrl + 'files/upload/' + req.id,
+	        headers: { 'Authorization': this.authorization },
+	        contentType: 'application/json; charset=utf-8',
+	        data: JSON.stringify({ isCanceled: true }),
+	        dataType: 'json'
+	    });
+    });
 
-    StemApi.prototype.createAlbum = function (rse) {
-        var _this = this;
-        $.ajax({
+    // File
+    StemApi.prototype.upload = Promise.method(function (req) {
+    	var uploadResponse = null;
+
+        return $.ajax({
             type: 'POST',
-            url: _this.baseUrl + 'albums',
-            headers: { 'Authorization': _this.authorization },
+            url: this.baseUrl + 'files/upload',
+            headers: { 'Authorization': this.authorization },
             contentType: 'application/json; charset=utf-8',
-            data: JSON.stringify(rse.request),
-            dataType: 'json',
-            error: function (response) {
-                rse.error(response);
-            },
-            success: function (response) {
-                rse.success(response);
-            }
+            data: JSON.stringify({ fileName: req.file.name }),
+            dataType: 'json'
+        })
+        .then(function(res) {
+        	uploadResponse = res;
+
+            return $.ajax({
+                type: uploadResponse.verb,
+                url: uploadResponse.url,
+                contentType: uploadResponse.contentType,
+                headers: uploadResponse.headers,
+                // this flag is important, if not set, it will try to send data as a form
+                processData: false,
+                // the actual file is sent raw
+                data: req.file
+            });
+        }.bind(this))
+        .then(function(res) {
+        	return $.ajax({
+	            type: 'PUT',
+	            url: this.baseUrl + 'files/upload/' + uploadResponse.id,
+	            headers: { 'Authorization': this.authorization },
+	            contentType: 'application/json; charset=utf-8',
+	            data: JSON.stringify({ isComplete: true }),
+	            dataType: 'json'
+	        });
+        }.bind(this));
+    });
+
+    //Song
+    StemApi.prototype.createSong = Promise.method(function (req) {
+        return $.ajax({
+            type: 'POST',
+            url: this.baseUrl + 'songs',
+            headers: { 'Authorization': this.authorization },
+            contentType: 'application/json; charset=utf-8',
+            data: JSON.stringify(req),
+            dataType: 'json'
         });
-    },
+    });
+
+    StemApi.prototype.createAlbum = Promise.method(function (req) {
+        return $.ajax({
+            type: 'POST',
+            url: this.baseUrl + 'albums',
+            headers: { 'Authorization': this.authorization },
+            contentType: 'application/json; charset=utf-8',
+            data: JSON.stringify(req),
+            dataType: 'json'
+        });
+    });
 
     StemApi.prototype.updateSong = function (rse) {
         var _this = this;
@@ -191,38 +183,35 @@ var StemApi = (function () {
                 rse.success(response);
             }
         });
-    },
+    };
 
-    StemApi.prototype.getSong = function (rse) {
-        var _this = this;
-        $.ajax({
+    StemApi.prototype.getSong = Promise.method(function (req) {
+        return $.ajax({
             type: 'GET',
-            url: _this.baseUrl + 'songs/' + rse.request.id,
-            headers: { 'Authorization': _this.authorization },
-            contentType: 'application/json; charset=utf-8',
-            error: function (response) {
-                rse.error(response);
-            },
-            success: function (response) {
-                rse.success(response);
-            }
+            url: this.baseUrl + 'songs/' + req.id,
+            headers: { 'Authorization': this.authorization },
+            contentType: 'application/json; charset=utf-8'
         });
-    }
-    StemApi.prototype.getSongsByArtist = function (rse) {
-        var _this = this;
-        $.ajax({
+    });
+
+    StemApi.prototype.getSongsByArtist = Promise.method(function (req) {
+        return $.ajax({
             type: 'GET',
-            url: _this.baseUrl + 'artists/' + rse.request.artistId + '/songs',
-            headers: { 'Authorization': _this.authorization },
-            contentType: 'application/json; charset=utf-8',
-            error: function (response) {
-                rse.error(response);
-            },
-            success: function (response) {
-                rse.success(response);
-            }
+            url: this.baseUrl + 'artists/' + req.artistId + '/songs',
+            headers: { 'Authorization': this.authorization },
+            contentType: 'application/json; charset=utf-8'
         });
-    }
+    });
+
+    StemApi.prototype.getSongsByAlbum = Promise.method(function (req) {
+    	return $.ajax({
+    		type: 'GET',
+    		url: this.baseUrl + 'albums/' + req.id + '/songs',
+    		headers: { 'Authorization': this.authorization },
+            contentType: 'application/json; charset=utf-8'
+    	});
+    });
+
     StemApi.prototype.getAlbumsByArtist = function (rse) {
         var _this = this;
         $.ajax({
@@ -237,7 +226,7 @@ var StemApi = (function () {
                 rse.success(response);
             }
         });
-    }
+    };
 
     // Promisified this method
     StemApi.prototype.searchSongs = function (rse) {
@@ -249,7 +238,67 @@ var StemApi = (function () {
             data: JSON.stringify(rse.request),
             dataType: 'json'
         });
-    }
+    };
 
+    StemApi.prototype.getAllTagTypes = Promise.method(function(req) {
+    	return $.ajax({
+    		type: 'GET',
+    		url: this.baseUrl + 'tagtypes',
+    		data: req,
+    		headers: { 'Authorization': this.authorization },
+            contentType: 'application/json; charset=utf-8'
+    	});
+    });
+
+    StemApi.prototype.getTagValues = Promise.method(function(req) {
+    	return $.ajax({
+    		type: 'GET',
+    		url: this.baseUrl + 'tagtypes/' + req.tagTypeId + '/tags',
+    		headers: { Authorization: this.authorization },
+    		contentType: 'application/json; charset=utf-8'
+    	});
+    });
+
+    StemApi.prototype.getCreatorDownloads = Promise.method(function (req) {
+    	return $.ajax({
+    		type: 'GET',
+    		url: this.baseUrl + 'creators/' + req.creatorId + '/downloads',
+    		headers: { 'Authorization': this.authorization },
+    		contentType: 'application/json; charset=utf-8',
+    	});
+    });
+    
+    StemApi.prototype.getArtistsPopular = function (rse) {
+        return $.ajax({
+            type: 'GET',
+            url: this.baseUrl + 'artists/popular',
+            headers: { 'Authorization': this.authorization },
+            contentType: 'application/json; charset=utf-8',
+        });
+    }
+    StemApi.prototype.getCreatorProfile = Promise.method(function (req) {
+        return $.ajax({
+            type: 'GET',
+            url: this.baseUrl + 'creators/' + req.creatorId,
+            headers: { 'Authorization': this.authorization },
+            contentType: 'application/json; charset=utf-8'
+        });
+    }); 
+    StemApi.prototype.getArtistDashboard = function (rse) {
+        return $.ajax({
+            type: 'GET',
+            url: this.baseUrl + 'artists/' + rse.artistId + '/dashboard',
+            headers: { 'Authorization': this.authorization },
+            contentType: 'application/json; charset=utf-8',
+        });
+    }
+    StemApi.prototype.getCreatorBookmarks = Promise.method(function (req) {
+        return $.ajax({
+            type: 'GET',
+            url: this.baseUrl + 'creators/' + req.creatorId + '/bookmarkedsongs',
+            headers: { 'Authorization': this.authorization },
+            contentType: 'application/json; charset=utf-8'
+        });
+    });
     return StemApi;
 }());

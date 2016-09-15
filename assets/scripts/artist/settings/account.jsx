@@ -1,17 +1,21 @@
-var ArtistAccountSettings = React.createClass({
+var ArtistAccountSettings = ReactRedux.connect(function(state) {
+    return {
+        userInfo: state.userState.userInfo
+    };
+})(React.createClass({
     getInitialState: function () {
         return {
             characterCount: 0,
             disableButton: false,
             saveSuccessful: false,
-            profileImgURL: this.context.userInfo.profileImageUrl,
-            bannerImgURL: this.context.userInfo.bannerImageUrl,
-            profileName: this.context.userInfo.profileName,
-            customLink: this.context.userInfo.customLink,
-            email: this.context.userInfo.email,
-            country: this.context.userInfo.country,
-            timeZone: this.context.userInfo.timeZone,
-            bio: this.context.userInfo.bio,
+            profileImgURL: this.props.userInfo.profileImageUrl,
+            bannerImgURL: this.props.userInfo.bannerImageUrl,
+            profileName: this.props.userInfo.profileName,
+            customLink: this.props.userInfo.customLink,
+            email: this.props.userInfo.email,
+            country: this.props.userInfo.country,
+            timeZone: this.props.userInfo.timeZone,
+            bio: this.props.userInfo.bio,
             errorMessage: '',
 
             profileImgId: 0,
@@ -107,38 +111,31 @@ var ArtistAccountSettings = React.createClass({
         // Upload profile image if needed
         if (this.state.profileImg) {
             stemApi.upload({
-                request: {
-                    file: this.state.profileImg
-                },
-                success: function (response) {
-                    self.setState({
-                        profileImg: null,
-                        profileImgId: response.id
-                    });
-                    self.updateAccount();
-                },
-                error: function (response) {
-                    console.error(JSON.stringify(response, null, 2));
-                }
+                file: this.state.profileImg
+            }).then(function (response) {
+	            self.setState({
+	                profileImg: null,
+	                profileImgId: response.id
+	            });
+
+	            self.updateAccount();
+	        }, function (error) {
+            	console.error(JSON.stringify(error, null, 2));
             });
         };
 
         // Upload banner image if needed
         if (this.state.bannerImg) {
             stemApi.upload({
-                request: {
-                    file: this.state.bannerImg
-                },
-                success: function (response) {
-                    self.setState({
-                        bannerImg: null,
-                        bannerImgId: response.id
-                    });
-                    self.updateAccount();
-                },
-                error: function (response) {
-                    console.error(JSON.stringify(response, null, 2));
-                }
+            	file: this.state.bannerImg
+            }).then(function (response) {
+	            self.setState({
+	                bannerImg: null,
+	                bannerImgId: response.id
+	            });
+	            self.updateAccount();
+	        }, function (error) {
+	            console.error(JSON.stringify(error, null, 2));
             });
         };
 
@@ -188,7 +185,7 @@ var ArtistAccountSettings = React.createClass({
                 });
                 store.dispatch({
                     type: 'UpdateUserRecord',
-                    data: { userInfo: response, currentPage: 5 }
+                    data: { userInfo: response }
                 });
             },
             error: function (response) {
@@ -201,9 +198,9 @@ var ArtistAccountSettings = React.createClass({
         var self = this;
 
         return (
-            <div className="content-with-sidebar">
-				<div className="col-xs-12">
-					<h3>Account</h3>
+            <div className="artist-account-settings pad-box-lg">
+				<div className="col-xs-12 mar-b-md">
+					<h2 className="mar-b-sm">Account</h2>
 					<h5>Update your account settings</h5>
 				</div>
 				<div className="col-xs-12 col-lg-3 pad-box-md">
@@ -240,26 +237,22 @@ var ArtistAccountSettings = React.createClass({
 						<input onChange={this.handleFileUpload} type="file" name="bannerImg" id="bannerImg" />
 					</div>
 				</div>
-				<div className="col-xs-12 col-md-6 col-lg-5 pad-t-md">
-					<h5>Profile Name</h5>
+				<div className="col-xs-12 col-md-6 pad-t-md">
+					<h4 className="mar-b-sm">Profile Name</h4>
 					<input id="profileName" onChange={this.handleFieldChange} value={this.state.profileName} />
-					<h5>Custom Link</h5>
+					<h4 className="mar-b-sm">Custom Link</h4>
 					<input id="customLink" onChange={this.handleFieldChange} value={this.state.customLink} />
 					<p>http://stem.com/myprofile</p>
-					<h5>Email</h5>
+					<h4 className="mar-b-sm">Email</h4>
 					<input id="email" type="email" onChange={this.handleFieldChange} value={this.state.email} />
-					<h5 className="strike">Country</h5>
-					<input id="country" onChange={this.handleFieldChange} value={this.state.country} />
-					<h5 className="strike">TimeZone</h5>
-					<input id="timeZone" onChange={this.handleFieldChange} value={this.state.timeZone} />
 				</div>
 
-				<div className="col-xs-12 col-sm-12 col-md-8 pad-t-sm pad-b-sm">
-					<h5>Biography</h5>
+				<div className="col-xs-12 col-md-6 pad-t-md pad-b-sm">
+					<h4 className="mar-b-sm">Biography</h4>
 					<textarea id="bio" className="form-input" onChange={self.handleLineGrow} value={this.state.bio} />
 					<div className="character-count">
-						<p>{this.state.characterCount}/300 Characters</p>
-							<svg height="20" width="400">
+						<p className="display-inlb mar-r-md">{this.state.characterCount}/300 Characters</p>
+							<svg height="20" width="400" className="display-inlb">
 								<line className="svg-line2" x1="300" y='0' />
 								<line className="svg-line" x1={self.state.characterCount} y='0' />
 							</svg>
@@ -286,10 +279,4 @@ var ArtistAccountSettings = React.createClass({
 			</div>
 		)
     }
-});
-
-ArtistAccountSettings.contextTypes = {
-    baseAPI: React.PropTypes.string,
-    authToken: React.PropTypes.string,
-    userInfo: React.PropTypes.object
-};
+}));

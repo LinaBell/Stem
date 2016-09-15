@@ -178,7 +178,7 @@ var Login = React.createClass({
 		   			self.handleCommitSubmit(data);
 				},
 	            error: function (response) {
-					console.log(JSON.stringify(response, null, 2));
+					console.error(JSON.stringify(response, null, 2));
 					if(response.responseJSON.modelState["request.UserName"] != null) {
 						errorMessage = response.responseJSON.modelState["request.UserName"];
 					}
@@ -217,7 +217,7 @@ var Login = React.createClass({
         this.setState({
         	errorMessage: message
         });
-        console.log('message = ' + message)
+        console.error('message = ' + message)
 	},
 	/////// END Registration Form
 
@@ -229,21 +229,47 @@ var Login = React.createClass({
             success: function (response) {
                 console.log('success!');
 				console.log(JSON.stringify(response, null, 2));
-				self.updateLoginStatus(true, response, 0);
+				var page = 100;
+				if (response.accountType == 'Artist') {
+					page = 6;
+				} else if (response.accountType == 'Creator') {
+					page = 10;
+				} else if (response.accountType == 'Admin') {
+					page = 20;
+				}
+				self.updateLoginStatus(true, response, page);	
             },
             error: function (response) { 
-            	console.log(JSON.stringify(response, null, 2));
-				self.updateLoginStatus(true, null, 100);
+            	console.error(JSON.stringify(response, null, 2));
+				self.goToWhoAreYou();
              }
         });
 	},
 
     updateLoginStatus: function(isLoggedIn, userInfo, currentPage) {
 		//FB.logout();
-        store.dispatch({
-          type: 'UpdateLoginStatus',
-          data: {isLoggedIn: isLoggedIn, userInfo: userInfo, currentPage: currentPage}
-        });
+
+		store.dispatch((dispatch) => {
+			dispatch({
+				type: 'UpdateLoginStatus',
+				data: {
+					isLoggedIn: isLoggedIn,
+					userInfo: userInfo
+				}
+			});
+
+	    	dispatch({
+	        	type: 'GoToPage',
+	        	data: {currentPage: currentPage}
+	    	});
+		})
+    },
+
+    goToWhoAreYou: function() {
+    	store.dispatch({
+        	type: 'GoToPage',
+        	data: {currentPage: 100}
+    	});
     },
 
 //					<a onClick={self.updateLoginStatus(false)}>Logout</a>

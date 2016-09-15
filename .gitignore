@@ -56,7 +56,6 @@ test3.html
 assets/jsx/login-test.jsx
 
 # Sublime Files
-*.sublime-project
 *.sublime-workspace
 
 # Dependency directory

@@ -1,14 +1,12 @@
 var ArtistSettings = React.createClass({
 	render: function() {
 	    return (
-	        <span>
-	        	<ArtistAccountNavBar />
+	        <div>
 				<ArtistAccountSettings />
 				<ArtistContactInfo />
 				<ArtistConnectedAccounts />
-				<ArtistNotification />
 				<ArtistPassword />
-            </span>
+            </div>
 	    )
   	}
 });

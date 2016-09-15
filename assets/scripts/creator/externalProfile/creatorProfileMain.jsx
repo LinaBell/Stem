@@ -1,35 +1,24 @@
 var CreatorProfileMain = React.createClass({
   getInitialState: function() {
     return {
-      songs: [],
-      artist: {}
+      songs: []
     };     
   },
   componentDidMount: function() {
-    var userInfo = this.context.userInfo;
-
-    // This is test data, keeping this for now
-    // TODO: Remove me later when we have more test data to work with
-    // var userInfo = {
-    //  profileName: 'InMemory',
-    //  bio: 'The best band thats ever had the pleasure of playing instruments on a stage with live people, not dead',
-    //  profileImageUrl: 'https://a4-images.myspacecdn.com/images03/33/588cae99266a4ae2a9c49c909b02781c/300x300.jpg',
-    //  bannerImageUrl: 'https://a4-images.myspacecdn.com/images03/33/588cae99266a4ae2a9c49c909b02781c/300x300.jpg'
-    // };
-
-    this.setState({
-      creator: {
-        profileName: userInfo.profileName,
-        bio: userInfo.bio,
-        profileImageUrl: userInfo.profileImageUrl,
-        bannerImageUrl: userInfo.bannerImageUrl
-      }
+    stemApi.getCreatorProfile({
+      creatorId: this.props.creator.id
+    })
+    .then(function(response) {
+      this.setState({songs: response});
+    }.bind(this))
+    .catch(function(error) {
+      console.log('Creator Profile Error: ' + JSON.stringify(error));
     });
   },
   render: function () {
     return (
       <div>
-        <CreatorProfileHeader creator={this.state.creator} />
+        <CreatorProfileHeader creator={this.props.creator} />
         <div className="pad-box-lg bg-white">
           <h3>My Latest Videos</h3>
           <a>youtube.com/things</a>
@@ -39,7 +28,7 @@ var CreatorProfileMain = React.createClass({
             <h3>My Activity</h3>
             <p>My latest plays and loves</p>
           </div>
-          <PlaylistTable />
+          <PlaylistTable songs={this.state.songs} />
           <div className="text-center">
             <a><h3>Load More</h3></a>
           </div>  
@@ -48,7 +37,3 @@ var CreatorProfileMain = React.createClass({
     )
   }
 });
-
-CreatorProfileMain.contextTypes = {
-  userInfo: React.PropTypes.object
-};

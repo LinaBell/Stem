@@ -1,4 +1,4 @@
-﻿<!doctype html>
+<!doctype html>
 <html>
     <head>
         <meta charset="utf-8">
@@ -14,6 +14,7 @@
         <link rel="stylesheet" href="assets/styles/c3.min.css" type="text/css">
         <link rel="stylesheet" href="assets/styles/icons.css">
         <link rel="stylesheet" href="assets/scripts/imageUpload/cropper.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.3/css/selectize.default.css" />
 
         <link rel="stylesheet/less" type="text/css" href="assets/styles/variables.less" />
         <link rel="stylesheet/less" type="text/css" href="assets/styles/colors.less" />
@@ -32,10 +33,14 @@
         <link rel="stylesheet/less" type="text/css" href="assets/styles/creatorDownloads.less" />
         <link rel="stylesheet/less" type="text/css" href="assets/styles/creator-profile.less" />
         <link rel="stylesheet/less" type="text/css" href="assets/styles/ipsy-main.less" />
-
+        <link rel="stylesheet/less" type="text/css" href="assets/styles/promo-landing.less" />
         <link rel="stylesheet/less" type="text/css" href="assets/styles/edit-track.less">
 
         <link rel="stylesheet/less" type="text/css" href="assets/styles/banner.less">
+
+        <link rel="stylesheet/less" type="text/css" href="assets/styles/staffpicks.less">
+
+        <link rel="stylesheet/less" type="text/css" href="assets/styles/dashboard.less">
 
         <link rel="stylesheet/less" type="text/css" href="assets/styles/footer.less">
         <link rel="stylesheet/less" type="text/css" href="assets/styles/top-album.less">
@@ -53,6 +58,10 @@
 
         <script type="text/jsx" src="assets/scripts/autoCompleteTextBox.jsx"></script>
         <script type="text/jsx" src="assets/scripts/imageUpload/ImageUpload.jsx"></script>
+        <script type="text/jsx" src="assets/scripts/loadingButton.jsx"></script>
+        <script type="text/jsx" src="assets/scripts/audioUpload.jsx"></script>
+        <script type="text/jsx" src="assets/scripts/tagSelector.jsx"></script>
+        <script type="text/jsx" src="assets/scripts/musicPlayer.jsx"></script>
         
         <!-- JSX Component Files -->
         <script type="text/jsx" src="assets/scripts/header.jsx"> </script>
@@ -84,10 +93,12 @@
         <script type="text/jsx" src="assets/scripts/artist/internalProfile/LibraryMainTableRow.jsx"> </script>
         <script type="text/jsx" src="assets/scripts/artist/internalProfile/LibraryMainTableHeader.jsx"> </script>
         <script type="text/jsx" src="assets/scripts/artist/internalProfile/LibraryMainTable.jsx"> </script>
+        <script type="text/jsx" src="assets/scripts/artist/internalProfile/LibraryZeroState.jsx"> </script>
         <script type="text/jsx" src="assets/scripts/artist/internalProfile/submitMusicMain.jsx"> </script>
+        <script type="text/jsx" src="assets/scripts/artist/internalProfile/trackEditor.jsx"></script>
+        <script type="text/jsx" src="assets/scripts/artist/internalProfile/trackItem.jsx"></script>
         <script type="text/jsx" src="assets/scripts/artist/internalProfile/submitMusicAlbum.jsx"> </script>
         <script type="text/jsx" src="assets/scripts/artist/internalProfile/submitMusicTrack.jsx"> </script>
-        <script type="text/jsx" src="assets/scripts/artist/internalProfile/submitTrackEdit.jsx"> </script>
     
         <script type="text/jsx" src="assets/scripts/artist/internalProfile/uploadSuccess.jsx"> </script>
         <script type="text/jsx" src="assets/scripts/artist/internalProfile/downloadNotice.jsx"> </script>
@@ -112,7 +123,7 @@
         <script type="text/jsx" src="assets/scripts/artist/settings/account.jsx"> </script>
         <script type="text/jsx" src="assets/scripts/artist/settings/password.jsx"> </script>
         <script type="text/jsx" src="assets/scripts/artist/settings/contactInfo.jsx"> </script>
-        <script type="text/jsx" src="assets/scripts/artist/settings/sidebar.jsx"> </script>
+        <script type="text/jsx" src="assets/scripts/artist/settings/artistAccountNavBar.jsx"> </script>
         <script type="text/jsx" src="assets/scripts/artist/settings/connectedAccounts.jsx"> </script>
         <script type="text/jsx" src="assets/scripts/artist/settings/notification.jsx"> </script>
 
@@ -124,9 +135,19 @@
 
         <!-- Creator Internal -->
         <script type="text/jsx" src="assets/scripts/creator/internalProfile/creatorMain.jsx"> </script>
-        <script type="text/jsx" src="assets/scripts/creator/internalProfile/creatorDownloads.jsx"> </script>
+        <script type="text/jsx" src="assets/scripts/creator/internalProfile/creatorDownloadsMain.jsx"> </script>
+        <script type="text/jsx" src="assets/scripts/creator/internalProfile/creatorDownloadsCard.jsx"> </script>
+        <script type="text/jsx" src="assets/scripts/creator/internalProfile/creatorDownloadsZeroState.jsx"> </script>
         <script type="text/jsx" src="assets/scripts/creator/internalProfile/featuredArtist.jsx"> </script>
         <script type="text/jsx" src="assets/scripts/creator/internalProfile/topAlbums.jsx"> </script>
+        <script type="text/jsx" src="assets/scripts/creator/internalProfile/bookmarksZeroState.jsx"></script>
+        <script type="text/jsx" src="assets/scripts/creator/internalProfile/spinHistoryZeroState.jsx"></script>
+        <script type="text/jsx" src="assets/scripts/creator/internalProfile/creatorBookmarkMain.jsx"> </script>
+        <script type="text/jsx" src="assets/scripts/creator/internalProfile/creatorSpinHistoryMain.jsx"> </script>
+
+        <!-- Staff Picks -->
+        <script type="text/jsx" src="assets/scripts/creator/internalProfile/staffPicksMain.jsx"> </script>
+        <script type="text/jsx" src="assets/scripts/creator/internalProfile/staffPicksHeader.jsx"> </script>
 
         <!-- Creator External -->
         <script type="text/jsx" src="assets/scripts/creator/externalProfile/creatorProfileMain.jsx"> </script>
@@ -149,11 +170,21 @@
         <script type="text/jsx" src="assets/scripts/playlist/playlistTable.jsx"> </script>
         <script type="text/jsx" src="assets/scripts/playlist/mobile.jsx"> </script>
 
-        <!-- Analytics -->
-        <script type="text/jsx" src="assets/scripts/analytics/analyticsMain.jsx"> </script>
-        <script type="text/jsx" src="assets/scripts/analytics/downloads.jsx"> </script>
-        <script type="text/jsx" src="assets/scripts/analytics/plays.jsx"> </script>
-        <script type="text/jsx" src="assets/scripts/analytics/topInterests.jsx"> </script>
+        <!-- Dashboard -->
+        <script type="text/jsx" src="assets/scripts/artistDashboard/dashboardMain.jsx"> </script>
+        <script type="text/jsx" src="assets/scripts/artistDashboard/analytics.jsx"> </script>
+        <script type="text/jsx" src="assets/scripts/artistDashboard/creatorPickups.jsx"> </script>
+        <script type="text/jsx" src="assets/scripts/artistDashboard/dma.jsx"> </script>
+        <script type="text/jsx" src="assets/scripts/artistDashboard/topCommunities.jsx"> </script>
+
+        <!-- Promo Landing -->
+        <script type="text/jsx" src="assets/scripts/promoLandingPage/promoLandingPageMain.jsx"></script>
+        <script type="text/jsx" src="assets/scripts/promoLandingPage/promoLandingHeader.jsx"></script>
+        <script type="text/jsx" src="assets/scripts/promoLandingPage/promoLandingFooter.jsx"></script>
+        <script type="text/jsx" src="assets/scripts/promoLandingPage/followThisArtistLinks.jsx"></script>
+        <script type="text/jsx" src="assets/scripts/promoLandingPage/promoLandingTopSection.jsx"></script>
+        <script type="text/jsx" src="assets/scripts/promoLandingPage/promoLandingContent.jsx"></script>
+        <script type="text/jsx" src="assets/scripts/promoLandingPage/becomeAPatron.jsx"></script>
 
         <!-- Admin -->
         <script type="text/jsx" src="assets/scripts/admin/adminMain.jsx"> </script>
@@ -169,6 +200,7 @@
         <script type="text/jsx" src="assets/scripts/app.jsx"> </script>
         
         <!-- Core JS Files -->
+        <script src="https://unpkg.com/bluebird@3.4.6/js/browser/bluebird.min.js" type="text/javascript"></script>
         <script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
         <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js" 
         	integrity="sha256-eGE6blurk5sHj+rmkfsGYeKyZx3M4bG+ZlFyA7Kns7E=" crossorigin="anonymous"></script>
@@ -178,15 +210,18 @@
         <script type="text/javascript" src="assets/scripts/player.js"></script>
         <script src="assets/scripts/d3.v3.min.js" charset="utf-8"></script>
         <script src="assets/scripts/c3.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/wavesurfer.js/1.1.12/wavesurfer.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.3/js/standalone/selectize.js"></script>
 
         <!-- React -->
-        <script src="https://npmcdn.com/react@15.3.1/dist/react.js"></script>
-		<script src="https://npmcdn.com/react-dom@15.3.1/dist/react-dom.js"></script>
+        <script src="https://unpkg.com/react@15.3.1/dist/react.js"></script>
+		<script src="https://unpkg.com/react-dom@15.3.1/dist/react-dom.js"></script>
 
         <!-- Redux -->
-        <script src="https://npmcdn.com/redux@3.5.2/dist/redux.js"></script>
-        <script src="https://npmcdn.com/react-redux@4.0.0/dist/react-redux.js"></script>
-        <script src="https://npmcdn.com/redux-thunk@2.1.0/dist/redux-thunk.js"></script>
+        <script src="https://unpkg.com/redux@3.5.2/dist/redux.js"></script>
+        <script src="https://unpkg.com/react-redux@4.0.0/dist/react-redux.js"></script>
+        <script src="https://unpkg.com/redux-thunk@2.1.0/dist/redux-thunk.js"></script>
+        <script src="https://unpkg.com/redux-logger@2.6.1/dist/index.js"></script>
 
         <!-- In-browser JSX transformer, remove when pre-compiling JSX. -->
         <script src="http://fb.me/JSXTransformer-0.13.3.js"></script>

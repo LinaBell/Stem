@@ -3,11 +3,19 @@ var TopAlbums = React.createClass({
 		return {
 			windowWidth: 1,
 			topAlbumWidth: 0,
-			albumItemWidth: 270
+			albumItemWidth: 270,
+			topArtists: []
 		};
 	},
 
 	componentDidMount: function() {
+		stemApi.getArtistsPopular({})
+    .then(function(response) {
+      this.setState({topArtists: response});
+    }.bind(this), function(error) {
+      console.error('Top Artist Error: ' + JSON.stringify(error));
+    });
+
 		this.slideShow();
 
 		var l = $('.top-album-wrapper ul li').length,
@@ -29,7 +37,7 @@ var TopAlbums = React.createClass({
 
 	slideShow: function(){
 		var self = this;
-		setInterval(this.moveRight, 3000);
+		setInterval(this.moveRight, 5000);
 	},
 	moveLeft: function() {
 		var w = this.state.albumItemWidth;
@@ -51,27 +59,31 @@ var TopAlbums = React.createClass({
 		});
 	},
   render: function() {
-	   
+	   var topArtist = this.state.topArtists
 		return(
 		  <div className="top-album-wrapper">
 		  	<h4>Other awesome artists</h4>
 				<a onClick={this.moveRight} className="album-nav-next icon-right-open-big"></a>
 	      <a onClick={this.moveLeft} className="album-nav-prev icon-left-open-big"></a>
 				<ul className="top-album-list">
-				  <li><img className="top-album-img" src="http://illusion.scene360.com/wp-content/uploads/2014/10/computergraphics-album-covers-2014-15.jpg" /></li>
-				  <li><img className="top-album-img" src="http://static.gigwise.com/gallery/5209864_8262181_JasonDeruloTatGall.jpg" /></li>
-				  <li><img className="top-album-img" src="http://www.slate.com/content/dam/slate/blogs/browbeat/2011/09/29/hugo_chavez_caption_contest/Drake_Nothing_Was_the_Same_Album_Cover.jpg.CROP.article568-large.jpg" /></li>
-				  <li><img className="top-album-img" src="http://img.wennermedia.com/620-width/blake-shelton-if-im-honest-album-cover-zoom-56d72c12-eea5-418c-a6fa-1e4434dd704d.jpg" /></li>
-				  <li><img className="top-album-img" src="https://static.dezeen.com/uploads/2016/01/Jonathan-Barnbrook_David-Bowie_Heathen_album-cover-art_dezeen_936_3.jpg" /></li>
-				  <li><img className="top-album-img" src="https://images.rapgenius.com/07b5246af5ee9cd4724c0deb8d0ba68e.618x618x1.jpg" /></li>
-				  <li><img className="top-album-img" src="http://illusion.scene360.com/wp-content/uploads/2014/10/computergraphics-album-covers-2014-15.jpg" /></li>
-				  <li><img className="top-album-img" src="http://static.gigwise.com/gallery/5209864_8262181_JasonDeruloTatGall.jpg" /></li>
-				  <li><img className="top-album-img" src="http://www.slate.com/content/dam/slate/blogs/browbeat/2011/09/29/hugo_chavez_caption_contest/Drake_Nothing_Was_the_Same_Album_Cover.jpg.CROP.article568-large.jpg" /></li>
-				  <li><img className="top-album-img" src="http://img.wennermedia.com/620-width/blake-shelton-if-im-honest-album-cover-zoom-56d72c12-eea5-418c-a6fa-1e4434dd704d.jpg" /></li>
-				  <li><img className="top-album-img" src="https://static.dezeen.com/uploads/2016/01/Jonathan-Barnbrook_David-Bowie_Heathen_album-cover-art_dezeen_936_3.jpg" /></li>
-				  <li><img className="top-album-img" src="https://images.rapgenius.com/07b5246af5ee9cd4724c0deb8d0ba68e.618x618x1.jpg" /></li>
+				  {this.state.topArtists.map(function(topArtist, index) {
+						return(
+							<TopArtistsList key={index} topArtist={topArtist} />
+						);
+					})}
 				</ul>
 		  </div>
 		)
   }
+});
+
+var TopArtistsList = React.createClass({
+	render: function() {
+		var topArtist = this.props.topArtist
+		return (
+			<div className="top-album-list-item-wrapper">
+				<li className="top-album-list-item"><img className="top-album-img" src={topArtist.albumArtUrl} /></li>
+			</div>
+		)
+	}
 });

@@ -12,14 +12,17 @@ var AdminSideNav = React.createClass({
 					<div className="admin-nav-items">
 						<ul>
 							<li className="pad-b-md pad-t-md pad-l-lg"><h4>Dashboard</h4></li>
-							<li className="pad-b-md pad-t-md pad-l-lg"><h4>New Creators</h4></li>
-							<li className="pad-b-md pad-t-md pad-l-lg"><h4>New Submissions</h4></li>
-								<li className="admin-nav-sub-items pad-b-md pad-t-md"><h4>Approved Submissions</h4></li>
-								<li className="admin-nav-sub-items pad-b-md pad-t-md"><h4>Rejected Submissions</h4></li>
-							<li className="pad-b-md pad-t-md pad-l-lg"><h4>Downloads</h4></li>
-							<li className="pad-b-md pad-t-md pad-l-lg"><h4>Active Creators</h4></li>
-							<li className="pad-b-md pad-t-md pad-l-lg"><h4>Top Artists</h4></li>
-							<li className="pad-b-md pad-t-md pad-l-lg"><h4>Browse Music</h4></li>
+							<li className="pad-b-md pad-t-md pad-l-lg"><h4>Creators</h4></li>
+							<li className="pad-b-md pad-t-md pad-l-lg"><h4>Artists</h4></li>
+							<li className="pad-b-md pad-t-md pad-l-lg"><h4>Music Admin</h4></li>
+								<li className="admin-nav-sub-items pad-b-md pad-t-md"><h4>Approved Music</h4></li>
+								<li className="admin-nav-sub-items pad-b-md pad-t-md"><h4>Live Music</h4></li>
+								<li className="admin-nav-sub-items pad-b-md pad-t-md"><h4>Pending Music</h4></li>
+							<li className="pad-b-md pad-t-md pad-l-lg"><h4>Top of...</h4></li>
+								<li className="admin-nav-sub-items pad-b-md pad-t-md"><h4>Top Downloads</h4></li>
+								<li className="admin-nav-sub-items pad-b-md pad-t-md"><h4>Top Creators</h4></li>
+								<li className="admin-nav-sub-items pad-b-md pad-t-md"><h4>Top Artists</h4></li>
+							<li className="pad-b-md pad-t-md pad-l-lg"><h4>Settings</h4></li>
 						</ul>
 					</div>
 				</nav>

@@ -10,15 +10,13 @@ var ArtistProfile = React.createClass({
 			artistId = this.props.artistId || this.context.userInfo.id;
 
 		stemApi.getSongsByArtist({
-			request: {
-				artistId: artistId
-			},
-			success: function(data) {
-				this.setState( { songs: data } );
-			}.bind(this),
-			error: function(error) {
-				console.log('Error occured while fetching songs by artist: ' + error.responseText);
-			}
+			artistId: artistId
+		})
+		.then(function(data) {
+			this.setState( { songs: data } );
+		}.bind(this))
+		.catch(function(error) {
+			console.error('Error occured while fetching songs by artist: ' + Utilities.normalizeError(error));
 		});
 
 		this.setState({

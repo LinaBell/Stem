@@ -1,4 +1,9 @@
-var LibraryMain = React.createClass({
+var LibraryMain = ReactRedux.connect(function(state) {
+	return {
+		userInfo: state.userState.userInfo
+	};
+}, null)
+(React.createClass({
 	getInitialState: function() {
 		return { 
 			songs: [],
@@ -7,21 +12,19 @@ var LibraryMain = React.createClass({
 		};
 	},
 	componentDidMount: function() {
-		var userInfo = this.context.userInfo;
+		var userInfo = this.props.userInfo;
 
 		stemApi.getSongsByArtist({
-			request: {
-				artistId: userInfo.id
-			},
-			success: function(data) {
-				this.setState({ 
-					songs: data,
-					displayedSongs: data
-				});
-			}.bind(this),
-			error: function(error) {
-				console.log('Error occured while fetching songs by artist: ' + error.responseText);
-			}
+			artistId: userInfo.id
+		})
+		.then(function(res) {
+			this.setState({ 
+				songs: res,
+				displayedSongs: res
+			});
+		}.bind(this))
+		.catch(function(reason) {
+			console.error('Error occured while fetching songs by artist: ' + Utilities.normalizeError(reason));
 		});
 	},
 	handleFilter: function(ev) {
@@ -36,11 +39,9 @@ var LibraryMain = React.createClass({
 	},
 	getFilterList: function() {
 		var filterList = [
-			'All',
+			'Live',
 			'Approved',
 			'Pending',
-			'Disabled',
-			'Rejected'
 		];
 
 		return filterList.map(function(filter, index) {
@@ -70,13 +71,9 @@ var LibraryMain = React.createClass({
 							{this.getFilterList()}
 						</ul>
 					</div>
-					<LibraryMainTable songs={this.state.displayedSongs} />
+					{this.state.displayedSongs.length <= 0 ? <LibraryZeroState /> : <LibraryMainTable songs={this.state.displayedSongs} /> }	
 				</div>  
 			</span>
 		);
 	}
-});
-
-LibraryMain.contextTypes = {
-	userInfo: React.PropTypes.object
-};
+}));

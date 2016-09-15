@@ -1,136 +1,227 @@
 var SubmitMusicTrack = React.createClass({
-  getInitialState: function() {
-    return {
-      browseButtonVisible: true,
-      loaderVisible: false,
-      loadedItemVisible: false,
-      adminState: false
-    }
-  },
-  handleBrowse: function() {
-    if (this.state.browseButtonVisible) {
-      this.setState({ browseButtonVisible: false });
-      this.setState({ loaderVisible: true });
-      setTimeout(this.handleLoadAnimation, 8000);
-    }
-  },
-  handleLoadAnimation: function() {
-    this.setState({ loaderVisible: false });
-    this.setState({ loadedItemVisible: true});
-  },
-  buttonReset: function() {
-    this.setState({ loadedItemVisible: false});
-    this.setState({ browseButtonVisible: true});
-  },
-  handleAdminState: function() {
-    if (this.state.playerStateVisible) {
-      this.setState({ playerStateVisible: false });
-    } else {
-      this.setState({ playerStateVisible:true });
-    }
-  },
-  render: function() {
-    return(
-      <div className="submit-track-wrapper">
-        <SubmitTrackEdit />
-        <div className="submit-track-name col-lg-6">
-          <p>Track Name</p>
-          <input />
-           {this.state.browseButtonVisible ? <button className="btn-primary pull-right" onClick={this.handleBrowse}>Browse for file</button> : null }
-           {this.state.loaderVisible ? <LoadingAnimation /> : null }
-           {this.state.loadedItemVisible ? <div className="loaded-track pull-right"><p>satori.aiff (50mb)</p> <i onClick={this.buttonReset} className="icon-cancel pull-right"></i></div> : null }
-        </div>
-        <div className="col-lg-6">
-          <p>ISRC # <a>Whats an ISRC#?</a></p>
-          <input placeholder="( optional )" />
-        </div> 
-        <div className="col-lg-6">
-          <p>Release Date - MM/DD/YY</p>
-          <input placeholder="( optional )" />
-        </div>
-        <div className="col-lg-6">
-          <p>Additionl Credits</p>
-          <input placeholder="( optional )" />
-        </div>
-        <div className="col-lg-6">
-          <p>Genre</p>
-          <select className="btn col-xs-12">
-            <option>Rock</option>
-            <option>Techno</option>
-            <option>Folk</option>
-          </select>
-        </div>
-        <div className="col-lg-6">
-          <p>Genre</p>
-          <select className="btn col-xs-12">
-            <option>Rock</option>
-            <option>Techno</option>
-            <option>Folk</option>
-          </select>
-        </div>
-        <div className="submit-add-genre pad-t-md pad-b-md col-xs-12">
-          <a><i className="icon-plus-circled fa-2x"></i> Add Genre</a>
-        </div>
-        <div className=" pad-b-sm col-xs-12">
-          <p>Lyrics <a> Why upload lyrics?</a></p>
-          <textarea placeholder="Paste your lyrics here.." />
-        </div>
-        <div className="explicit-checkbox pad-b-lg col-xs-12 red">
-          <input type="checkbox" />
-          <h5 className="pad-l-sm">EXPLICIT</h5>
-          <a className="pad-l-lg" onClick={this.handleAdminState}>Admin State</a>
-        </div> 
-        {this.state.playerStateVisible ? <AdminButtons /> : <SubmitButtons /> }
-      </div>
-    )
-  }
-});
+	getInitialState: function() {
+		return {
+			genreTag: null,
+		  	genreTagValues: [],
+		  	addedTracks: [],
+		  	isSubmitting: false,
+		  	statusMessage: ''
+		}
+	},
+	componentDidMount: function() {
+		stemApi.getAllTagTypes({
+			systemType: Tag.SystemType.Genre
+		})
+		.then((res) => {
+			var genreTag = res[0];
 
-var AdminButtons = React.createClass({
-  render: function() {
-    return(
-      <div className="admin-state-btn-wrapper">
-        <ul>
-          <li>
-            <div className="pending-state">Pending</div>
-          </li>
-          <li>
-            <div className="approved-state">Approved</div>
-          </li>
-          <li>
-            <div className="live-state">Live</div>
-          </li>
-          <li>
-            <div className="save-state">Save & Close</div>
-          </li>
-        </ul>
-      </div>
-    )
-  }
-}); 
+			this.setState({
+				genreTag: genreTag
+			});
 
-var SubmitButtons = React.createClass({
-  render: function() {
-    return(
-      <div className="submit-btns">
-        <button className="additional-track-btn mar-r-md"><i className="icon-plus-circled"></i> Add Additional Tracks</button>
-        <button className="btn-primary"><i className="icon-ok-circled2"></i> Submit</button>
-      </div>
-    )
-  }
-}); 
+			return stemApi.getTagValues({
+				tagTypeId: genreTag.id
+			});
 
-var LoadingAnimation = React.createClass({
-  render: function() {
-    return(
-      <div className="loader col-xs-12 pull-right">
-        <div className="loader__bar"></div>
-        <div className="loader__bar"></div>
-        <div className="loader__bar"></div>
-        <div className="loader__bar"></div>
-        <div className="loader__bar"></div>
-        <div className="loader__ball"></div>    
-      </div>
-    )
-  }
+		})
+		.then((res) => {
+			this.setState({
+				genreTagValues: res
+			});
+
+			if (this.props.albumId) {
+				return stemApi.getSongsByAlbum({ id: this.props.albumId });
+			}
+		})
+		.then((res) => {
+			if (res) {
+				this.setState({
+					addedTracks: res.map((item) => {
+						return {
+							id: item.id,
+							trackName: item.name,
+							isExplicit: item.isExplicit,
+	  						releaseDate: Date.parse(item.releaseDate),
+	  						additionalCredits: item.additionalCredits,
+	  						audioFile:  '', // TODO: Wire this up
+	  						selectedGenres: null, // TODO: Wire this up
+	  						lyrics: item.lyrics,
+	  						youTubeShareLink: item.youTubeShareLink,
+	  						isrc: item.isrc,
+	  						isEditing: false
+						};
+					})
+				});
+
+				return;
+			} else {
+				this.setState({
+					addedTracks: this.state.addedTracks.concat({
+						id: null,
+						trackName: '',
+						isExplicit: false,
+		  				isrc: '',
+		  				releaseDate: '',
+		  				additionalCredits: '',
+		  				audioFile: null,
+		  				selectedGenres: null,
+		  				lyrics: '',
+		  				youTubeShareLink: '',
+		  				isEditing: true
+					})
+				});
+				
+			}
+		})
+		.catch((reason) => {
+			console.error('Error initializing SubmitMusicTrack page: ' + Utilities.normalizeError(reason));
+		});
+	},
+	onTrackChange: function(track) {
+		var currentIndex = this.state.addedTracks.findIndex((item) => {
+			return item.isEditing;
+		});
+
+		var newState = [].concat(this.state.addedTracks);
+		newState[currentIndex] = Object.assign({}, this.state.addedTracks[currentIndex], track);
+
+		this.setState({
+			addedTracks: newState
+		});
+	},
+
+	onAddClicked: function() {
+		var currentIndex = this.state.addedTracks.findIndex((item) => {
+			return item.isEditing;
+		});
+
+		if (this.validate(this.state.addedTracks[currentIndex])) {
+			var newState = [].concat(this.state.addedTracks);
+			newState[currentIndex] = Object.assign({}, this.state.addedTracks[currentIndex], { isEditing: false });
+			newState.push({
+				id: null,
+				trackName: '',
+				isExplicit: false,
+				isrc: '',
+				releaseDate: '',
+				additionalCredits: '',
+				audioFile: null,
+				selectedGenres: null,
+				lyrics: '',
+				youTubeShareLink: '',
+				isEditing: true
+			});
+
+			this.setState({
+				addedTracks: newState,
+				statusMessage: ''
+			});
+		} else {
+			this.setState({
+				statusMessage: 'The track is not valid, please add an audio file, title, and genre before adding the track'
+			});
+		}
+	},
+
+	onEditTrack: function(index) {
+		var currentIndex = this.state.addedTracks.findIndex((item) => {
+			return item.isEditing;
+		});
+
+		var newState = [].concat(this.state.addedTracks);
+		newState[currentIndex] = Object.assign({}, this.state.addedTracks[currentIndex], { isEditing: false });
+		newState[index] = Object.assign({}, this.state.addedTracks[index], { isEditing: true });
+		
+		this.setState({
+			addedTracks: newState,
+			statusMessage: ''
+		});
+	},
+	
+	onDecreaseOrder: function(track) {
+		var currentIndex = this.state.addedTracks.indexOf(track);
+
+		if (currentIndex < this.state.addedTracks.length - 1) {
+			var newArray = [].concat(this.state.addedTracks);
+			var temp = newArray[currentIndex];
+			
+			newArray[currentIndex] = newArray[currentIndex + 1];
+			newArray[currentIndex + 1] = temp;
+
+			this.setState({
+				addedTracks: newArray
+			});
+		}
+	},
+	
+	validate: function(track) {
+		// TODO: Implement visual validation later
+		return track.trackName && track.trackName.length > 0 && 
+		  	track.audioFile && 
+		  	track.selectedGenres && track.selectedGenres.length > 0;
+	},
+	createTracks: function(album, artistName) {
+		return Promise.map(this.state.addedTracks, (track, index) => {
+			if (!this.validate(track)) {
+				return Promise.reject('The track is not valid, please add an audio file, title, and genre before adding the track');
+			}
+
+			if (!track.id) {
+				return stemApi.createSong({
+					artistName: artistName,
+					name: track.trackName,
+					trackNumber: index + 1,
+					albumId: album.id,
+					songFileId: track.audioFile.response.id,
+					additionalCredits: track.additionalCredits,
+					releaseDate: track.releaseDate,
+					tagIds: track.selectedGenres.map((genreItem) => {
+						return genreItem.id;
+					}),
+					lyrics: track.lyrics,
+					youTubeShareLink: track.youTubeShareLink,
+					isExplicit: track.isExplicit
+				})
+				.then((res) => {
+					track.id = res.id;
+
+					console.log('Track Created: ' + JSON.stringify(res));
+					
+					return res;
+				});
+			}
+		});
+	},
+	render: function() {
+		return (	
+			<div className="submit-track-edit-wrapper col-xs-12">
+				<p className="order-track">{ !this.props.isAdmin ? "Order" : null }</p>
+				<p>Track Name</p>
+				<ul className="tag-list">
+					{ this.state.addedTracks.map((item, index) => {
+						return ( 
+							<li key={ index } className="pad-b-sm">
+								{ item.isEditing ? 
+									<TrackEditor 
+										item={ item }
+										genreTag={ this.state.genreTag } 
+										genreTagValues={ this.state.genreTagValues }
+										onChange={ this.onTrackChange }
+										onAddClicked={ this.onAddClicked }
+										statusMessage= { this.state.statusMessage }
+									/> :
+									<TrackItem 
+										item={ item }
+										index={ index }
+										onEditTrack={ this.onEditTrack } 
+										onDecreaseOrder={ this.onDecreaseOrder }
+										playerStateVisible={ true } />
+								}
+							</li> 
+						);
+					})}
+				</ul>
+			</div>		
+		);
+	}
 });

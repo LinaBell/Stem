@@ -95,9 +95,9 @@ var Header = (function() {
 					<Menu displayMenu={this.state.displayMenu} showHideMenu={this.showHideMenu} alignment="right">
 						<div className="menu-content">
 							<MenuHeader showHideMenu={this.showHideMenu} />
-							{ this.props.artistMenu.map(function(item) {
+							{ this.props.menu.map(function(item) {
 								return (
-									<MenuItem showHideMenu={this.showHideMenu} hash={item.text} key={item.pageID} meunItemID={item.pageID}>
+									<MenuItem showHideMenu={this.showHideMenu} hash={item.text} key={item.pageID} meunItemID={item.pageID} level={item.level}>
 										<i className={item.icon}></i> {item.text}
 									</MenuItem>
 								)
@@ -160,8 +160,15 @@ var Header = (function() {
 		},
 
 		render: function() {
+			var itemClass = 'menu-item';
+			if(this.props.meunItemID == this.context.currentPage) {
+				itemClass += ' active'
+			}
+			if(this.props.level == 2) {
+				itemClass += ' level-2'
+			}
 			return (
-				<div onClick={this.navigate.bind(this, this.props.meunItemID)} key={this.props.meunItemID} className={this.props.meunItemID == this.context.currentPage ? "menu-item active" : "menu-item"}>{this.props.children}</div>
+				<div onClick={this.navigate.bind(this, this.props.meunItemID)} key={this.props.meunItemID} className={itemClass}>{this.props.children}</div>
 			);
 		}
 	});
@@ -175,8 +182,8 @@ var Header = (function() {
 
 	function mapStateToProps(state) {
 		return {
-			isLoggedIn: state.isLoggedIn,
-			currentPage: state.currentPage
+			isLoggedIn: state.userState.isLoggedIn,
+			currentPage: state.appState.currentPage
 		};
 	}
 
