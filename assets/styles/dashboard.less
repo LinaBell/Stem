@@ -1,12 +1,22 @@
 @import url("variables.less");
 
-.pick-ups-wrapper {
-  background-color: rgb(80, 227, 194);
+.artist-dashboard-wrapper {
+  padding: 0; 
+  margin: 0;
+  position: relative;
+}
+.analytics-wrapper {
+  width: 100%;
+}
+.analytics-box {
+  font-family: @font-reg;
   height: 400px;
+  color: @white;
+  background-image: none;
   h2, h1, h3 {
-    font-family: @font-reg;
-    color: @white;
     font-style: normal;
+    position: relative;
+    z-index: 3500;
   }
   h1, h3 {
     text-align: center;
@@ -14,7 +24,31 @@
   }
   h3 {
     font-size: 1.5em;
-    max-width: 250px;
+    max-width: 300px;
     margin: 0 auto;
   }
+}
+.dashboard-img-overlay {
+  width: 100%;
+  height: 400px;
+  position: absolute;
+  opacity: .2;
+  z-index: 3400;
+  background-size: 100%;
+  background-position: center bottom;
+  background-repeat: no-repeat;
+  background-image: url('/assets/images/radio.jpg');
+}
+
+.pick-ups {
+  ul {
+    display: inline-block;
+    p {
+      display: inline-block;
+    }
+  }
+}
+.map-svg {
+  width: 475px;
+  margin-left: -50px;
 }

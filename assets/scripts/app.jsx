@@ -195,7 +195,7 @@ var App = React.createClass({
 
 				{ this.props.currentPage == 2 ?
 					<div className="wrapper">
-						<ArtistDashboardMain />
+						<DashboardMain />
 						<Footer />
 					</div>
 				: null} 
@@ -269,6 +269,14 @@ var App = React.createClass({
 				{ this.props.currentPage == 16 ?
 					<div className="wrapper">
 						<CreatorBookmarkMain creator={this.props.userInfo} />
+						<Footer />
+					</div>
+				: null}
+
+				{ this.props.currentPage == 17 ?
+					<div className="wrapper">
+						<FilterNav />
+						<StaffPicksMain />
 						<Footer />
 					</div>
 				: null}
@@ -422,6 +430,11 @@ var creatorMenu = [
 		pageID: 16,
 		text: "Creator Bookmarks",
 		icon: "icon-cog-2"
+	},
+	{
+		pageID: 17,
+		text: "Staff Picks",
+		icon: "icon-reddit"
 	}
 ]; 
 

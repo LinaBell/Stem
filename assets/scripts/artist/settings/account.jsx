@@ -237,7 +237,7 @@ var ArtistAccountSettings = ReactRedux.connect(function(state) {
 						<input onChange={this.handleFileUpload} type="file" name="bannerImg" id="bannerImg" />
 					</div>
 				</div>
-				<div className="col-xs-12 col-md-6 col-lg-5 pad-t-md">
+				<div className="col-xs-12 col-md-6 pad-t-md">
 					<h4 className="mar-b-sm">Profile Name</h4>
 					<input id="profileName" onChange={this.handleFieldChange} value={this.state.profileName} />
 					<h4 className="mar-b-sm">Custom Link</h4>
