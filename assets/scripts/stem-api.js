@@ -300,5 +300,13 @@ var StemApi = (function () {
             contentType: 'application/json; charset=utf-8'
         });
     });
+    StemApi.prototype.getArtistSignups = Promise.method(function (req) {
+        return $.ajax({
+            type: 'GET',
+            url: this.baseUrl + 'admin/artists/signups/' + req.days,
+            headers: { 'Authorization': this.authorization },
+            contentType: 'application/json; charset=utf-8'
+        });
+    });
     return StemApi;
 }());
