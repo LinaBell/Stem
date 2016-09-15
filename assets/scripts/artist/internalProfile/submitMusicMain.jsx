@@ -17,7 +17,7 @@ var SubmitMusicMain = ReactRedux.connect(null, function(dispatch) {
 			statusMessage: ''
 		};
 	},
-	submitClicked: function() {
+	onSubmitClicked: function() {
 		var album = this.refs.submitMusicAlbum;
 		var track = this.refs.submitMusicTrack;
 		
@@ -63,7 +63,7 @@ var SubmitMusicMain = ReactRedux.connect(null, function(dispatch) {
                         <SubmitMusicAlbum ref="submitMusicAlbum" />
                         <SubmitMusicTrack 
                         	ref="submitMusicTrack" 
-                        	onSubmitClicked={ this.submitClicked } 
+                        	onSubmitClicked={ this.onSubmitClicked } 
                         	isSubmitting={ this.state.isSubmitting } 
                         	statusMessage={ this.state.statusMessage } />
                     </div>    

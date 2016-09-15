@@ -105,7 +105,7 @@ var SubmitMusicTrack = React.createClass({
 			return item.isEditing;
 		});
 
-		if (this.validate(this.state.addedTracks[currentIndex])) {
+		if (currentIndex === -1 || this.validate(this.state.addedTracks[currentIndex])) {
 			var newState = [].concat(this.state.addedTracks);
 			newState[currentIndex] = Object.assign({}, this.state.addedTracks[currentIndex], { isEditing: false });
 			newState.push(this.createNewTrack());
@@ -139,8 +139,8 @@ var SubmitMusicTrack = React.createClass({
 	onIncreaseOrder: function(index) {
 		if (index < this.state.addedTracks.length - 1) {
 			var newArray = [].concat(this.state.addedTracks);
-			var temp = newArray[index];
 			
+			var temp = newArray[index];
 			newArray[index] = newArray[index + 1];
 			newArray[index + 1] = temp;
 
@@ -207,9 +207,6 @@ var SubmitMusicTrack = React.createClass({
 										genreTag={ this.state.genreTag } 
 										genreTagValues={ this.state.genreTagValues }
 										onChange={ this.onTrackChange }
-										onAddClicked={ this.onAddClicked }
-										onSubmitClicked={ this.props.onSubmitClicked }
-										isSubmitting={ this.props.isSubmitting }
 									/> :
 									<TrackItem 
 										item={ item }
@@ -222,6 +219,36 @@ var SubmitMusicTrack = React.createClass({
 						);
 					})}
 				</ul>
+
+				{ this.props.isAdmin ? 
+					<div className="admin-state-btn-wrapper">
+				        <ul>
+							<li>
+								<div className="pending-state">Pending</div>
+							</li>
+							<li>
+								<div className="approved-state">Approved</div>
+							</li>
+							<li>
+								<div className="live-state">Live</div>
+							</li>
+							<li>
+								<div className="save-state">Save & Close</div>
+							</li>
+				        </ul>
+				    </div> : 
+					<div className="submit-btns">
+				        <button className="additional-track-btn mar-r-md" onClick={ this.onAddClicked }>
+				        	<i className="icon-plus-circled"></i> Add Additional Track
+				        </button>
+
+				        { this.state.isSubmitting ? <LoadingButton /> : 
+					        <button className="btn-primary" onClick={ this.props.onSubmitClicked }>
+					        	<i className="icon-ok-circled2"></i> Submit
+					        </button>
+					    }
+			      	</div>
+				}
 				<p className="bg-danger">
 					{ this.state.statusMessage }
 				</p>
