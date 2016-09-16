@@ -10,21 +10,6 @@ var SubmitMusicTrack = React.createClass({
 		  	statusMessage: statusMessage
 		}
 	},
-	createNewTrack: function() {
-		return {
-			id: null,
-			trackName: '',
-			isExplicit: false,
-			isrc: '',
-			releaseDate: '',
-			additionalCredits: '',
-			audioFile: null,
-			selectedGenres: null,
-			lyrics: '',
-			youTubeShareLink: '',
-			isEditing: true
-		};
-	},
 	componentDidMount: function() {
 		stemApi.getAllTagTypes({
 			systemType: Tag.SystemType.Genre
@@ -70,13 +55,14 @@ var SubmitMusicTrack = React.createClass({
 	  						lyrics: item.lyrics,
 	  						youTubeShareLink: item.youTubeShareLink,
 	  						isrc: item.isrc || '',
+	  						status: item.status,
 	  						isEditing: false
 						};
 					})
 				});
 			} else {
 				this.setState({
-					addedTracks: this.state.addedTracks.concat(this.createNewTrack())
+					addedTracks: this.state.addedTracks.concat(this.newTrack())
 				});
 			}
 		})
@@ -90,6 +76,26 @@ var SubmitMusicTrack = React.createClass({
 				statusMessage: nextProps.statusMessage
 			});
 		}
+	},
+	newTrack: function() {
+		return {
+			id: null,
+			trackName: '',
+			isExplicit: false,
+			isrc: '',
+			releaseDate: '',
+			additionalCredits: '',
+			audioFile: null,
+			selectedGenres: null,
+			lyrics: '',
+			youTubeShareLink: '',
+			isEditing: true
+		};
+	},
+	currentTrack: function() {
+		return this.state.addedTracks.find((item) => {
+			return item.isEditing;
+		});
 	},
 	onTrackChange: function(track) {
 		var currentIndex = this.state.addedTracks.findIndex((item) => {
@@ -112,7 +118,7 @@ var SubmitMusicTrack = React.createClass({
 		if (currentIndex === -1 || this.validate(this.state.addedTracks[currentIndex])) {
 			var newState = [].concat(this.state.addedTracks);
 			newState[currentIndex] = Object.assign({}, this.state.addedTracks[currentIndex], { isEditing: false });
-			newState.push(this.createNewTrack());
+			newState.push(this.newTrack());
 
 			this.setState({
 				addedTracks: newState,
@@ -160,7 +166,7 @@ var SubmitMusicTrack = React.createClass({
 		  	track.audioFile && 
 		  	track.selectedGenres && track.selectedGenres.length > 0;
 	},
-	updateCreateTracks: function(album, artistName) {
+	upsertTracks: function(album, artistName) {
 
 		return Promise.map(this.state.addedTracks, (track, index) => {
 			if (!this.validate(track)) {
@@ -212,7 +218,9 @@ var SubmitMusicTrack = React.createClass({
 										genreTag={ this.state.genreTag } 
 										genreTagValues={ this.state.genreTagValues }
 										onChange={ this.onTrackChange }
-									/> :
+										isAdmin={ this.props.isAdmin }
+									/>
+									:
 									<TrackItem 
 										item={ item }
 										index={ index }
@@ -227,21 +235,9 @@ var SubmitMusicTrack = React.createClass({
 
 				{ this.props.isAdmin ? 
 					<div className="admin-state-btn-wrapper">
-				        <ul>
-							<li>
-								<div className="pending-state">Pending</div>
-							</li>
-							<li>
-								<div className="approved-state">Approved</div>
-							</li>
-							<li>
-								<div className="live-state">Live</div>
-							</li>
-							<li>
-								<button onClick={ this.props.onSubmitClicked } className="save-state">Save & Close</button>
-							</li>
-				        </ul>
-				    </div> : 
+						<button onClick={ this.props.onSubmitClicked } className="save-state">Save & Close</button>
+				    </div> 
+				    : 
 					<div className="submit-btns">
 				        <button className="additional-track-btn mar-r-md" onClick={ this.onAddClicked }>
 				        	<i className="icon-plus-circled"></i> Add Additional Track

@@ -13,6 +13,13 @@ var Tag = {
 	}
 };
 
+// This should be moved to it's own file at some point
+var TrackStatus = {
+	Pending: 0,
+	Approved: 1,
+	Live: 2
+};
+
 // This should be moved to it's own file or use a third party library
 var Formatter = {
 	formatFileLabel: function(file) {
