@@ -1,38 +1,47 @@
 var StatusButtons = React.createClass({
+	selectedClass: 'selected',
+	pendingClass: 'pending-state',
+	approvedClass: 'approved-state',
+	liveClass: 'live-state',
+
 	getInitialState: function() {
 		return {
-			pendingClass: 'pending-state',
-			approvedClass: 'approved-state',
-			liveClass: 'live-state'
+			pendingClass: this.pendingClass,
+			approvedClass: this.approvedClass,
+			liveClass: this.liveClass
 		};
 	},
 	componentDidMount: function() {
-		if (this.props.value) {
-			this.setStatus(this.props.value);
-		}
+		this.setStatus(this.props.value);
 	},
 	componentWillReceiveProps: function(nextProps) {
-		if (nextProps.value) {
-			this.setStatus(nextProps.value);
-		}
+		this.setStatus(nextProps.value);
 	},
 	setStatus: function(status) {
-		switch (status) {
-			case TrackStatus.Pending:
-				this.setState({
-					pendingClass: this.state.pendingClass + ' selected'
-				});
-				break;
-			case TrackStatus.Approved:
-				this.setState({
-					approvedClass: this.state.approvedClass + ' selected'
-				});
-				break;
-			case TrackStatus.Live:
-				this.setState({
-					liveClass: this.state.liveClass + ' selected'
-				});
-				break;
+		if (typeof status !== undefined) {
+			switch (status) {
+				case TrackStatus.Pending:
+					this.setState({
+						pendingClass: this.pendingClass + ' ' + this.selectedClass,
+						approvedClass: this.approvedClass,
+						liveClass: this.liveClass
+					});
+					break;
+				case TrackStatus.Approved:
+					this.setState({
+						approvedClass: this.approvedClass + ' ' + this.selectedClass,
+						pendingClass: this.pendingClass,
+						liveClass: this.liveClass
+					});
+					break;
+				case TrackStatus.Live:
+					this.setState({
+						liveClass: this.liveClass + ' ' + this.selectedClass,
+						pendingClass: this.pendingClass,
+						approvedClass: this.approvedClass
+					});
+					break;
+			}
 		}
 	},
 	statusChange: function(status) {
