@@ -47,7 +47,7 @@ var SubmitMusicTrack = React.createClass({
 			});
 
 			if (this.props.albumId) {
-				return stemApi.getSongsByAlbum({ id: this.props.albumId });
+				return stemApi.getSongsByAlbumAdmin({ id: this.props.albumId });
 			}
 		})
 		.then((res) => {
@@ -59,12 +59,17 @@ var SubmitMusicTrack = React.createClass({
 							trackName: item.name,
 							isExplicit: item.isExplicit,
 	  						releaseDate: Date.parse(item.releaseDate),
-	  						additionalCredits: item.additionalCredits,
-	  						audioFile:  '', // TODO: Wire this up
-	  						selectedGenres: null, // TODO: Wire this up
+	  						additionalCredits: item.additionalCredits || '',
+	  						audioFile:  {
+	  							data: {
+	  								name: item.fileName,
+	  								size: 0 // TODO: We don't have this info on get
+	  							}
+	  						},
+	  						selectedGenres: item.tags,
 	  						lyrics: item.lyrics,
 	  						youTubeShareLink: item.youTubeShareLink,
-	  						isrc: item.isrc,
+	  						isrc: item.isrc || '',
 	  						isEditing: false
 						};
 					})
@@ -155,7 +160,8 @@ var SubmitMusicTrack = React.createClass({
 		  	track.audioFile && 
 		  	track.selectedGenres && track.selectedGenres.length > 0;
 	},
-	createTracks: function(album, artistName) {
+	updateCreateTracks: function(album, artistName) {
+
 		return Promise.map(this.state.addedTracks, (track, index) => {
 			if (!this.validate(track)) {
 				return Promise.reject('The track is not valid, please add an audio file, title, and genre before adding the track');
@@ -174,7 +180,7 @@ var SubmitMusicTrack = React.createClass({
 						return genreItem.id;
 					}),
 					lyrics: track.lyrics,
-					youTubeShareLink: track.youTubeShareLink,
+					youTubeShareLink: track.youTubeShareLink, // TODO: This field might be changing
 					isExplicit: track.isExplicit
 				})
 				.then((res) => {
@@ -232,7 +238,7 @@ var SubmitMusicTrack = React.createClass({
 								<div className="live-state">Live</div>
 							</li>
 							<li>
-								<div className="save-state">Save & Close</div>
+								<button onClick={ this.props.onSubmitClicked } className="save-state">Save & Close</button>
 							</li>
 				        </ul>
 				    </div> : 

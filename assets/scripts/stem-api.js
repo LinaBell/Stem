@@ -221,6 +221,15 @@ var StemApi = (function () {
     	});
     });
 
+    StemApi.prototype.getSongsByAlbumAdmin = Promise.method(function(req) {
+    	return $.ajax({
+    		type: 'GET',
+    		url: this.baseUrl + 'admin/albums/' + req.id + '/songs',
+    		headers: { 'Authorization': this.authorization },
+            contentType: 'application/json; charset=utf-8'
+    	});
+    });
+
     StemApi.prototype.getAlbumsByArtist = function (rse) {
         var _this = this;
         $.ajax({
@@ -317,5 +326,6 @@ var StemApi = (function () {
             contentType: 'application/json; charset=utf-8'
         });
     });
+
     return StemApi;
 }());
