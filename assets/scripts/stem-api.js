@@ -108,7 +108,7 @@ var StemApi = (function () {
 
     // File
     StemApi.prototype.upload = Promise.method(function (req) {
-    	var uploadResponse = null;
+    	var uploadResponse;    	
 
         return $.ajax({
             type: 'POST',
@@ -118,7 +118,7 @@ var StemApi = (function () {
             data: JSON.stringify({ fileName: req.file.name }),
             dataType: 'json'
         })
-        .then(function(res) {
+        .then((res) => {
         	uploadResponse = res;
 
             return $.ajax({
@@ -131,8 +131,8 @@ var StemApi = (function () {
                 // the actual file is sent raw
                 data: req.file
             });
-        }.bind(this))
-        .then(function(res) {
+        })
+        .then((res) => {
         	return $.ajax({
 	            type: 'PUT',
 	            url: this.baseUrl + 'files/upload/' + uploadResponse.id,
@@ -141,7 +141,22 @@ var StemApi = (function () {
 	            data: JSON.stringify({ isComplete: true }),
 	            dataType: 'json'
 	        });
-        }.bind(this));
+        })
+        .catch((reason) => {
+        	console.error('Error during upload api call: ' + reason);
+
+        	if (uploadResponse.id) {
+        		console.log('Attempting to cancel the upload...');
+        		return this.cancelUpload({
+		 			id: uploadResponse.id
+        		});
+        	}
+        })
+        .then((res) => {
+        	if (res) {
+        		console.log('Upload cancelling successful for id: ' + uploadResponse.id);
+        	}
+        });
     });
 
     //Song
