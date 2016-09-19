@@ -110,17 +110,17 @@ var StemApi = (function () {
 	    });
     });
 
-    StemApi.prototype.upload = Promise.method(function (req) {
+    StemApi.prototype.upload = function (req) {
     	var uploadResponse;    	
 
-        return $.ajax({
+        return Promise.resolve($.ajax({
             type: 'POST',
             url: this.baseUrl + 'files/upload',
             headers: { 'Authorization': this.authorization },
             contentType: 'application/json; charset=utf-8',
             data: JSON.stringify({ fileName: req.file.name }),
             dataType: 'json'
-        })
+        }))
         .then((res) => {
         	uploadResponse = res;
 
@@ -154,13 +154,8 @@ var StemApi = (function () {
 		 			id: uploadResponse.id
         		});
         	}
-        })
-        .then((res) => {
-        	if (res) {
-        		console.log('Upload cancelling successful for id: ' + uploadResponse.id);
-        	}
         });
-    });
+    };
 
     ///////////// Songs /////////////
     //
