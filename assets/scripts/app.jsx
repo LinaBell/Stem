@@ -13,6 +13,13 @@ var Tag = {
 	}
 };
 
+// This should be moved to it's own file at some point
+var TrackStatus = {
+	Pending: 0,
+	Approved: 1,
+	Live: 2
+};
+
 // This should be moved to it's own file or use a third party library
 var Formatter = {
 	formatFileLabel: function(file) {
@@ -284,10 +291,19 @@ var App = React.createClass({
 
 				{ this.props.currentPage == 20 ?
 					<div className="wrapper">
+						<AdminHeader />
 						<AdminMain />
 						<Footer />
 					</div>
 				: null} 
+
+				{ this.props.currentPage == 22 ?
+					<div className="wrapper">
+						<AdminHeader />
+						<AdminNewArtistMain />
+						<Footer />
+					</div>
+				: null}
 
 				{ this.props.currentPage == 100 ?
 					<div className="wrapper">

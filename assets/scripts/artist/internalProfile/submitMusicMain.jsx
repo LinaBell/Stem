@@ -30,7 +30,7 @@ var SubmitMusicMain = ReactRedux.connect(null, function(dispatch) {
 		// the API and the UI design, revisit this later
 		return album.createAlbum(track.state.releaseDate)
 			.then((res) => {
-				return track.createTracks(res, album.state.artistName);
+				return track.upsertTracks(res, album.state.artistName);
 			})
 			.then((res) => {
 				console.log('Album created successfully: ' + JSON.stringify(res));
