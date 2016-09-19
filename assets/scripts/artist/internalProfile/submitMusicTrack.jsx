@@ -43,7 +43,7 @@ var SubmitMusicTrack = React.createClass({
 							id: item.id,
 							trackName: item.name,
 							isExplicit: item.isExplicit,
-	  						releaseDate: Date.parse(item.releaseDate),
+	  						releaseDate: new Date(item.releaseDate).toDateString(),
 	  						additionalCredits: item.additionalCredits || '',
 	  						audioFile:  {
 	  							data: {

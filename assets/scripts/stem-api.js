@@ -365,7 +365,7 @@ var StemApi = (function () {
     		url: this.baseUrl + 'admin/songs/' + req.id,
     		headers: { 'Authorization': this.authorization },
             contentType: 'application/json; charset=utf-8',
-            data: JSON.stringify(data),
+            data: JSON.stringify(req),
             dataType: 'json'
     	});
     });
