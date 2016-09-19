@@ -10,8 +10,8 @@ var TrackItem = React.createClass({
 
 		return (
 			<div>
-				{ this.props.isAdmin ? <i onClick={ this.onIncreaseOrder } className="icon-down-open fa-2x"></i> : null }
-				{ this.props.isAdmin ? null : <i className="icon-play-2 primary fa-2x"></i> }
+				{ this.props.isAdmin ? null : <i onClick={ this.onIncreaseOrder } className="icon-down-open fa-2x"></i> }
+				{ this.props.isAdmin ? <i className="icon-play-2 primary fa-2x"></i> : null }
 
 				<span className="loaded-track-name"><p>{ item.trackName }</p></span>
 
