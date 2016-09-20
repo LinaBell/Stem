@@ -102,7 +102,7 @@ var SubmitMusicAlbum = React.createClass({
 					<input value={this.state.upc} onChange={this.onUpcChange} placeholder="( optional )" />
 				</div>
 				<div className="submit-album-img mar-l-lg">
-					<ImageUpload width="240" onImageChange={ this.onAlbumArtChange } value={ this.state.albumArt }>
+					<ImageUpload onImageChange={ this.onAlbumArtChange } value={ this.state.albumArt }>
 						<div className="upload-album-content">
 					  		<i className="icon-picture-1 fa-5x"></i>
 					  		<h4 className="pad-b-sm">Upload your album art</h4>

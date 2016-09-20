@@ -56,8 +56,6 @@ var ImageUpload = React.createClass({
 		// The maxWidth style is important for the image cropper control, remove at your own risk
 		var imageStyles = {
 			maxWidth: '100%',
-			height: 'auto',
-			width: this.props.width + 'px',
 			display: this.state.imageLoaded ? 'initial' : 'none'
 		};
 
