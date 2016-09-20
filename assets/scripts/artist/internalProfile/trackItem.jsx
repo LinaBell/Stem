@@ -9,9 +9,9 @@ var TrackItem = React.createClass({
 		var item = this.props.item;
 
 		return (
-			<div>
-				{ this.props.playerStateVisible ? <i onClick={ this.onIncreaseOrder } className="icon-down-open fa-2x"></i> : null }
-				{ this.props.playerStateVisible ? null : <i className="icon-play-2 primary fa-2x"></i> }
+			<div className="col-xs-12">
+				{ this.props.isAdmin ? null : <i onClick={ this.onIncreaseOrder } className="icon-down-open fa-2x"></i> }
+				{ this.props.isAdmin ? <i className="icon-play-2 primary fa-2x"></i> : null }
 
 				<span className="loaded-track-name"><p>{ item.trackName }</p></span>
 
@@ -26,7 +26,7 @@ var TrackItem = React.createClass({
 						}) : null
 				  	}
 				</ul>
-				{ this.props.playerStateVisible ? null : <div className="live-state submit-track-state pull-right">Live</div> }
+				{ this.props.isAdmin ? null : <div className="live-state submit-track-state pull-right">Live</div> }
 				
 				<i onClick={ this.onEditTrack } className="icon-edit submit-edit-icon pull-right fa-2x"></i>
 			</div>

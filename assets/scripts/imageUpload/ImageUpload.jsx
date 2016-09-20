@@ -23,6 +23,14 @@ var ImageUpload = React.createClass({
 			this.props.onImageChange(imageData, this.state.originalImage);
 		}.bind(this));
 	},
+	componentWillReceiveProps: function(nextProps) {
+
+		if (nextProps.value) {
+			this.setState({
+				imageLoaded: true
+			});
+		}
+	},
 	componentWillUnmount: function() {
 		$(this.refs.imageElement).cropper('destroy');
 	},
@@ -48,14 +56,12 @@ var ImageUpload = React.createClass({
 		// The maxWidth style is important for the image cropper control, remove at your own risk
 		var imageStyles = {
 			maxWidth: '100%',
-			height: 'auto',
-			width: this.props.width + 'px',
 			display: this.state.imageLoaded ? 'initial' : 'none'
 		};
 
 		return (
 			<div>
-				<img ref="imageElement" style={ imageStyles } />
+				<img ref="imageElement" style={ imageStyles } src={ this.props.value } />
 				{ !this.state.imageLoaded ? this.props.children : null }
 				<input onChange={ this.handleChangeFile } type="file" accept="image/*" />
 			</div>

@@ -1,0 +1,27 @@
+@import url("variables.less");
+
+.error-page {
+	height: 100vh;
+	width: 100%;
+	position: fixed;
+	background-image: url("/assets/images/wood.jpg");
+	background-position: center center;
+	background-attachment: fixed;
+	background-size: cover; 
+}
+.error-page-content {
+	width: 500px;
+	margin: 80px auto;
+	background-color: fade(@primary, 92.5%)
+}
+.error-page-content h2 {
+	font-size: 6em
+}
+.error-page-content h4 {
+	font-size: 1.7em;
+	font-family: @font-reg;
+	line-height: 30px
+}
+.error-page-content span {
+	text-decoration: underline;
+}
