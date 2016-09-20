@@ -46,7 +46,7 @@ var AdminSubmitMusic = React.createClass({
 			console.error(errorMessage);
 			this.setState({
 				statusMessage: errorMessage
-			});x
+			});
 		})
 		.finally(() => {
 			this.setState({
