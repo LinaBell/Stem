@@ -1,124 +1,25 @@
 var PlaylistTable = React.createClass({
 	getInitialState: function() {
 		return {
-			displayPlayer: false,
-			displayNotice: false,
-			displayEdit: false,
-			displayAdmin: false,
-			displayArtistTaggedSuccess: false,
-			displayUploadSuccess: false,
-			displaySongDetail: false,
-			displayCreatorDownloadsMain: false,
-			bookMarked: false,
-
 			albumId: ''
 		}
 	},
-
-	showHidePlayer: function() {
-		if(this.state.displayPlayer) {
-			this.setState({ displayPlayer: false });
-		} else {
-			this.setState({ displayPlayer: true });
-		}
-	},
-
-	showHideNotice: function() {
-		if(this.state.displayNotice) {
-			this.setState({ displayNotice: false });
-		} else {
-			this.setState({ displayNotice: true });
-		}
-	},	
-	showHideEdit: function() {
-		if(this.state.displayEdit) {
-			this.setState({ displayEdit: false });
-		} else {
-			this.setState({ displayEdit: true });
-		}
-	},	
-	showHideAdminDashboard: function() {
-		if(this.state.displayAdminDashboard) {
-			this.setState({ displayAdminDashboard: false });
-		} else {
-			this.setState({ displayAdminDashboard: true });
-		}
-	},
-	showHideArtistTaggedSuccess: function() {
-		if(this.state.displayArtistTaggedSuccess) {
-			this.setState({ displayArtistTaggedSuccess: false });
-		} else {
-			this.setState({ displayArtistTaggedSuccess: true });
-		}
-	},
-	showHideUploadSuccess: function() {
-		if(this.state.displayUploadSuccess) {
-			this.setState({ displayUploadSuccess: false });
-		} else {
-			this.setState({ displayUploadSuccess: true });
-		}
-	},
-	showHidePaymentProcessingPage: function() {
-		if(this.state.displayPaymentProcessingPage) {
-			this.setState({ displayPaymentProcessingPage: false });
-		} else {
-			this.setState({ displayPaymentProcessingPage: true });
-		}
-	},
-	showHidePaymentOptions: function() {
-		if(this.state.displayPaymentOptions) {
-			this.setState({ displayPaymentOptions: false });
-		} else {
-			this.setState({ displayPaymentOptions: true });
-		}
-	},
-	showHideWelcomeModal: function() {
-		if(this.state.displayWelcomeModal) {
-			this.setState({ displayWelcomeModal: false });
-		} else {
-			this.setState({ displayWelcomeModal: true });
-		}
-	},
-	showHideCreatorProfile: function() {
-		if(this.state.displayCreatorProfile) {
-			this.setState({ displayCreatorProfile: false });
-		} else {
-			this.setState({ displayCreatorProfile: true });
-		}
-	},
-	showHideCreatorDownloadsMain: function() {
-		this.setState({
-			displayCreatorDownloadsMain: !this.state.displayCreatorDownloadsMain
+	testAdminEdit: function() {
+		store.dispatch({
+			type: 'GoToPage',
+			data: {
+				currentPage: 105,
+				pageParams: {
+					albumId: this.state.albumId
+				}
+			}
 		});
 	},
-	showHideSongDetail: function() {
-		if(this.state.displaySongDetail) {
-			this.setState({ displaySongDetail: false });
-		} else {
-			this.setState({ displaySongDetail: true });
-		}
+	onAlbumIdChange: function(ev) {
+		this.setState({
+			albumId: ev.target.value
+		});
 	},
-	handleLike: function (event) {
-		if (event.currentTarget.className == "icon-bookmark-empty fa-2x" ) {
-	  		event.currentTarget.className = "icon-bookmark-2 primary fa-2x";
-		}
-  	},
-  	testAdminEdit: function() {
-  		store.dispatch({
-  			type: 'GoToPage',
-  			data: {
-  				currentPage: 105,
-  				pageParams: {
-  					albumId: this.state.albumId
-  				}
-  			}
-  		});
-  	},
-  	onAlbumIdChange: function(ev) {
-  		this.setState({
-  			albumId: ev.target.value
-  		});
-  	},
 	render: function() {
 		var songs = this.props.songs;
 
@@ -146,41 +47,6 @@ var PlaylistTable = React.createClass({
 				</table>
 
 				<div>
-					<a onClick={this.showHidePlayer}>play test</a>
-					<br />
-					<a onClick={this.showHideNotice}>notice test</a>
-					{ this.state.displayPlayer ? <Player /> : null }
-					{ this.state.displayNotice ? <ArtistDownloadNotice showHideNotice={self.showHideNotice} /> : null }
-					<br />
-					<a onClick={this.showHideEdit}>show edit</a>
-					{ this.state.displayEdit ? <ArtistEditTrack showHideEdit={self.showHideEdit} /> : null }
-					<br />
-					<a onClick={this.showHideAdminDashboard}>show admin dashboard</a>
-					{ this.state.displayAdminDashboard ? <AdminDashboard showHideAdminDashboard={self.showHideAdminDashboard} /> : null }
-					<br />
-					<a onClick={this.showHideUploadSuccess}>show upload success</a>
-					{ this.state.displayUploadSuccess ? <ArtistUploadSuccess showHideUploadSuccess={self.showHideUploadSuccess} /> : null }
-					<br />
-					<a onClick={this.showHidePaymentOptions}>show payment options</a>
-					{ this.state.displayPaymentOptions ? <PaymentOptions showHidePaymentOptions={self.showHidePaymentOptions} /> : null }
-					<br />
-					<a onClick={this.showHidePaymentProcessingPage}>show payment processing</a>
-					{ this.state.displayPaymentProcessingPage ? <PaymentProcessingPage showHidePaymentProcessingPage={self.showHidePaymentProcessingPage} /> : null }
-					<br />
-					<a onClick={this.showHideArtistTaggedSuccess}>show tagged success</a>
-					{ this.state.displayArtistTaggedSuccess ? <ArtistTaggedSuccess showHideArtistTaggedSuccess={self.showHideArtistTaggedSuccess} /> : null }
-					<br />
-					<a onClick={this.showHideWelcomeModal}>show welcome</a>
-					{ this.state.displayWelcomeModal ? <WelcomeModal showHideWelcomeModal={self.showHideWelcomeModal} /> : null }
-					<br />
-					<a onClick={this.showHideCreatorDownloadsMain}>show creator downloads</a>
-					{ this.state.displayCreatorDownloadsMain ? <CreatorDownloadsMain /> : null }
-					<br />
-					<a onClick={this.showHideSongDetail}>show song detail</a>
-					{ this.state.displaySongDetail ? <ArtistSongDetail showHideSongDetail={self.showHideSongDetail} /> : null }
-					<br />
-					<a onClick={this.props.navigateToCreatorProfile}>show creator profile</a>
-					<br />
 					<input type="text" value={ this.albumId } onChange={ this.onAlbumIdChange } placeholder="Album Id" />
 					<a onClick={ this.testAdminEdit }>Test Admin Edit</a>
 				</div>	
@@ -190,15 +56,37 @@ var PlaylistTable = React.createClass({
 });
 
 var PlaylistItems = React.createClass({
+	navigateToArtist: function(playList) {
+		store.dispatch({
+			type: 'GoToPage',
+			data: {
+				currentPage: 110,
+				pageParams: {
+					artistId: playList.artistId
+				}
+			}
+		});
+	},	
+	bookmarkSong: function (songID) {
+		if (this.props.songs.isBookmarked == false) {
+			stemApi.bookmarkSong({
+				songID: songID.id
+			});
+		} else {
+			stemApi.unBookmarkSong({
+				songID: songID.id
+			});
+		}
+	},
 	render: function() {
 		var playList = this.props.songs;
 		return(
 				<tr>
-					<td className="col-md-3">
+					<td className="playlist-track-artist col-md-3">
 						<img className="mobile-img-thumbnail mar-r-md" src={playList.albumArtUrl} />
 						<div className="playlist-detail-info">
 							<h4>{playList.name}</h4>
-							<p>{playList.artistName}</p>
+							<p><a onClick={this.navigateToArtist.bind(this, playList.id)}>{playList.artistName}</a></p>
 						</div> 
 					</td>
 
@@ -219,7 +107,7 @@ var PlaylistItems = React.createClass({
 					</td>
 
 					<td className="col-md-1">
-						<span onClick={this.handleLike} className={ playList.isBookmarked ? "icon-bookmark-2 primary fa-2x" : "icon-bookmark-empty fa-2x"}></span>            
+						<span onClick={this.bookmarkSong.bind(this, playList)} className={ playList.isBookmarked ? "icon-bookmark-2 primary fa-2x" : "icon-bookmark-empty fa-2x"}></span>            
 					</td>
 
 					<td className="col-md-1">

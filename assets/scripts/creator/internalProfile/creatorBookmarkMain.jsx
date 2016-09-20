@@ -18,7 +18,13 @@ var CreatorBookmarkMain = ReactRedux.connect(function(state) {
     }.bind(this), function(error) {
       console.error('Creator Bookmarks Error: ' + JSON.stringify(error));
     });
-
+  },
+  onBookmarkChange: function(creatorId) {
+    debugger;
+    stemApi.getCreatorBookmarks({
+      creatorId: this.props.creatorId
+    })
+    .then((res)=> {})
   },
   render: function() {
     return(
@@ -27,7 +33,7 @@ var CreatorBookmarkMain = ReactRedux.connect(function(state) {
           <h3>Bookmarks</h3>
           <p>The songs you've liked</p>
         </div>
-        {this.state.songs.length <= 0 ? <BookmarksZeroState /> : <PlaylistTable songs={this.state.songs} /> }  
+        {this.state.songs.length <= 0 ? <BookmarksZeroState /> : <PlaylistTable songs={this.state.songs} onChange={this.onBookmarkChange} /> }  
         
       </div>
     )

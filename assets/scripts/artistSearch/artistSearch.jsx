@@ -13,7 +13,7 @@ var ArtistSearch = ReactRedux.connect(function(state) {
 				<div className="content-with-sidebar">
 					{ this.props.searchResults.length === 0 && this.props.searchTerms.length > 0 ? 
 						<ArtistSearchNoResultsHeader /> : 
-						<ArtistSearchResultsTable songs={this.props.searchResults} />
+						<PlaylistTable songs={this.props.searchResults} />
 					}
 				</div>  
 			</span>

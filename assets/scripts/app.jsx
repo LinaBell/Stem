@@ -424,9 +424,9 @@ var creatorMenu = [
 		icon: "icon-user"
 	},
 	{
-		pageID: 12,
-		text: "Loved",
-		icon: "icon-heart"
+		pageID: 16,
+		text: "Creator Bookmarks",
+		icon: "icon-bookmark"
 	},
 	{
 		pageID: 13,
@@ -441,11 +441,6 @@ var creatorMenu = [
 	{
 		pageID: 15,
 		text: "Account Settings",
-		icon: "icon-cog-2"
-	},
-	{
-		pageID: 16,
-		text: "Creator Bookmarks",
 		icon: "icon-cog-2"
 	},
 	{

@@ -322,6 +322,24 @@ var StemApi = (function () {
             contentType: 'application/json; charset=utf-8'
         });
     });
+
+    StemApi.prototype.bookmarkSong = Promise.method(function (req) {
+        return $.ajax({
+            type: 'POST',
+            url: this.baseUrl + 'songs/' + req.songID + '/bookmark',
+            headers: { 'Authorization': this.authorization },
+            contentType: 'application/json; charset=utf-8'
+        });
+    });
+
+    StemApi.prototype.unBookmarkSong = Promise.method(function (req) {
+        return $.ajax({
+            type: 'DELETE',
+            url: this.baseUrl + 'songs/' + req.songID + '/bookmark',
+            headers: { 'Authorization': this.authorization },
+            contentType: 'application/json; charset=utf-8'
+        });
+    });
     
     ///////////// Artists /////////////
     //
