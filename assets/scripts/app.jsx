@@ -374,7 +374,7 @@ var App = React.createClass({
 
 var artistMenu = [
 	{
-		pageID: 0,
+		pageID: 6,
 		text: "Home",
 		icon: "icon-home"
 	},
