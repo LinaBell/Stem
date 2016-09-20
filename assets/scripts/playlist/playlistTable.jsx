@@ -181,7 +181,7 @@ var PlaylistTable = React.createClass({
 					<br />
 					<a onClick={this.props.navigateToCreatorProfile}>show creator profile</a>
 					<br />
-					<input type="text" value={ this.albumId } onChange={ this.onAlbumIdChange } />
+					<input type="text" value={ this.albumId } onChange={ this.onAlbumIdChange } placeholder="Album Id" />
 					<a onClick={ this.testAdminEdit }>Test Admin Edit</a>
 				</div>	
 			</div>
