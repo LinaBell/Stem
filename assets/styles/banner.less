@@ -31,6 +31,10 @@
 	border-radius: 50%;
 	display: inline-block;
 	vertical-align: top;
+	box-shadow: @drop-1
+}
+.header-img , .header-content-detail {
+	vertical-align: middle
 }
 .header-content-detail {
 	display: inline-block;
@@ -40,10 +44,19 @@
 	font-family: @font-reg;
 }
 
+.header-content-detail h1, .header-content-detail h4 {
+	text-shadow: @drop-9;
+}
+
+.header-content-detail button {
+	box-shadow: @drop-9;
+}
+
 .header-social-media li {
 	display: inline;
 	color: white;
 	padding-left: @space-sm;
+	text-shadow: @drop-9;
 }
 .red {
 	color: #D80325;
