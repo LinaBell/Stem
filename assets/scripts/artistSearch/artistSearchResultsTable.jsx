@@ -7,7 +7,7 @@ var ArtistSearchResultsTable = React.createClass({
 	        	<tbody>
 	        		{this.props.songs.map(function(song, index) {
 						return (
-							<ArtistSearchResultsTableRow key={index} song={song} />
+							<PlaylistTable key={index} songs={song} />
 						);
 					})}
 	        	</tbody>

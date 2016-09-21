@@ -1,24 +1,23 @@
 var CreatorBookmarkMain = ReactRedux.connect(function(state) {
   return {
-    creatorId: state.userState.userInfo.id
-  };
-})(React.createClass({
-  getInitialState: function() {
-    return {
-      songs: []
-    }
-  },
-  componentDidMount: function() {
-    stemApi.getCreatorBookmarks({
-      creatorId: this.props.creatorId
-    })
-    .then(function(response) {
-      this.setState({ songs: response });
-      console.log(this.state.songs, "hi hello");
-    }.bind(this), function(error) {
-      console.error('Creator Bookmarks Error: ' + JSON.stringify(error));
-    });
+    creatorId: state.userState.userInfo.id,
+    creatorBookmarks: state.appState.creatorBookmarks
 
+  };
+},
+function (dispatch) {
+  return {
+    refreshBookmarks: function(creatorId) {
+      dispatch(beginBookmarkRefresh(creatorId));
+    }
+  };
+}
+)(React.createClass({
+  componentDidMount: function() {
+    this.props.refreshBookmarks(this.props.creatorId)
+  },
+  onBookmarkChange: function() {
+    this.props.refreshBookmarks(this.props.creatorId)
   },
   render: function() {
     return(
@@ -27,7 +26,8 @@ var CreatorBookmarkMain = ReactRedux.connect(function(state) {
           <h3>Bookmarks</h3>
           <p>The songs you've liked</p>
         </div>
-        {this.state.songs.length <= 0 ? <BookmarksZeroState /> : <PlaylistTable songs={this.state.songs} /> }  
+        {this.props.creatorBookmarks.length <= 0 ? <BookmarksZeroState /> : 
+          <PlaylistTable songs={this.props.creatorBookmarks} onBookmarkChange={this.onBookmarkChange} canToggleBookmarkIcon={false} /> }  
         
       </div>
     )
