@@ -59,6 +59,7 @@ var PlaylistItem = ReactRedux.connect(null,
 function (dispatch) {
   return {
     navigateToArtist: function(song) {
+    	debugger;
 			dispatch({
 				type: 'GoToPage',
 				data: {
@@ -110,7 +111,7 @@ function (dispatch) {
 						<img className="mobile-img-thumbnail mar-r-md" src={song.albumArtUrl} />
 						<div className="playlist-detail-info">
 							<h4>{song.name}</h4>
-							<p><a onClick={this.navigateToArtist.bind(this, song.id)}>{song.artistName}</a></p>
+							<p><a onClick={this.props.navigateToArtist.bind(this, song)}>{song.artistName}</a></p>
 						</div> 
 					</td>
 
