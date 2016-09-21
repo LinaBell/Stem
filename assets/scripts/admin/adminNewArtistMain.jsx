@@ -2,7 +2,7 @@ var AdminNewArtistMain = React.createClass({
   render: function() {
     return(
       <div>
-        <AdminNewSubmissions />
+        <AdminNewArtists />
       </div>
     )
   }
