@@ -38,9 +38,9 @@ var PlaylistTable = React.createClass({
 						</tr>	
 					</thead>
 					<tbody>
-						{songs.map(function(songs, index) {
+						{songs.map((song, index) => {
 							return (
-								<PlaylistItems key={index} songs={songs} />
+									<PlaylistItem key={index} song={song} onBookmarkChange={this.props.onBookmarkChange} canToggleBookmarkIcon={this.props.canToggleBookmarkIcon} />
 							)
 						})}
 					</tbody>
@@ -55,7 +55,7 @@ var PlaylistTable = React.createClass({
 	}
 });
 
-var PlaylistItems = React.createClass({
+var PlaylistItem = React.createClass({
 	navigateToArtist: function(playList) {
 		store.dispatch({
 			type: 'GoToPage',
@@ -67,47 +67,66 @@ var PlaylistItems = React.createClass({
 			}
 		});
 	},	
-	bookmarkSong: function (songID) {
-		if (this.props.songs.isBookmarked == false) {
+	bookmarkSong: function (song) {
+		if (song.currentTarget.className == "icon-bookmark-empty fa-2x" ) {
+	  		song.currentTarget.className = "icon-bookmark-2 primary fa-2x";
+		}
+		if (!this.props.song.isBookmarked) {
 			stemApi.bookmarkSong({
-				songID: songID.id
+				song: this.props.song.id
+			})
+			.then((res) => {
+					this.props.onBookmarkChange();
+					console.log('bookmarked song');
+			})
+			.catch((reason) => {
+				console.error('Error occurred when adding bookmark: ' + Utilities.normalizeError(reason));
 			});
 		} else {
 			stemApi.unBookmarkSong({
-				songID: songID.id
-			});
+				song: this.props.song.id
+			})
+			.then((res) => {
+					this.props.onBookmarkChange();
+					console.log('deleted bookmark');
+			})
+			.catch((reason) => {
+				console.error('Error occurred when removing bookmark: ' + Utilities.normalizeError(reason));
+			});	
 		}
 	},
 	render: function() {
-		var playList = this.props.songs;
+		var song = this.props.song;
+		var isBookmarked = song.isBookmarked || !this.props.canToggleBookmarkIcon;
+
 		return(
 				<tr>
 					<td className="playlist-track-artist col-md-3">
-						<img className="mobile-img-thumbnail mar-r-md" src={playList.albumArtUrl} />
+						<img className="mobile-img-thumbnail mar-r-md" src={song.albumArtUrl} />
 						<div className="playlist-detail-info">
-							<h4>{playList.name}</h4>
-							<p><a onClick={this.navigateToArtist.bind(this, playList.id)}>{playList.artistName}</a></p>
+							<h4>{song.name}</h4>
+							<p><a onClick={this.navigateToArtist.bind(this, song.id)}>{song.artistName}</a></p>
 						</div> 
 					</td>
 
 					<td className="col-md-2">
-						<p>{playList.albumName}</p>              
+						<p>{song.albumName}</p>              
 					</td>
 
 					<td className="col-md-1">
-						<p>{playList.duration}</p>              
+						<p>{song.duration}</p>              
 					</td>
 
 					<td className="col-md-1">
-						<p>{playList.downloadCount}</p>              
+						<p>{song.downloadCount}</p>              
 					</td>
 
 					<td className="col-md-1">
-						<p>{playList.bookmarkCount} <i className="icon-up-open"></i></p>
+						<p>{song.bookmarkCount} <i className="icon-up-open"></i></p>
 					</td>
 
 					<td className="col-md-1">
-						<span onClick={this.bookmarkSong.bind(this, playList)} className={ playList.isBookmarked ? "icon-bookmark-2 primary fa-2x" : "icon-bookmark-empty fa-2x"}></span>            
+						<span onClick={this.bookmarkSong} className={ isBookmarked ? "icon-bookmark-2 primary fa-2x" : "icon-bookmark-empty fa-2x"}></span>            
 					</td>
 
 					<td className="col-md-1">

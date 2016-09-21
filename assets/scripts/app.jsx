@@ -80,6 +80,25 @@ function beginSearch(searchTerms) {
 	};
 }
 
+function beginBookmarkRefresh(creatorId) {
+	return function(dispatch) {
+		stemApi.getCreatorBookmarks({
+      creatorId: creatorId
+    })
+		.then(function(res) {
+			dispatch({
+	        	type: 'UpdateCreatorBookmarks',
+    	    	data: {
+        			results: res
+        		}
+        	});
+		})
+		.catch(function(reason) {
+			console.error('Search Error: ' + Utilities.normalizeError(reason));
+		});
+	};
+}
+
 // This should be moved to it's own file at some point
 const initialAppState = {
 	baseAPI: 'http://52.32.255.104/api',
@@ -87,6 +106,7 @@ const initialAppState = {
 	pageParams: {},
 	searchTerms: '',
 	searchResults: [],
+	creatorBookmarks: [],
 	tagList: []
 };
 var appReducer = function(state = initialAppState, action) {
@@ -101,6 +121,11 @@ var appReducer = function(state = initialAppState, action) {
 			return Object.assign({}, state, {
 				searchResults: action.data.results,
 				searchTerms: action.data.terms
+			});
+
+		case 'UpdateCreatorBookmarks':
+			return Object.assign({}, state, {
+				creatorBookmarks: action.data.results
 			});
 
 		default: 
