@@ -16,8 +16,6 @@ var TopAlbums = React.createClass({
       console.error('Top Artist Error: ' + JSON.stringify(error));
     });
 
-		// this.slideShow();
-
 		var l = $('.top-album-wrapper ul li').length,
 			w = $('.top-album-wrapper ul li').width(),
 			windowWidth = window.innerWidth,

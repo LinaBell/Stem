@@ -10,10 +10,9 @@ var AdminNewArtists = React.createClass({
     })
     .then(function(response) {
       this.setState({artist: response});
-      console.log(this.state.artists);
     }.bind(this))
     .catch(function(error) {
-      console.log('Creator Profile Error: ' + JSON.stringify(error));
+      console.log('Creator Profile Error: ' + Utilities.normalizeError(reason));
     });
 	},
 	onTimespanChange: function(days) {
