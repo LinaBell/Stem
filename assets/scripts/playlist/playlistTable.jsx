@@ -55,18 +55,23 @@ var PlaylistTable = React.createClass({
 	}
 });
 
-var PlaylistItem = React.createClass({
-	navigateToArtist: function(playList) {
-		store.dispatch({
-			type: 'GoToPage',
-			data: {
-				currentPage: 110,
-				pageParams: {
-					artistId: playList.artistId
+var PlaylistItem = ReactRedux.connect(null,
+function (dispatch) {
+  return {
+    navigateToArtist: function(song) {
+			dispatch({
+				type: 'GoToPage',
+				data: {
+					currentPage: 110,
+					pageParams: {
+						artistId: song.artistId
+					}
 				}
-			}
-		});
-	},	
+			});
+		}
+  };
+}
+)(React.createClass({	
 	bookmarkSong: function (song) {
 		if (song.currentTarget.className == "icon-bookmark-empty fa-2x" ) {
 	  		song.currentTarget.className = "icon-bookmark-2 primary fa-2x";
@@ -135,4 +140,4 @@ var PlaylistItem = React.createClass({
 				</tr>
 		)
 	}
-});
+}));
