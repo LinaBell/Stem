@@ -15,13 +15,13 @@ var ImageUpload = React.createClass({
 			rotatable: false,
 			zoomable: false,
 			aspectRatio: 1
-		}).on('crop.cropper', function(ev) {
+		}).on('crop.cropper', (ev) => {
 			var imageData = $(ev.target)
 				.cropper('getCroppedCanvas')
 				.toDataURL();
 
 			this.props.onImageChange(imageData, this.state.originalImage);
-		}.bind(this));
+		});
 	},
 	componentWillReceiveProps: function(nextProps) {
 
@@ -35,13 +35,13 @@ var ImageUpload = React.createClass({
 		$(this.refs.imageElement).cropper('destroy');
 	},
 	
-	handleChangeFile: function(ev) {
+	onFileChange: function(ev) {
 		var fileReader = new FileReader(),
 			file = ev.target.files[0];
 		
 		if (file) {
 			fileReader.readAsDataURL(file);
-			fileReader.onloadend = function() {
+			fileReader.onloadend = () => {
 				var cropperEl = $(this.refs.imageElement);
 				cropperEl.cropper('replace', fileReader.result);
 				this.setState({
@@ -49,7 +49,7 @@ var ImageUpload = React.createClass({
 					originalImage: file
 				});
 
-			}.bind(this);
+			}
 		}
 	},
 	render: function() {
@@ -59,11 +59,16 @@ var ImageUpload = React.createClass({
 			display: this.state.imageLoaded ? 'initial' : 'none'
 		};
 
+		var imageSource = this.props.value;
+		if (typeof imageSource !== 'string') {
+			imageSource = null;
+		}
+
 		return (
 			<div>
-				<img ref="imageElement" style={ imageStyles } src={ this.props.value } />
+				<img ref="imageElement" style={ imageStyles } src={ imageSource } />
 				{ !this.state.imageLoaded ? this.props.children : null }
-				<input onChange={ this.handleChangeFile } type="file" accept="image/*" />
+				<input onChange={ this.onFileChange } type="file" accept="image/*" />
 			</div>
 		);
 	}
