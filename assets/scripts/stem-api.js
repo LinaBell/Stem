@@ -340,6 +340,15 @@ var StemApi = (function () {
             contentType: 'application/json; charset=utf-8'
         });
     });
+
+    StemApi.prototype.getSpinHistory = Promise.method(function (req) {
+        return $.ajax({
+            type: 'GET',
+            url: this.baseUrl + 'creators/' + req.id + '/spins',
+            headers: { 'Authorization': this.authorization },
+            contentType: 'application/json; charset=utf-8'
+        });
+    });
     
     ///////////// Artists /////////////
     //

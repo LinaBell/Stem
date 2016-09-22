@@ -75,7 +75,7 @@ var TrackEditor = React.createClass({
 					</div>	
 					<div className="col-lg-6">
 						<p>YouTube Share Link</p>
-						<input name="youTubeShareLink" value={ item.youTubeShareLink } onChange={ this.onInputChange } placeholder="( optional )" />
+						<input name="youTubeVideoId" value={ item.youTubeVideoId } onChange={ this.onInputChange } placeholder="( optional )" />
 					</div>
 				</div>
 				<div className="pad-b-sm col-xs-12">

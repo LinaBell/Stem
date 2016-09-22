@@ -287,7 +287,7 @@ var App = React.createClass({
 				{ this.props.currentPage == 14 ?
 					<div className="wrapper">
 						<FilterNav />
-						<CreatorSpinHistoryMain />
+						<CreatorSpinHistoryMain creator={this.props.userInfo} />
 						<Footer />
 					</div>
 				: null}

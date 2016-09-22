@@ -53,7 +53,7 @@ var SubmitMusicTrack = React.createClass({
 	  						},
 	  						selectedGenres: item.tags,
 	  						lyrics: item.lyrics,
-	  						youTubeShareLink: item.youTubeShareLink,
+	  						youTubeVideoId: item.youTubeVideoId,
 	  						isrc: item.isrc || '',
 	  						status: item.status,
 	  						isEditing: false
@@ -88,7 +88,7 @@ var SubmitMusicTrack = React.createClass({
 			audioFile: null,
 			selectedGenres: null,
 			lyrics: '',
-			youTubeShareLink: '',
+			youTubeVideoId: '',
 			isEditing: true
 		};
 	},
@@ -186,7 +186,7 @@ var SubmitMusicTrack = React.createClass({
 						return genreItem.id;
 					}),
 					lyrics: track.lyrics,
-					youTubeShareLink: track.youTubeShareLink, // TODO: This field might be changing
+					youTubeVideoId: track.youTubeVideoId, // TODO: This field might be changing
 					isExplicit: track.isExplicit
 				})
 				.then((res) => {
