@@ -108,8 +108,10 @@ function (dispatch) {
 		return(
 				<tr>
 					<td className="playlist-track-artist col-md-3">
-						<img className="mobile-img-thumbnail mar-r-md" src={song.albumArtUrl} />
-						<div className="playlist-detail-info">
+						<div className="col-sm-4">
+							<img className="mobile-img-thumbnail mar-r-md" src={song.albumArtUrl} />
+						</div>
+						<div className="playlist-detail-info col-sm-8">
 							<h4>{song.name}</h4>
 							<p><a onClick={this.props.navigateToArtist.bind(this, song)}>{song.artistName}</a></p>
 						</div> 
