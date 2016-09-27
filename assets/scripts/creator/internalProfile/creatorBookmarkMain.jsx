@@ -22,9 +22,9 @@ function (dispatch) {
   render: function() {
     return(
       <div>
-        <div className="pad-box-lg">
-          <h3>Bookmarks</h3>
-          <p>The songs you've liked</p>
+        <div className="tables-page pad-box-lg">
+          <h2>Bookmarks</h2>
+          <p className="font-light">The songs you've liked</p>
         </div>
         {this.props.creatorBookmarks.length <= 0 ? <BookmarksZeroState /> : 
           <PlaylistTable songs={this.props.creatorBookmarks} onBookmarkChange={this.onBookmarkChange} canToggleBookmarkIcon={false} /> }  
