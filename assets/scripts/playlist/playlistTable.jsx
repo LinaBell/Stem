@@ -59,7 +59,6 @@ var PlaylistItem = ReactRedux.connect(null,
 function (dispatch) {
   return {
     navigateToArtist: function(song) {
-    	debugger;
 			dispatch({
 				type: 'GoToPage',
 				data: {

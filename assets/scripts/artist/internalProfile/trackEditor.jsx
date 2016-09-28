@@ -22,7 +22,7 @@ var TrackEditor = React.createClass({
 	
 	onCheckedChange: function(ev) {		
 		var newState = {};
-		newState[ev.target.name] = ev.target.value;
+		newState[ev.target.name] = ev.target.value === 'on';
 
 		this.setState(newState);
 		this.propagateState(newState);
@@ -75,7 +75,7 @@ var TrackEditor = React.createClass({
 					</div>	
 					<div className="col-lg-6">
 						<p>YouTube Share Link</p>
-						<input name="youTubeShareLink" value={ item.youTubeShareLink } onChange={ this.onInputChange } placeholder="( optional )" />
+						<input name="youTubeVideoId" value={ item.youTubeVideoId } onChange={ this.onInputChange } placeholder="( optional )" />
 					</div>
 				</div>
 				<div className="pad-b-sm col-xs-12">
@@ -83,7 +83,7 @@ var TrackEditor = React.createClass({
 					<textarea name="lyrics" value={ item.lyrics } onChange={ this.onInputChange } placeholder="Paste your lyrics here.." />
 				</div>
 				<div className="explicit-checkbox pad-b-lg col-xs-12 red">
-					<input type="checkbox" name="isExplicit" onChange={ this.onCheckedChange } checked={ item.isExplicit } />
+					<input type="checkbox" name="isExplicit" onClick={ this.onCheckedChange } checked={ item.isExplicit } />
 				  	<h5 className="pad-l-sm">EXPLICIT</h5>
 				</div>
 				{ this.props.isAdmin ? 

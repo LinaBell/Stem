@@ -287,7 +287,7 @@ var App = React.createClass({
 				{ this.props.currentPage == 14 ?
 					<div className="wrapper">
 						<FilterNav />
-						<CreatorSpinHistoryMain />
+						<CreatorSpinHistoryMain creator={this.props.userInfo} />
 						<Footer />
 					</div>
 				: null}
@@ -322,10 +322,26 @@ var App = React.createClass({
 					</div>
 				: null} 
 
+				{ this.props.currentPage == 21 ?
+					<div className="wrapper">
+						<AdminHeader />
+						<AdminNewCreators />
+						<Footer />
+					</div>
+				: null} 
+
 				{ this.props.currentPage == 22 ?
 					<div className="wrapper">
 						<AdminHeader />
 						<AdminNewArtistMain />
+						<Footer />
+					</div>
+				: null}
+
+				{ this.props.currentPage == 23.3 ?
+					<div className="wrapper">
+						<AdminHeader />
+						<AdminNewSubmissions />
 						<Footer />
 					</div>
 				: null}
@@ -378,12 +394,12 @@ var App = React.createClass({
 					</div>
 				: null}
 
-				{ this.props.currentPage == 107 ?
+				{ this.props.currentPage === 107 ? 
 					<div className="wrapper">
 						<PromoLandingPageMain />
 						<Footer />
 					</div>
-				: null}
+				: null }
 
 				{ this.props.currentPage === 110 ? 
 					<div className="wrapper">
@@ -433,6 +449,11 @@ var artistMenu = [
 	{
 		pageID: 5,
 		text: "Account Settings",
+		icon: "icon-cog-2"
+	},
+	{
+		pageID: 107,
+		text: "Promo Page",
 		icon: "icon-cog-2"
 	}
 ]; 
