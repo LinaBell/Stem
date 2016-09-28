@@ -370,12 +370,39 @@ var StemApi = (function () {
         });
     }
 
+    StemApi.prototype.getArtist = Promise.method(function (req) {
+        return $.ajax({
+            type: 'GET',
+            url: this.baseUrl + 'artist/' + req.id,
+            headers: { 'Authorization': this.authorization },
+            contentType: 'application/json; charset=utf-8'
+        });
+    });
+
 	///////////// Admin /////////////
 	//
     StemApi.prototype.getArtistSignups = Promise.method(function (req) {
         return $.ajax({
             type: 'GET',
             url: this.baseUrl + 'admin/artists/signups/' + req.days,
+            headers: { 'Authorization': this.authorization },
+            contentType: 'application/json; charset=utf-8'
+        });
+    });
+
+    StemApi.prototype.getArtistSubmissions = Promise.method(function (req) {
+        return $.ajax({
+            type: 'GET',
+            url: this.baseUrl + 'admin/artists/submissions/' + req.days,
+            headers: { 'Authorization': this.authorization },
+            contentType: 'application/json; charset=utf-8'
+        });
+    });
+
+    StemApi.prototype.getCreatorSignups = Promise.method(function (req) {
+        return $.ajax({
+            type: 'GET',
+            url: this.baseUrl + 'admin/creators/signups/' + req.days,
             headers: { 'Authorization': this.authorization },
             contentType: 'application/json; charset=utf-8'
         });
