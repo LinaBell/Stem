@@ -12,6 +12,7 @@ var Header = (function() {
 
 	    search: function() {
 	    	this.setState({ displaySearch: true });
+	    	this.setState({ searchInput: '' });
 	    	this.props.search(this.props.searchTerms.join(' ') + ' ' + this.state.searchInput);
 
 	    },
