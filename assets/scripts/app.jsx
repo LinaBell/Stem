@@ -53,16 +53,14 @@ var Utilities = {
 function beginSearch(searchTerms) {
 	return function(dispatch) {
 		stemApi.searchSongs({
-            request: {
-                text: searchTerms
-            }
+        	text: searchTerms
         })
 		.then(function(response) {
 			dispatch({
 	        	type: 'UpdateSearch',
     	    	data: {
         			results: response.songs,
-        			terms: response.terms.join(' ')
+        			terms: response.terms
         		}
         	});
 
@@ -104,7 +102,7 @@ const initialAppState = {
 	baseAPI: 'http://52.32.255.104/api',
 	currentPage: 0,
 	pageParams: {},
-	searchTerms: '',
+	searchTerms: [],
 	searchResults: [],
 	creatorBookmarks: [],
 	tagList: []
@@ -120,7 +118,7 @@ var appReducer = function(state = initialAppState, action) {
 		case 'UpdateSearch':
 			return Object.assign({}, state, {
 				searchResults: action.data.results,
-				searchTerms: action.data.terms
+				searchTerms: [].concat(action.data.terms)
 			});
 
 		case 'UpdateCreatorBookmarks':
