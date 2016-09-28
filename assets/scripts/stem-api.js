@@ -224,16 +224,16 @@ var StemApi = (function () {
     	});
     });
 
-    StemApi.prototype.searchSongs = function (rse) {
+    StemApi.prototype.searchSongs = Promise.method(function (req) {
         return $.ajax({
             type: 'POST',
             url: this.baseUrl + 'songs/search',
             headers: { 'Authorization': this.authorization },
             contentType: 'application/json; charset=utf-8',
-            data: JSON.stringify(rse.request),
+            data: JSON.stringify(req),
             dataType: 'json'
         });
-    };
+    })
 
     ///////////// Albums /////////////
     //

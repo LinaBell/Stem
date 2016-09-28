@@ -12,7 +12,8 @@ var Header = (function() {
 
 	    search: function() {
 	    	this.setState({ displaySearch: true });
-	    	this.props.search(this.state.searchInput);
+	    	this.props.search(this.props.searchTerms.join(' ') + ' ' + this.state.searchInput);
+
 	    },
 
 		showHideMenu: function() {
@@ -186,14 +187,15 @@ var Header = (function() {
 	function mapStateToProps(state) {
 		return {
 			isLoggedIn: state.userState.isLoggedIn,
-			currentPage: state.appState.currentPage
+			currentPage: state.appState.currentPage,
+			searchTerms: state.appState.searchTerms
 		};
 	}
 
 	function mapDispatchToProps(dispatch, ownProps) {
 		return {
 			search: function(terms) {
-				dispatch(beginSearch(terms));
+				dispatch(beginSearch(terms.trim()));
 			}
 		};
 	}
