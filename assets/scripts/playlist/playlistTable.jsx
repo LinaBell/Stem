@@ -24,7 +24,7 @@ var PlaylistTable = React.createClass({
 		var songs = this.props.songs;
 
 		return(
-			<div className="playlist-wrapper pad-l-lg pad-r-lg pad-b-lg">
+			<div className="playlist-wrapper pad-b-lg">
 				<table className="col-xs-12 table no-borders">
 					<thead>
 						<tr>

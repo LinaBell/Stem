@@ -1,7 +1,7 @@
 @import url("variables.less");
 
 .menu-page-overlay, .filter-page-overlay {
-    background: @grey-4;
+    background: @white;
     bottom: 0;
     display: none;
     left: 0;
@@ -14,14 +14,14 @@
 }
 .menu-page-overlay.active, .filter-page-overlay.active {
     display: block;
-    opacity: 0.4;
+    opacity: 0.8;
     transform: translateX(0px);
 }
 .menu-page-overlay {
     z-index: 3500;
 }
 .filter-page-overlay {
-    z-index: 1000;
+    z-index: 3500;
 }
 
 .header {
@@ -33,7 +33,7 @@
     box-shadow: @drop-5;
     background-color: @white;
     position: relative;
-    z-index: 3000;
+    z-index: 3501;
 }
 .header-brand {
     padding: 5px 15px 0;

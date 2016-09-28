@@ -6,10 +6,12 @@ var Header = (function() {
 	            displaySearch: false,
 				autofocus: true,
 				searchInput: '',
+				filterOverlay: false
 	        };
 	    },
 
 	    search: function() {
+	    	this.setState({ displaySearch: true });
 	    	this.props.search(this.state.searchInput);
 	    },
 
@@ -22,14 +24,14 @@ var Header = (function() {
 		},
 
 		showHideSearch: function() {
-			if(this.state.displaySearch) {
-				this.setState({ 
-					displaySearch: false,
-					searchInput: ''
-				});
-			} else {
-		        this.setState({ displaySearch: true });
-			}
+		    this.setState({ displaySearch: true });
+		    this.setState({ filterOverlay: true });
+		},
+
+		filterOverlay: function() {
+		    if(this.state.filterOverlay) {
+				this.setState({ filterOverlay: false });
+			} 
 		},
 
 		navigate: function(id) {
@@ -45,6 +47,7 @@ var Header = (function() {
 
 		searchInputKeyPress: function( ev ) {
 			if (ev.which === 13) {
+				this.setState({ filterOverlay: false });
 				this.search();
 			}
 		},
@@ -104,7 +107,7 @@ var Header = (function() {
 							}.bind(this))}
 						</div>
 					</Menu>
-					<div className={this.state.displaySearch ? "filter-page-overlay active" : null} onClick={this.showHideSearch}></div>
+					<div onClick={this.filterOverlay} className={this.state.filterOverlay ? "filter-page-overlay active" : null} ></div>
 				</div>
 			)
 		}

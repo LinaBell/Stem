@@ -25,7 +25,7 @@ function (dispatch) {
 				<div className="sidebar search-sidebar-tablet">
 					<ArtistSearchSideBar />
 				</div>
-				<div className="content-with-sidebar">
+				<div className="pad-box-lg">
 					{ this.props.searchResults.length === 0 && this.props.searchTerms.length > 0 ? 
 						<ArtistSearchNoResultsHeader /> : 
 						<PlaylistTable songs={this.props.searchResults} onBookmarkChange={this.onBookmarkChange} canToggleBookmarkIcon={true} />
