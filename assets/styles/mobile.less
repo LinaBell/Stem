@@ -394,7 +394,11 @@
   .promo-landing-header button {
     padding: 5px 20px; 
   }
-  .promo-landing-main-bottom-mobile {
+  .promo-landing-main-bottom {
+    padding: 0;
+    margin: 0;
+  }
+  .promo-landing-content {
     padding: 0;
   }
   .promo-background {
@@ -422,10 +426,16 @@
     height: 170px;
   }
   .promo-song-info .right-side-content {
-    margin: 50px 0 0 0;
+    padding-bottom: @space-md;
+    margin: 50px 0 0;
+    border-bottom: 2px solid @grey-4
   }
   .promo-share-this, .follow-artist-with-links, .promo-landing-header h3 {
     display: none;
+  }
+  .promo-landing-main-bottom {
+    padding-top: @space-md;
+    border-top: none;
   }
   .become-a-patron {
     width: 100%;
