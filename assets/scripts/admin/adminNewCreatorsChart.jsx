@@ -1,6 +1,6 @@
-var AdminNewArtistsChart = React.createClass({
-  componentDidMount: function() {
-    stemApi.getArtistSignups({
+var AdminNewCreatorsChart = React.createClass({
+    componentDidMount: function() {
+    stemApi.getCreatorSignups({
       days: 1
     })
     .then( (res) =>  {
@@ -10,12 +10,12 @@ var AdminNewArtistsChart = React.createClass({
                 json: res.signUps.map((item, index) => {
                     return{
                         day: index,
-                        Artists: item.count
+                        Creators: item.count
                     }
                 }),
                 keys: {
                     x: 'day',
-                    value: ['Artists']
+                    value: ['Creators']
                 },
                 axis: {
                     y: {
@@ -30,23 +30,22 @@ var AdminNewArtistsChart = React.createClass({
     });
   },
   onTimespanChange: function() {
-    stemApi.getArtistSignups({
+    stemApi.getCreatorSignups({
       days: days
     })
     .then( (res) =>  {
-
         c3.generate({
             bindto: '.admin-chart',
             data: {
-                json: res.map((item, index) => {
+                json: res.signUps.map((item, index) => {
                     return{
                         day: index,
-                        Artists: item.signUps
+                        Creators: item.signUps.count
                     }
                 }),
                 keys: {
                     x: 'day',
-                    value: ['Artists']
+                    value: ['Creators']
                 },
                 axis: {
                     y: {
@@ -59,7 +58,7 @@ var AdminNewArtistsChart = React.createClass({
             }
         })
     });
-  },
+  }, 
   render: function() {
     return(
       <div className="admin-chart"></div>

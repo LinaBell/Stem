@@ -4,6 +4,17 @@ var CreatorSpinHistoryMain = React.createClass({
       songs: []
     }
   },
+  componentDidMount: function() {
+    stemApi.getSpinHistory({
+      id: this.props.creator.id
+    })
+    .then(function(res) {
+      this.setState( { songs: res } );
+    }.bind(this))
+    .catch(function(error) {
+      console.error('Error occured while fetching spin history: ' + Utilities.normalizeError(error));
+    });
+  },
   render: function() {
     return(
       <div>

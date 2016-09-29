@@ -18,7 +18,7 @@ var SubmitMusicAlbum = React.createClass({
 					id: res.id,
 					artistName: res.artistName,
 					albumName: res.name,
-					upc: res.upc,
+					upc: res.upc || '',
 					albumArt: res.albumArtUrl
 				})
 			})

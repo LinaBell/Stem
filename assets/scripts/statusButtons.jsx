@@ -18,30 +18,24 @@ var StatusButtons = React.createClass({
 		this.setStatus(nextProps.value);
 	},
 	setStatus: function(status) {
-		if (typeof status !== undefined) {
-			switch (status) {
-				case TrackStatus.Pending:
-					this.setState({
-						pendingClass: this.pendingClass + ' ' + this.selectedClass,
-						approvedClass: this.approvedClass,
-						liveClass: this.liveClass
-					});
-					break;
-				case TrackStatus.Approved:
-					this.setState({
-						approvedClass: this.approvedClass + ' ' + this.selectedClass,
-						pendingClass: this.pendingClass,
-						liveClass: this.liveClass
-					});
-					break;
-				case TrackStatus.Live:
-					this.setState({
-						liveClass: this.liveClass + ' ' + this.selectedClass,
-						pendingClass: this.pendingClass,
-						approvedClass: this.approvedClass
-					});
-					break;
-			}
+		if (status === TrackStatus.Pending || TrackStatus[status] === TrackStatus.Pending) {
+			this.setState({
+				pendingClass: this.pendingClass + ' ' + this.selectedClass,
+				approvedClass: this.approvedClass,
+				liveClass: this.liveClass
+			});
+		} else if (status === TrackStatus.Approved || TrackStatus[status] === TrackStatus.Approved) {
+			this.setState({
+				approvedClass: this.approvedClass + ' ' + this.selectedClass,
+				pendingClass: this.pendingClass,
+				liveClass: this.liveClass
+			});
+		} else if (status === TrackStatus.Live || TrackStatus[status] === TrackStatus.Live) {
+			this.setState({
+				liveClass: this.liveClass + ' ' + this.selectedClass,
+				pendingClass: this.pendingClass,
+				approvedClass: this.approvedClass
+			});
 		}
 	},
 	statusChange: function(status) {

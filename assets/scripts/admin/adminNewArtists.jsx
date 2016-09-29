@@ -7,12 +7,13 @@ var AdminNewArtists = React.createClass({
 	},
 	componentDidMount: function() {
 		stemApi.getArtistSignups({
+      days: 1
     })
-    .then(function(response) {
-      this.setState({artist: response});
+    .then(function(res) {
+      this.setState({artist: res.artists});
     }.bind(this))
     .catch(function(error) {
-      console.log('Creator Profile Error: ' + Utilities.normalizeError(reason));
+      console.log('New Artist Error: ' + Utilities.normalizeError(error));
     });
 	},
 	onTimespanChange: function(days) {

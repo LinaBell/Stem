@@ -26,7 +26,7 @@ var TrackItem = React.createClass({
 						}) : null
 				  	}
 				</ul>
-				{ this.props.isAdmin ? null : <div className="live-state submit-track-state pull-right">Live</div> }
+				{ this.props.isAdmin ? <StatusButtons isReadOnly={ true } value={ item.status } onStatusChange={ this.onStatusChange } /> : null }
 				
 				<i onClick={ this.onEditTrack } className="icon-edit submit-edit-icon pull-right fa-2x"></i>
 			</div>
