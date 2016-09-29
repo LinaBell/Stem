@@ -4,12 +4,23 @@ var CreatorSpinHistoryMain = React.createClass({
       songs: []
     }
   },
+  componentDidMount: function() {
+    stemApi.getSpinHistory({
+      id: this.props.creator.id
+    })
+    .then(function(res) {
+      this.setState( { songs: res } );
+    }.bind(this))
+    .catch(function(error) {
+      console.error('Error occured while fetching spin history: ' + Utilities.normalizeError(error));
+    });
+  },
   render: function() {
     return(
       <div>
-        <div className="pad-box-lg">
-          <h3>Spin History</h3>
-          <p>The songs you've listened to recently</p>
+        <div className="tables-page pad-box-lg">
+          <h2>Spin History</h2>
+          <p className="font-light">The songs you've listened to recently</p>
         </div>
         {this.state.songs.length <= 0 ? <SpinHistoryZeroState /> : <PlaylistTable songs={this.state.songs} /> }  
         

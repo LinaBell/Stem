@@ -35,8 +35,8 @@ var AudioUpload = React.createClass({
 				response: response
 			};
 			
-			if (this.props.onAudioChanged) {
-				this.props.onAudioChanged(fileInfo);
+			if (this.props.onAudioChange) {
+				this.props.onAudioChange(fileInfo);
 			}
 		}.bind(this))
 		.catch(function(error) {
@@ -48,19 +48,9 @@ var AudioUpload = React.createClass({
 			});
 		}.bind(this));
 	},
-	reset: function(deleteFile) {
-
-		if (deleteFile) {
-			stemApi.cancelUpload({
-				id: this.props.value.response.id
-			})
-			.catch(function(error) {
-				console.error('Error occurred while canceling upload: ' + JSON.stringify(error));
-			});
-		}
-
-		if (this.props.onAudioChanged) {
-			this.props.onAudioChanged(null);
+	reset: function() {
+		if (this.props.onAudioChange) {
+			this.props.onAudioChange(null);
 		}
 	},
 	render: function() {

@@ -6,11 +6,15 @@ var Header = (function() {
 	            displaySearch: false,
 				autofocus: true,
 				searchInput: '',
+				filterOverlay: false
 	        };
 	    },
 
 	    search: function() {
-	    	this.props.search(this.state.searchInput);
+	    	this.setState({ displaySearch: true });
+	    	this.setState({ searchInput: '' });
+	    	this.props.search(this.props.searchTerms.join(' ') + ' ' + this.state.searchInput);
+
 	    },
 
 		showHideMenu: function() {
@@ -22,14 +26,14 @@ var Header = (function() {
 		},
 
 		showHideSearch: function() {
-			if(this.state.displaySearch) {
-				this.setState({ 
-					displaySearch: false,
-					searchInput: ''
-				});
-			} else {
-		        this.setState({ displaySearch: true });
-			}
+		    this.setState({ displaySearch: true });
+		    this.setState({ filterOverlay: true });
+		},
+
+		filterOverlay: function() {
+		    if(this.state.filterOverlay) {
+				this.setState({ filterOverlay: false });
+			} 
 		},
 
 		navigate: function(id) {
@@ -45,6 +49,7 @@ var Header = (function() {
 
 		searchInputKeyPress: function( ev ) {
 			if (ev.which === 13) {
+				this.setState({ filterOverlay: false });
 				this.search();
 			}
 		},
@@ -104,7 +109,7 @@ var Header = (function() {
 							}.bind(this))}
 						</div>
 					</Menu>
-					<div className={this.state.displaySearch ? "filter-page-overlay active" : null} onClick={this.showHideSearch}></div>
+					<div onClick={this.filterOverlay} className={this.state.filterOverlay ? "filter-page-overlay active" : null} ></div>
 				</div>
 			)
 		}
@@ -183,14 +188,15 @@ var Header = (function() {
 	function mapStateToProps(state) {
 		return {
 			isLoggedIn: state.userState.isLoggedIn,
-			currentPage: state.appState.currentPage
+			currentPage: state.appState.currentPage,
+			searchTerms: state.appState.searchTerms
 		};
 	}
 
 	function mapDispatchToProps(dispatch, ownProps) {
 		return {
 			search: function(terms) {
-				dispatch(beginSearch(terms));
+				dispatch(beginSearch(terms.trim()));
 			}
 		};
 	}

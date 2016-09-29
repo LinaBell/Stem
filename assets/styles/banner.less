@@ -5,9 +5,8 @@
 	height: 330px;
 }
 .header-banner {
-	background-image: url('https://a4-images.myspacecdn.com/images03/33/588cae99266a4ae2a9c49c909b02781c/300x300.jpg');
 	background-repeat: no-repeat;
-	background-position: center -300px;
+	background-position: center;
 	background-size: 100%;
 	overflow: hidden;
 	width: 100%;
@@ -31,6 +30,10 @@
 	border-radius: 50%;
 	display: inline-block;
 	vertical-align: top;
+	box-shadow: @drop-1
+}
+.header-img , .header-content-detail {
+	vertical-align: middle
 }
 .header-content-detail {
 	display: inline-block;
@@ -40,10 +43,19 @@
 	font-family: @font-reg;
 }
 
+.header-content-detail h1, .header-content-detail h4 {
+	text-shadow: @drop-9;
+}
+
+.header-content-detail button {
+	box-shadow: @drop-9;
+}
+
 .header-social-media li {
 	display: inline;
 	color: white;
 	padding-left: @space-sm;
+	text-shadow: @drop-9;
 }
 .red {
 	color: #D80325;

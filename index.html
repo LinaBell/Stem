@@ -21,6 +21,8 @@
         <link rel="stylesheet/less" type="text/css" href="assets/styles/style.less" />
         <link rel="stylesheet/less" type="text/css" href="assets/styles/form.less" />
         <link rel="stylesheet/less" type="text/css" href="assets/styles/header.less" />
+        
+        <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick.min.css" />
 
         <link rel="stylesheet/less" type="text/css" href="assets/styles/payment-options.less" />
         <link rel="stylesheet/less" type="text/css" href="assets/styles/login.less" />
@@ -29,12 +31,14 @@
         <link rel="stylesheet/less" type="text/css" href="assets/styles/playlist.less" />
         <link rel="stylesheet/less" type="text/css" href="assets/styles/artist-search.less" />
         <link rel="stylesheet/less" type="text/css" href="assets/styles/artist-internal.less">
-        <link rel="stylesheet/less" type="text/css" href="assets/styles/creatorMain.less">
-        <link rel="stylesheet/less" type="text/css" href="assets/styles/creatorDownloads.less" />
+        <link rel="stylesheet/less" type="text/css" href="assets/styles/creator-main.less">
+        <link rel="stylesheet/less" type="text/css" href="assets/styles/creator-downloads.less" />
         <link rel="stylesheet/less" type="text/css" href="assets/styles/creator-profile.less" />
         <link rel="stylesheet/less" type="text/css" href="assets/styles/ipsy-main.less" />
         <link rel="stylesheet/less" type="text/css" href="assets/styles/promo-landing.less" />
         <link rel="stylesheet/less" type="text/css" href="assets/styles/edit-track.less">
+
+        <link rel="stylesheet/less" type="text/css" href="assets/styles/error-page.less">
 
         <link rel="stylesheet/less" type="text/css" href="assets/styles/banner.less">
 
@@ -45,6 +49,7 @@
         <link rel="stylesheet/less" type="text/css" href="assets/styles/footer.less">
         <link rel="stylesheet/less" type="text/css" href="assets/styles/top-album.less">
 
+        <link rel="stylesheet/less" type="text/css" href="assets/styles/tables.less">
         <link rel="stylesheet/less" type="text/css" href="assets/styles/library.less">
         <link rel="stylesheet/less" type="text/css" href="assets/styles/admin.less">
         <link rel="stylesheet/less" type="text/css" href="assets/styles/player.less">
@@ -55,13 +60,16 @@
   
     <body>
         <div id="app" class="content-wrapper"></div> 
-
+        
+        <script type="text/jsx" src="https://unpkg.com/react-slick@0.13.6/dist/react-slick.min.js"></script>
+    
         <script type="text/jsx" src="assets/scripts/autoCompleteTextBox.jsx"></script>
         <script type="text/jsx" src="assets/scripts/imageUpload/ImageUpload.jsx"></script>
         <script type="text/jsx" src="assets/scripts/loadingButton.jsx"></script>
         <script type="text/jsx" src="assets/scripts/audioUpload.jsx"></script>
         <script type="text/jsx" src="assets/scripts/tagSelector.jsx"></script>
         <script type="text/jsx" src="assets/scripts/musicPlayer.jsx"></script>
+        <script type="text/jsx" src="assets/scripts/statusButtons.jsx"></script>
         
         <!-- JSX Component Files -->
         <script type="text/jsx" src="assets/scripts/header.jsx"> </script>
@@ -70,7 +78,8 @@
         <script type="text/jsx" src="assets/scripts/filterNav.jsx"> </script>
         <script type="text/jsx" src="assets/scripts/player.jsx"> </script>
         <script type="text/jsx" src="assets/scripts/footer.jsx"> </script>
-        <script type="text/jsx" src="assets/scripts/welcomeModal.jsx"></script>
+        <script type="text/jsx" src="assets/scripts/welcomeModal.jsx"> </script>
+        <script type="text/jsx" src="assets/scripts/errorPage.jsx"> </script>
 
         <!-- Payment -->
         <script type="text/jsx" src="assets/scripts/payment/paymentOptions.jsx"> </script>
@@ -198,7 +207,12 @@
         <script type="text/jsx" src="assets/scripts/admin/adminChart.jsx"></script>
         <script type="text/jsx" src="assets/scripts/admin/adminSubmitMusic.jsx"></script>
         <script type="text/jsx" src="assets/scripts/admin/adminNewArtistMain.jsx"></script>
-        <script type="text/jsx" src="assets/scripts/admin/adminTimelineNav.jsx"></script>
+        <script type="text/jsx" src="assets/scripts/timespanSelector.jsx"></script>
+        <script type="text/jsx" src="assets/scripts/admin/adminNewArtistChart.jsx"></script>
+        <script type="text/jsx" src="assets/scripts/admin/adminNewArtistTable.jsx"></script>
+        <script type="text/jsx" src="assets/scripts/admin/adminNewSubmissionsTable.jsx"></script>
+        <script type="text/jsx" src="assets/scripts/admin/adminNewCreatorsTable.jsx"></script>
+        <script type="text/jsx" src="assets/scripts/admin/adminNewCreatorsChart.jsx"></script>
 
         <script type="text/jsx" src="assets/scripts/app.jsx"> </script>
         

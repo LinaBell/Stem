@@ -429,7 +429,6 @@
   }
   .become-a-patron {
     width: 100%;
-    transform: scale(1);
     margin: 0;
   }
   .promo-landing-footer {
@@ -437,6 +436,9 @@
     h2 {
       font-size: 1.7em;
     }
+  }
+  .promo-artist-bio {
+    text-align: center;
   }
   /* -- Zero State -- */
   .zero-state {
@@ -450,6 +452,11 @@
   }
   .dashboard-img-overlay {
     display: none;
+  }
+  /* -- Error Page -- */
+  .error-page-content {
+    transform: scale(0.8);
+    width: 380px;
   }
 }
 
@@ -684,7 +691,7 @@
     width: 430px;
   }
 
-  /* -- BECOME A PATRON -- */
+  /* -- PROMO LANDING -- */
   .promo-landing-header h3 {
     display: none;
   }
@@ -699,12 +706,20 @@
     width: 450px;
     margin: @space-sm 0;
   }
+  .become-a-patron {
+    width: 380px;
+  }
   .follow-this-artist-links li {
     font-size: 1.8em;
     margin-right: @space-sm;
   }
   .promo-landing-content .follow-artist-with-links {
     display: none;
+  }
+
+  /* -- Error Page -- */
+  .error-page-content {
+    transform: scale(0.8);
   }
 }
 

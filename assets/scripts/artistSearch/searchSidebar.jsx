@@ -1,10 +1,8 @@
-var ArtistSearchSideBar = ReactRedux.connect(function(state) {
-		var searchTerms = state.appState.searchTerms.length > 0 ? state.appState.searchTerms.split(' ') : [];
-		
+var ArtistSearchSideBar = ReactRedux.connect(function(state) {		
 		return {
-			tagList: searchTerms
+			tagList: state.appState.searchTerms
 		};
-	}, function(dispatch, ownProps) {
+	}, function(dispatch) {
 		return {
 			removeTag: function(tag) {
 				var newTagList = this.tagList.filter(function(item) {
@@ -19,7 +17,7 @@ var ArtistSearchSideBar = ReactRedux.connect(function(state) {
 			var tagList = this.props.tagList;
 
 			return (
-				<span>
+				<span className={ tagList.length <= 0 ? "display-false" : "display-true"}>
 					{ tagList.length > 0 ? 
 						<ul className="artist-search-tags-list col-xs-12">
 	                        { tagList.map(function(item, index) {

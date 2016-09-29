@@ -179,24 +179,22 @@ ol, ul {
 .content, .content-with-sidebar  {
     height: 100%;
     width: 100%;
-    padding: 50px 30px 40px 70px;
     background: @white;
     display: inline-block;
 }
 .content-with-sidebar {
-    // float: left;
+    float: right;
     margin-left: 250px;
     width: ~"calc(100% - 260px)";
     min-height: 854px;
 }
 /* -- Commented out to fix issues with sidebar on artist library home -- */
-// .sidebar {
-//     width: 260px;
-//     // float: left;
-//     padding: 20px;
-//     display: inline-block;
-//     // position: absolute;
-// }
+.sidebar {
+    width: 260px;
+    padding: 20px;
+    display: inline-block;
+    position: absolute;
+}
 
 .table.no-borders td {
     border: none;

@@ -13,6 +13,13 @@ var Tag = {
 	}
 };
 
+// This should be moved to it's own file at some point
+var TrackStatus = {
+	Pending: 0,
+	Approved: 1,
+	Live: 2
+};
+
 // This should be moved to it's own file or use a third party library
 var Formatter = {
 	formatFileLabel: function(file) {
@@ -46,16 +53,14 @@ var Utilities = {
 function beginSearch(searchTerms) {
 	return function(dispatch) {
 		stemApi.searchSongs({
-            request: {
-                text: searchTerms
-            }
+        	text: searchTerms
         })
 		.then(function(response) {
 			dispatch({
 	        	type: 'UpdateSearch',
     	    	data: {
         			results: response.songs,
-        			terms: response.terms.join(' ')
+        			terms: response.terms
         		}
         	});
 
@@ -73,13 +78,33 @@ function beginSearch(searchTerms) {
 	};
 }
 
+function beginBookmarkRefresh(creatorId) {
+	return function(dispatch) {
+		stemApi.getCreatorBookmarks({
+      creatorId: creatorId
+    })
+		.then(function(res) {
+			dispatch({
+	        	type: 'UpdateCreatorBookmarks',
+    	    	data: {
+        			results: res
+        		}
+        	});
+		})
+		.catch(function(reason) {
+			console.error('Search Error: ' + Utilities.normalizeError(reason));
+		});
+	};
+}
+
 // This should be moved to it's own file at some point
 const initialAppState = {
 	baseAPI: 'http://52.32.255.104/api',
 	currentPage: 0,
 	pageParams: {},
-	searchTerms: '',
+	searchTerms: [],
 	searchResults: [],
+	creatorBookmarks: [],
 	tagList: []
 };
 var appReducer = function(state = initialAppState, action) {
@@ -93,7 +118,12 @@ var appReducer = function(state = initialAppState, action) {
 		case 'UpdateSearch':
 			return Object.assign({}, state, {
 				searchResults: action.data.results,
-				searchTerms: action.data.terms
+				searchTerms: [].concat(action.data.terms)
+			});
+
+		case 'UpdateCreatorBookmarks':
+			return Object.assign({}, state, {
+				creatorBookmarks: action.data.results
 			});
 
 		default: 
@@ -255,7 +285,7 @@ var App = React.createClass({
 				{ this.props.currentPage == 14 ?
 					<div className="wrapper">
 						<FilterNav />
-						<CreatorSpinHistoryMain />
+						<CreatorSpinHistoryMain creator={this.props.userInfo} />
 						<Footer />
 					</div>
 				: null}
@@ -290,10 +320,26 @@ var App = React.createClass({
 					</div>
 				: null} 
 
+				{ this.props.currentPage == 21 ?
+					<div className="wrapper">
+						<AdminHeader />
+						<AdminNewCreators />
+						<Footer />
+					</div>
+				: null} 
+
 				{ this.props.currentPage == 22 ?
 					<div className="wrapper">
 						<AdminHeader />
 						<AdminNewArtistMain />
+						<Footer />
+					</div>
+				: null}
+
+				{ this.props.currentPage == 23.3 ?
+					<div className="wrapper">
+						<AdminHeader />
+						<AdminNewSubmissions />
 						<Footer />
 					</div>
 				: null}
@@ -346,12 +392,12 @@ var App = React.createClass({
 					</div>
 				: null}
 
-				{ this.props.currentPage == 107 ?
+				{ this.props.currentPage === 107 ? 
 					<div className="wrapper">
 						<PromoLandingPageMain />
 						<Footer />
 					</div>
-				: null}
+				: null }
 
 				{ this.props.currentPage === 110 ? 
 					<div className="wrapper">
@@ -374,7 +420,7 @@ var App = React.createClass({
 
 var artistMenu = [
 	{
-		pageID: 0,
+		pageID: 6,
 		text: "Home",
 		icon: "icon-home"
 	},
@@ -402,6 +448,11 @@ var artistMenu = [
 		pageID: 5,
 		text: "Account Settings",
 		icon: "icon-cog-2"
+	},
+	{
+		pageID: 107,
+		text: "Promo Page",
+		icon: "icon-cog-2"
 	}
 ]; 
 
@@ -417,9 +468,9 @@ var creatorMenu = [
 		icon: "icon-user"
 	},
 	{
-		pageID: 12,
-		text: "Loved",
-		icon: "icon-heart"
+		pageID: 16,
+		text: "Creator Bookmarks",
+		icon: "icon-bookmark"
 	},
 	{
 		pageID: 13,
@@ -434,11 +485,6 @@ var creatorMenu = [
 	{
 		pageID: 15,
 		text: "Account Settings",
-		icon: "icon-cog-2"
-	},
-	{
-		pageID: 16,
-		text: "Creator Bookmarks",
 		icon: "icon-cog-2"
 	},
 	{

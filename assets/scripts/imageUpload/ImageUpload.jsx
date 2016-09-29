@@ -15,25 +15,33 @@ var ImageUpload = React.createClass({
 			rotatable: false,
 			zoomable: false,
 			aspectRatio: 1
-		}).on('crop.cropper', function(ev) {
+		}).on('crop.cropper', (ev) => {
 			var imageData = $(ev.target)
 				.cropper('getCroppedCanvas')
 				.toDataURL();
 
 			this.props.onImageChange(imageData, this.state.originalImage);
-		}.bind(this));
+		});
+	},
+	componentWillReceiveProps: function(nextProps) {
+
+		if (nextProps.value) {
+			this.setState({
+				imageLoaded: true
+			});
+		}
 	},
 	componentWillUnmount: function() {
 		$(this.refs.imageElement).cropper('destroy');
 	},
 	
-	handleChangeFile: function(ev) {
+	onFileChange: function(ev) {
 		var fileReader = new FileReader(),
 			file = ev.target.files[0];
 		
 		if (file) {
 			fileReader.readAsDataURL(file);
-			fileReader.onloadend = function() {
+			fileReader.onloadend = () => {
 				var cropperEl = $(this.refs.imageElement);
 				cropperEl.cropper('replace', fileReader.result);
 				this.setState({
@@ -41,23 +49,26 @@ var ImageUpload = React.createClass({
 					originalImage: file
 				});
 
-			}.bind(this);
+			}
 		}
 	},
 	render: function() {
 		// The maxWidth style is important for the image cropper control, remove at your own risk
 		var imageStyles = {
 			maxWidth: '100%',
-			height: 'auto',
-			width: this.props.width + 'px',
 			display: this.state.imageLoaded ? 'initial' : 'none'
 		};
 
+		var imageSource = this.props.value;
+		if (typeof imageSource !== 'string') {
+			imageSource = null;
+		}
+
 		return (
 			<div>
-				<img ref="imageElement" style={ imageStyles } />
+				<img ref="imageElement" style={ imageStyles } src={ imageSource } />
 				{ !this.state.imageLoaded ? this.props.children : null }
-				<input onChange={ this.handleChangeFile } type="file" accept="image/*" />
+				<input onChange={ this.onFileChange } type="file" accept="image/*" />
 			</div>
 		);
 	}
