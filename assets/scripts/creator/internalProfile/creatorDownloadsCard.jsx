@@ -21,7 +21,7 @@ var CreatorDownloadsCard = React.createClass({
 						<li className="downloaded-song-extras">
 							<h4 className="title font-light light-grey mar-b-sm">Download Extras</h4>
 							<ul className="font-light">
-								<a className="primary"><li>Album Art</li></a>
+								<a className="primary" download="" href={download.albumArtUrl}><li>Album Art</li></a>
 								<a className="primary"><li>Lyrics</li></a>
 								<a className="primary"><li>Song File</li></a>
 								<a className="primary"><li>License</li></a>

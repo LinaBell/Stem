@@ -311,6 +311,12 @@
   background-color: #3E8FDE;
   border: none;
   text-align: center;
+  &.selected {
+  	-webkit-box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.6);
+    -moz-box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.6);
+    box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.6);
+    border: solid 1px #203E5F;
+  }
 }
 .live-state {
 	color: @white;
@@ -318,6 +324,12 @@
   background-color: @primary;
   border: none;
   text-align: center;
+  &.selected {
+  	-webkit-box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.6);
+    -moz-box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.6);
+    box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.6);
+    border: solid 1px #203E5F;
+  }
 }
 .pending-state {
 	color: @white;
@@ -325,7 +337,14 @@
   background-color: #D80325;
   border: none;
   text-align: center;
+  &.selected {
+  	-webkit-box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.6);
+    -moz-box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.6);
+    box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.6);
+    border: solid 1px #203E5F;
+  }
 }
+
 .save-state {
 	color: @white;
   padding: 10px;

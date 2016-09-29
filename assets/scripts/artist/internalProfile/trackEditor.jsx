@@ -83,7 +83,7 @@ var TrackEditor = React.createClass({
 					<textarea name="lyrics" value={ item.lyrics } onChange={ this.onInputChange } placeholder="Paste your lyrics here.." />
 				</div>
 				<div className="explicit-checkbox pad-b-lg col-xs-12 red">
-					<input type="checkbox" name="isExplicit" onClick={ this.onCheckedChange } checked={ item.isExplicit } />
+					<input type="checkbox" name="isExplicit" onChange={ this.onCheckedChange } checked={ item.isExplicit } />
 				  	<h5 className="pad-l-sm">EXPLICIT</h5>
 				</div>
 				{ this.props.isAdmin ? 
