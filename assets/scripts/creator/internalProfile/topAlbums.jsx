@@ -22,7 +22,7 @@
         autoplay: true,
         autoplaySpeed: 6000,
         infinite: true,
-        easing: "ease-in-out",
+        easing: 'ease-in-out',
         speed: 2000,
         centerMode: true,
         centerPadding: '60px'
@@ -33,7 +33,7 @@
       <div className="top-album-wrapper">
         <h4>Other awesome artists</h4>
         <ul className="top-album-list">
-          <Slider slidesToShow='5' autoplay='true' autoplaySpeed='6000' infinite='true' easing="ease-in-out" speed='2000' centerMode='true' centerPadding='60px'>
+          <Slider slidesToShow='5' autoplay='true' autoplaySpeed='6000' infinite='true' easing='ease-in-out' speed='2000' centerMode='true' centerPadding='60px'>
           {this.state.topArtists.map(function(topArtist, index) {
             return(
               <TopArtistsList key={index} topArtist={topArtist} />
