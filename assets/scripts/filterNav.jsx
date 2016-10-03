@@ -150,7 +150,7 @@ var FilterMenu = ReactRedux.connect(function(state, ownProps) {
 				newState = terms.concat(filterName);
 			} else {
 				newState = terms.filter((item) => {
-					return item !== filterName;
+					return item !== filterName.toLowerCase();
 				});
 			}
 
