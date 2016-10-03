@@ -12,7 +12,7 @@ var SubmitMusicTrack = React.createClass({
 	},
 	componentDidMount: function() {
 		stemApi.getAllTagTypes({
-			systemType: Tag.SystemType.Genre
+			systemType: TagSystemTypeEnum.Genre.value
 		})
 		.then((res) => {
 			var genreTag = res[0];

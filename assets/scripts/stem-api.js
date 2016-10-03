@@ -110,7 +110,7 @@ var StemApi = (function () {
 	    });
     });
 
-    StemApi.prototype.upload = function (req) {
+    StemApi.prototype.upload = Promise.method(function (req) {
     	var uploadResponse;    	
 
         return Promise.resolve($.ajax({
@@ -155,7 +155,7 @@ var StemApi = (function () {
         		});
         	}
         });
-    };
+    })
 
     ///////////// Songs /////////////
     //
@@ -293,6 +293,15 @@ var StemApi = (function () {
     		contentType: 'application/json; charset=utf-8'
     	});
     });
+
+    StemApi.prototype.getTagType = Promise.method(function(req) {
+   		return $.ajax({
+   			type: 'GET',
+   			url: this.baseUrl + 'tagtypes/' + req.id,
+   			headers: { Authorization: this.authorization },
+   			contentType: 'application/json; charset=utf-8'
+   		});
+    })
 
     ///////////// Creators /////////////
     //
