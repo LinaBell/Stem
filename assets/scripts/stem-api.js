@@ -146,11 +146,11 @@ var StemApi = (function () {
 	        });
         })
         .catch((reason) => {
-        	console.error('Error during upload api call: ' + reason);
+        	console.error('Error during upload api call: ' + Utilities.normalizeError(reason));
 
         	if (uploadResponse.id) {
         		console.log('Attempting to cancel the upload...');
-        		return this.cancelUpload({
+        		this.cancelUpload({
 		 			id: uploadResponse.id
         		});
         	}
