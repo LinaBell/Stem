@@ -7,7 +7,8 @@ var SubmitMusicTrack = React.createClass({
 			genreTag: null,
 		  	genreTagValues: [],
 		  	addedTracks: [],
-		  	statusMessage: statusMessage
+		  	statusMessage: statusMessage,
+		  	isAudioUploading: false
 		}
 	},
 	componentDidMount: function() {
@@ -98,6 +99,7 @@ var SubmitMusicTrack = React.createClass({
 		});
 	},
 	onTrackChange: function(track) {
+
 		var currentIndex = this.state.addedTracks.findIndex((item) => {
 			return item.isEditing;
 		});
@@ -106,7 +108,8 @@ var SubmitMusicTrack = React.createClass({
 		newState[currentIndex] = Object.assign({}, this.state.addedTracks[currentIndex], track);
 
 		this.setState({
-			addedTracks: newState
+			addedTracks: newState,
+			isAudioUploading: track.isAudioUploading
 		});
 	},
 
@@ -239,12 +242,18 @@ var SubmitMusicTrack = React.createClass({
 				    </div> 
 				    : 
 					<div className="submit-btns">
-				        <button className="additional-track-btn mar-r-md" onClick={ this.onAddClicked }>
+				        <button 
+				        	disabled={ this.state.isAudioUploading }
+				        	className="additional-track-btn mar-r-md" 
+				        	onClick={ this.onAddClicked }>
 				        	<i className="icon-plus-circled"></i> Add Additional Track
 				        </button>
 
 				        { this.props.isSubmitting ? <LoadingButton /> : 
-					        <button className="btn-primary" onClick={ this.props.onSubmitClicked }>
+					        <button 
+					        	disabled={ this.state.isAudioUploading }
+					        	className="btn-primary" 
+					        	onClick={ this.props.onSubmitClicked }>
 					        	<i className="icon-ok-circled2"></i> Submit
 					        </button>
 					    }

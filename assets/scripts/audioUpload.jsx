@@ -23,6 +23,10 @@ var AudioUpload = React.createClass({
 			isUploading: true
 		});
 
+		if (this.props.onUploadStarted) {
+			this.props.onUploadStarted();
+		}
+
 		stemApi.upload({
 			file: ev.target.files[0]
 		})

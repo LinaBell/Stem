@@ -1,4 +1,9 @@
 var TrackEditor = React.createClass({
+	getInitialState() {
+		return {
+			isAudioUploading: false
+		}
+	},
 	propagateState: function(newState) {
 		if (this.props.onChange) {
 			this.props.onChange(Object.assign({}, this.state, newState));
@@ -13,11 +18,21 @@ var TrackEditor = React.createClass({
 	},
 	onAudioChange: function(file) {
 		var newState = {
-			audioFile: file
+			audioFile: file,
+			isAudioUploading: false
 		};
 
 		this.setState(newState);
 		this.propagateState(newState);
+	},
+
+	onUploadStarted() {
+		var newState = {
+			isAudioUploading: true
+		}
+
+		this.setState(newState)
+		this.propagateState(newState)
 	},
 	
 	onCheckedChange: function(ev) {		
@@ -51,7 +66,7 @@ var TrackEditor = React.createClass({
 				<div className="submit-track-name col-lg-6">
 					<p className="col-xs-12">Track Name</p>
 					<input name="trackName" value={ item.trackName } onChange={ this.onInputChange } />
-					<AudioUpload value={ item.audioFile } onAudioChange={ this.onAudioChange } />
+					<AudioUpload value={ item.audioFile } onUploadStarted={ this.onUploadStarted } onAudioChange={ this.onAudioChange } />
 				</div>
 				<div className="col-lg-6">
 					<p>ISRC # <a className="info-tags">Whats an ISRC#?</a></p>
