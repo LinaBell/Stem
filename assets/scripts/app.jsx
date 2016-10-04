@@ -491,7 +491,7 @@ var creatorMenu = [
 	},
 	{
 		pageID: 16,
-		text: "Creator Bookmarks",
+		text: "Bookmarks",
 		icon: "icon-bookmark"
 	},
 	{
@@ -502,7 +502,7 @@ var creatorMenu = [
 	{
 		pageID: 14,
 		text: "Spin History",
-		icon: "icon-down-circle"
+		icon: " icon-spin3"
 	},
 	{
 		pageID: 15,
@@ -512,7 +512,7 @@ var creatorMenu = [
 	{
 		pageID: 17,
 		text: "Staff Picks",
-		icon: "icon-reddit"
+		icon: "icon-group"
 	}
 ]; 
 

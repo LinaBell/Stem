@@ -136,8 +136,11 @@ var Header = (function() {
 		},
 		
 		render: function() {
+			bannerImageStyle = {
+	            backgroundImage: 'url(' + this.context.userInfo.bannerImageUrl +')'
+	        };
 			return (
-				<div className="menu-header">
+				<div className="menu-header" style={bannerImageStyle}>
 					<a onClick={this.showHideMenu} className="close">
 						<i className="icon-cancel"></i>
 					</a>
