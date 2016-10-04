@@ -22,7 +22,7 @@ var TrackEditor = React.createClass({
 	
 	onCheckedChange: function(ev) {		
 		var newState = {};
-		newState[ev.target.name] = ev.target.value === 'on';
+		newState[ev.target.name] = ev.target.checked;
 
 		this.setState(newState);
 		this.propagateState(newState);
