@@ -6,12 +6,7 @@ var createStore = Redux.createStore,
 	stemApi = new StemApi("http://52.32.255.104/api/"),
 	thunk = ReduxThunk.default;
 
-// This should be moved to it's own file at some point
-var Tag = {
-	SystemType: {
-		Genre: 1
-	}
-};
+var TagSystemTypeEnum = new Enum({ None:0, Genre:1, Community:2, Vocal:3, Tempo:4, Mood:5 });
 
 // This should be moved to it's own file at some point
 var TrackStatus = {
@@ -49,7 +44,26 @@ var Utilities = {
 	}
 };
 
-// Thunk Action Creator, for having actions that have side effects such as AJAX calls
+function refreshTags(tagTypeId) {
+	return function(dispatch) {
+		stemApi.getTagValues({
+			tagTypeId: tagTypeId
+		})
+		.then((res) => {
+			dispatch({
+				type: 'UpdateTags',
+				data: {
+					tags: res,
+					tagTypeId: tagTypeId
+				}
+			});
+		})
+		.catch((reason) => {
+			console.error('Error in refreshTags: ' + Utilities.normalizeError(reason))
+		})
+	}
+}
+
 function beginSearch(searchTerms) {
 	return function(dispatch) {
 		stemApi.searchSongs({
@@ -105,7 +119,7 @@ const initialAppState = {
 	searchTerms: [],
 	searchResults: [],
 	creatorBookmarks: [],
-	tagList: []
+	tags: {}
 };
 var appReducer = function(state = initialAppState, action) {
 	switch (action.type) {
@@ -124,6 +138,14 @@ var appReducer = function(state = initialAppState, action) {
 		case 'UpdateCreatorBookmarks':
 			return Object.assign({}, state, {
 				creatorBookmarks: action.data.results
+			});
+		case 'UpdateTags': 
+			var tagTypeId = action.data.tagTypeId;
+			var newTags = Object.assign({}, state.tags);
+			newTags[tagTypeId] = action.data.tags;
+
+			return Object.assign({}, state, {
+				tags: newTags
 			});
 
 		default: 
@@ -201,9 +223,9 @@ var App = React.createClass({
 			menu = this.props.artistMenu,
 			accountType = this.props.userInfo.accountType;
 
-		if(accountType == 'Creator') {
+		if (accountType === 'Creator') {
 			menu = this.props.creatorMenu;
-		} else if(accountType == 'Admin') {
+		} else if (accountType === 'Admin') {
 			menu = this.props.adminMenu;
 		}
 

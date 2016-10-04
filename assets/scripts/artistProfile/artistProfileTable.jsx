@@ -4,9 +4,7 @@ var ArtistProfileTable = React.createClass({
 
 		return (
 	  		<div className="artist-table-wrapper bg-white col-xs-12">
-				<table>
-		  			<PlaylistTable songs={songs} />
-				</table>
+				<PlaylistTable songs={songs} />
 	  		</div>
 		);
 	}
