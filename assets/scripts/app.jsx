@@ -223,9 +223,9 @@ var App = React.createClass({
 			menu = this.props.artistMenu,
 			accountType = this.props.userInfo.accountType;
 
-		if(accountType == 'Creator') {
+		if (accountType === 'Creator') {
 			menu = this.props.creatorMenu;
-		} else if(accountType == 'Admin') {
+		} else if (accountType === 'Admin') {
 			menu = this.props.adminMenu;
 		}
 
