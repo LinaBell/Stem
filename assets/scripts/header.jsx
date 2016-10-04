@@ -86,9 +86,7 @@ var Header = (function() {
 										}
 									</a>
 
-									<a><i className="icon-heart-empty"></i></a>
 									<a><i className="icon-up-circle" onClick={this.navigate.bind(this, 1)}></i></a>
-									<a><i className="icon-bell"></i></a>
 									<a onClick={this.showHideMenu} className="dropdown-toggle primary" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 										<i className="icon-menu"></i>
 									</a>                 
