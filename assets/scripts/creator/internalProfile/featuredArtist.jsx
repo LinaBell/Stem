@@ -14,6 +14,16 @@ var FeaturedArtist = React.createClass({
       console.error('Top Artist Error: ' + JSON.stringify(error));
     });
   },
+  onTopArtistChange: function(selectedArtist) {
+    this.setState({
+      selectedArtist: selectedArtist
+    });
+  },
+  onTopArtistBackground: function(selectedArtist) {
+    this.setState({
+      selectedArtist: selectedArtist
+    });
+  },
   render: function () {
     var selectedArtist = this.state.selectedArtist;
     var featuredBackground; 
@@ -40,7 +50,9 @@ var FeaturedArtist = React.createClass({
             <button className="play-btn"><h3 className="icon-play fa-2x pad-box-sm">PLAY NOW</h3></button>
             <a><p>Go to artist page</p></a>
           </div>
-          <TopAlbums />
+          <div className="large-desktop-space">
+            <TopAlbums onTopArtistBackground={this.onTopArtistBackground} onTopArtistChange={this.onTopArtistChange} />
+          </div>  
         </div>  
       </div>
     )

@@ -6,20 +6,23 @@
   overflow-x: scroll;
   overflow: hidden;
   height: 100%;
-  padding: 65px @space-lg @space-lg 0;
+  padding: 65px 0;
   margin-left: @space-lg;
 }
 .top-album-img {
+  margin: 20px;
   width: 250px;
   height: 250px;
+
 }
-.top-album-wrapper ul {
+
+.top-album-list {
   width: 100%;
   display: inline-block;
   white-space: nowrap;
   position: relative;
 }
-  .top-album-wrapper ul::-webkit-scrollbar { 
+  .top-album-list::-webkit-scrollbar { 
     display: none;
   }
   .top-album-list-item-wrapper {
@@ -27,24 +30,20 @@
   }  
   .top-album-list-item  {
     display: inline-block;
-    padding-right: 20px;
-  }
+    -webkit-appearance:none;
+    outline: none;
 
-a.album-nav-prev, a.album-nav-next {
-  position: absolute;
-  z-index: 1000;
-  display: block;
-  padding: 115px 10px 0;
-  width: auto;
-  height: 250px;
-  background: @grey-3;
-  color: white;
-  text-decoration: none;
-  font-weight: bold;
-  font-size: 18px;
-  opacity: 0.6;
-  cursor: pointer;
+    transition: 50ms ease-in;
+  }
+    .top-album-img:hover {
+      transform: scale(1.2);
+    }
+.slick-prev, .slick-next {
+  z-index: 100;
 }
-a.album-nav-next {
+  .slick-prev {
+    left: 0;
+  }
+  .slick-next {
     right: 0;
-}
+  }

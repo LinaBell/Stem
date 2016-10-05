@@ -69,7 +69,7 @@ var LibraryMain = ReactRedux.connect(function(state) {
 				<div className="sidebar artist-internal-sidebar-wrapper sidebar-hide">
 					<ArtistInternalSideBar />
 				</div>
-				<div className="content-with-sidebar">  
+				<div className="content-with-sidebar pad-box-lg">  
 					<div className="artist-internal-greeting">
 						<h3>Library</h3>
 						<p>Manage your library of available tracks</p>
