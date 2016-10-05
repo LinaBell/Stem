@@ -136,7 +136,6 @@ var FilterNav = React.createClass({
 });
 
 var FilterMenu = ReactRedux.connect(function(state, ownProps) {
-
 	return {
 		searchTerms: state.appState.searchTerms,
 		filters: state.appState.tags[ownProps.tagType.value]
@@ -175,9 +174,11 @@ var FilterMenu = ReactRedux.connect(function(state, ownProps) {
 	componentDidMount() {
 		this.updateTagType(this.props.tagType);
 
-		for (var i = 1; i <= 5; i++) {
-			this.props.refreshTags(i);
-		}
+		TagSystemTypeEnum.enums.forEach((item) => {
+			if (item.value > 0) {
+				this.props.refreshTags(item.value);
+			}
+		});
 	},
 	componentWillReceiveProps(nextProps) {
 		if (nextProps.tagType !== this.props.tagType) {

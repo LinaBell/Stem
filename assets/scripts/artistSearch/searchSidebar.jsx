@@ -1,34 +1,34 @@
 var ArtistSearchSideBar = ReactRedux.connect(function(state) {		
 		return {
-			tagList: state.appState.searchTerms
+			searchTerms: state.appState.searchTerms
 		};
 	}, function(dispatch) {
 		return {
-			removeTag: function(tag) {
-				var newTagList = this.tagList.filter(function(item) {
-					return item !== tag;
+			removeTerm: function(term) {
+				var newSearchTerms = this.searchTerms.filter((item) => {
+					return item.text !== term.text && item.type === term.type;
 				});
 
-				dispatch(beginSearch(newTagList.join(' ')));
+				dispatch(beginSearch(newSearchTerms));
 			}
-		};
+		}
 	})(React.createClass({
 		render: function() {
-			var tagList = this.props.tagList;
+			var searchTerms = this.props.searchTerms;
 
 			return (
-				<span className={ tagList.length <= 0 ? "display-false" : "display-true"}>
-					{ tagList.length > 0 ? 
+				<span className={ searchTerms.length <= 0 ? "display-false" : "display-true"}>
+					{ searchTerms.length > 0 ? 
 						<ul className="artist-search-tags-list col-xs-12">
-	                        { tagList.map(function(item, index) {
+	                        { searchTerms.map((item, index) => {
 								return (
 									<li key={index} value={index}>
-										<button onClick={this.props.removeTag.bind(this.props, item)} className="btn artist-search-tags">
-											<h4>{ item } <span className="icon-cancel-circled"></span></h4>
+										<button onClick={this.props.removeTerm.bind(this.props, item)} className="btn artist-search-tags">
+											<h4>{ item.text } <span className="icon-cancel-circled"></span></h4>
 										</button>
 									</li>
 								);
-	                        }.bind(this)) }
+	                        }) }
 	                    </ul>
 	                : null }
 				</span>  
