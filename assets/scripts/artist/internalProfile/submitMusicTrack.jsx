@@ -215,6 +215,8 @@ var SubmitMusicTrack = React.createClass({
 					{ this.state.addedTracks.map((item, index) => {
 						return ( 
 							<li key={ index } className="pad-b-sm">
+								<i onClick={ this.onIncreaseOrder } className="icon-down-open fa-2x"></i>
+								<i onClick={ this.onDecreaseOrder } className="icon-up-open fa-2x"></i>
 								{ item.isEditing ? 
 									<TrackEditor 
 										item={ item }
