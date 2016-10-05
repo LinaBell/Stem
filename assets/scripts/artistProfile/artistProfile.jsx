@@ -3,29 +3,29 @@ var ArtistProfile = React.createClass({
 		return {
 			songs: [],
 			artist: {}
-		};		 
+		} 
 	},
 	componentDidMount: function() {
-		var userInfo = this.context.userInfo,
-			artistId = this.props.artistId || this.context.userInfo.id;
+		var artist;
 
-		stemApi.getSongsByArtist({
-			artistId: artistId
+		stemApi.getArtist({
+			id: this.props.artistId
 		})
-		.then(function(data) {
-			this.setState( { songs: data } );
-		}.bind(this))
-		.catch(function(error) {
-			console.error('Error occured while fetching songs by artist: ' + Utilities.normalizeError(error));
-		});
+		.then((res) => {
+			artist = res;
 
-		this.setState({
-			artist: {
-				profileName: userInfo.profileName,
-				bio: userInfo.bio,
-				profileImageUrl: userInfo.profileImageUrl,
-				bannerImageUrl: userInfo.bannerImageUrl
-			}
+			return stemApi.getSongsByArtist({
+				artistId: this.props.artistId
+			})
+		})
+		.then((res) => {
+			this.setState({
+				songs: res,
+				artist: artist
+			})
+		})
+		.catch((error) => {
+			console.error('Error occured while fetching songs by artist: ' + Utilities.normalizeError(error));
 		});
 	},
 	render: function() {
@@ -41,7 +41,3 @@ var ArtistProfile = React.createClass({
 		);
 	}
 });
-
-ArtistProfile.contextTypes = {
-	userInfo: React.PropTypes.object
-};

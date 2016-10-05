@@ -111,14 +111,16 @@ var StemApi = (function () {
     });
 
     StemApi.prototype.upload = function (req) {
-    	var uploadResponse;    	
+    	var uploadResponse; 
+    	var fileName = req.file.name;
+    	var data = req.file.data || req.file;  	
 
         return Promise.resolve($.ajax({
             type: 'POST',
             url: this.baseUrl + 'files/upload',
             headers: { 'Authorization': this.authorization },
             contentType: 'application/json; charset=utf-8',
-            data: JSON.stringify({ fileName: req.file.name }),
+            data: JSON.stringify({ fileName: fileName }),
             dataType: 'json'
         }))
         .then((res) => {
@@ -132,7 +134,7 @@ var StemApi = (function () {
                 // this flag is important, if not set, it will try to send data as a form
                 processData: false,
                 // the actual file is sent raw
-                data: req.file
+                data: data
             });
         })
         .then((res) => {
@@ -146,16 +148,16 @@ var StemApi = (function () {
 	        });
         })
         .catch((reason) => {
-        	console.error('Error during upload api call: ' + reason);
+        	console.error('Error during upload api call: ' + Utilities.normalizeError(reason));
 
         	if (uploadResponse.id) {
         		console.log('Attempting to cancel the upload...');
-        		return this.cancelUpload({
+        		this.cancelUpload({
 		 			id: uploadResponse.id
         		});
         	}
         });
-    };
+    }
 
     ///////////// Songs /////////////
     //
@@ -293,6 +295,15 @@ var StemApi = (function () {
     		contentType: 'application/json; charset=utf-8'
     	});
     });
+
+    StemApi.prototype.getTagType = Promise.method(function(req) {
+   		return $.ajax({
+   			type: 'GET',
+   			url: this.baseUrl + 'tagtypes/' + req.id,
+   			headers: { Authorization: this.authorization },
+   			contentType: 'application/json; charset=utf-8'
+   		});
+    })
 
     ///////////// Creators /////////////
     //
