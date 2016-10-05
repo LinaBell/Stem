@@ -16,7 +16,7 @@ var MusicPlayer = React.createClass({
 		    cursorColor: "rgba(82, 84, 95, 0.5)",
 		    scrollParent: true,
 		    hideScrollbar: true,
-		    waveColor: "#50E3C2",
+		    waveColor: "#00D8D7",
 		    progressColor: "#c9c9c9",
 		});
 		this.setState({player: wavesurfer});
