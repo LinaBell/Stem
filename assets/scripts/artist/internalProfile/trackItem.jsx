@@ -2,9 +2,6 @@ var TrackItem = React.createClass({
 	onEditTrack: function() {
 		this.props.onEditTrack(this.props.index);
 	},
-	onIncreaseOrder: function() {
-		this.props.onIncreaseOrder(this.props.index);
-	},
 	render: function() {
 		var item = this.props.item;
 

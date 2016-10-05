@@ -150,17 +150,27 @@ var SubmitMusicTrack = React.createClass({
 	},
 	
 	onIncreaseOrder: function(index) {
-		if (index < this.state.addedTracks.length - 1) {
-			var newArray = [].concat(this.state.addedTracks);
-			
-			var temp = newArray[index];
-			newArray[index] = newArray[index + 1];
-			newArray[index + 1] = temp;
+		var newArray = [].concat(this.state.addedTracks);
+		
+		var temp = newArray[index];
+		newArray[index] = newArray[index + 1];
+		newArray[index + 1] = temp;
 
-			this.setState({
-				addedTracks: newArray
-			});
-		}
+		this.setState({
+			addedTracks: newArray
+		});
+	},
+
+	onDecreaseOrder: function(index) {
+		var newArray = [].concat(this.state.addedTracks);
+		
+		var temp = newArray[index];
+		newArray[index] = newArray[index - 1];
+		newArray[index - 1] = temp;
+
+		this.setState({
+			addedTracks: newArray
+		});
 	},
 	
 	validate: function(track) {
@@ -203,6 +213,9 @@ var SubmitMusicTrack = React.createClass({
 		});
 	},
 	render: function() {
+		var numTracks = this.state.addedTracks.length;
+		var canIncreaseOrDecrease = numTracks >= 2 && !this.state.isAudioUploading;
+
 		return (	
 			<div className="submit-track-edit-wrapper col-xs-12">
 				{ this.state.addedTracks.length > 1 ? 
@@ -215,8 +228,13 @@ var SubmitMusicTrack = React.createClass({
 					{ this.state.addedTracks.map((item, index) => {
 						return ( 
 							<li key={ index } className="pad-b-sm">
-								<i onClick={ this.onIncreaseOrder } className="icon-down-open fa-2x"></i>
-								<i onClick={ this.onDecreaseOrder } className="icon-up-open fa-2x"></i>
+								<div className="col-xs-12">
+								{ canIncreaseOrDecrease && index < numTracks - 1 ?
+									<i onClick={ this.onIncreaseOrder.bind(this, index) } className="icon-down-open fa-2x"></i> : null }
+								{ canIncreaseOrDecrease && index > 0 ?
+									<i onClick={ this.onDecreaseOrder.bind(this, index) } className="icon-up-open fa-2x"></i> : null }
+								</div>
+
 								{ item.isEditing ? 
 									<TrackEditor 
 										item={ item }
@@ -230,7 +248,6 @@ var SubmitMusicTrack = React.createClass({
 										item={ item }
 										index={ index }
 										onEditTrack={ this.onEditTrack } 
-										onIncreaseOrder={ this.onIncreaseOrder }
 										isAdmin={ this.props.isAdmin } />
 								}
 							</li> 
