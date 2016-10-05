@@ -1,11 +1,15 @@
 var PromoLandingTopSection = React.createClass({
 	render: function() {
-		// var bannerImageStyle = {
-	 //      		backgroundImage: 'url(' + artist.bannerImageUrl + ')'
-	 //    };
+		var artist = this.props.artist;
+		if (!artist) {
+			artist = ''
+		}
+		var bannerImageStyle = {
+	      		backgroundImage: 'url(' + artist.bannerImageUrl + ')'
+		    };
 		return(
 			<div className="promo-landing-top-section">
-				<div className="promo-background header-banner"></div>
+				<div className="promo-background header-banner" style={bannerImageStyle}></div>
 				<MusicPlayer />
 				<div className="promo-share-this">
 					<p className="display-inlb">Share this: </p>
