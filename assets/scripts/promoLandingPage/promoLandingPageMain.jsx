@@ -28,7 +28,6 @@ var PromoLandingPageMain = React.createClass({
 	render: function() {
 		return(
 			<div className="">
-				<PromoLandingHeader />
 				<PromoLandingTopSection />
 				<div className="promo-landing-main-bottom pad-box-sm">
 					<PromoLandingContent artist={this.state.artist} song={this.state.song} />
