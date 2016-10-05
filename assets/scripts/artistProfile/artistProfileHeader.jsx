@@ -14,7 +14,7 @@ var ArtistProfileHeader = React.createClass({
 			<div className="header-content-wrapper pad-l-lg">
 				<img className="header-img" src={artist.profileImageUrl} />
 				<div className="header-content-detail pad-l-lg">
-					<h1>{artist.profileName}</h1>
+					<h1>{artist.name}</h1>
 					<h4 className="pad-t-sm pad-b-md">{artist.bio}</h4>
 					<button className="btn-primary" onClick={this.follow}>
 						<h4 className="pad-l-md pad-r-md">

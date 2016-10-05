@@ -112,7 +112,7 @@ function (dispatch) {
 						</div>
 						<div className="playlist-detail-info col-sm-8">
 							<h4>{song.name}</h4>
-							<p><a onClick={this.props.navigateToArtist.bind(this, song)}>{song.artistName}</a></p>
+							<a onClick={this.props.navigateToArtist.bind(this, song)}><p>{song.artistName}</p></a>
 						</div> 
 					</td>
 
