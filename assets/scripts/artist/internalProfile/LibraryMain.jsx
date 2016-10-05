@@ -2,7 +2,18 @@ var LibraryMain = ReactRedux.connect(function(state) {
 	return {
 		userInfo: state.userState.userInfo
 	};
-}, null)
+}, function(dispatch) {
+	return {
+		navigateToMusicUpload: function() {
+			dispatch({
+				type: 'GoToPage',
+				data: {
+					currentPage: 1
+				}
+			});
+		}
+	}
+})
 (React.createClass({
 	getInitialState: function() {
 		return { 
@@ -61,7 +72,14 @@ var LibraryMain = ReactRedux.connect(function(state) {
 						<p>Manage your library of available tracks</p>
 					</div>
 					<div className="btn-wrapper pull-right">
-						<button type="button" className="btn-primary"><h3><span className="icon-up-circled"></span> Submit Music</h3></button>
+						<button 
+							onClick={ this.props.navigateToMusicUpload }
+							type="button" 
+							className="btn-primary">
+							<h3>
+								<span className="icon-up-circled"></span> Submit Music
+							</h3>
+						</button>
 					</div>
 					<div className="library-filter">
 						<ul className="pad-t-md">
