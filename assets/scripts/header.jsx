@@ -66,7 +66,7 @@ var Header = (function() {
 								<a href="http://d2pziso4zk2lvf.cloudfront.net/fontdemo.html"><i className="icon-star pad-l-sm"></i></a>
 								<a href="http://d2pziso4zk2lvf.cloudfront.net/stylesheet.html"><i className="icon-rocket error"></i></a>
 							</div>
-							{ this.props.isLoggedIn ?  
+							{ this.props.isLoggedIn && this.props.currentPage !== 107 ?  
 								<div className="nav header-nav header-right pull-right">										
 									<a onClick={this.showHideSearch}>
 										{ this.state.displaySearch ? 
@@ -79,20 +79,26 @@ var Header = (function() {
 													onKeyPress={this.searchInputKeyPress}
 													aria-describedby="addon-1" 
 													placeholder="Search..."  
-													autoFocus={this.state.autofocus} ></input>
+													autoFocus={this.state.autofocus} >
+												</input>
 											</div>	
 										: 
 											<i className="icon-search"></i>
 										}
 									</a>
-
-									<a><i className="icon-heart-empty"></i></a>
-									<a><i className="icon-up-circle" onClick={this.navigate.bind(this, 1)}></i></a>
-									<a><i className="icon-bell"></i></a>
+									{ this.props.accountType === 'Artist' ?
+										<a><i className="icon-up-circle" onClick={this.navigate.bind(this, 1)}></i></a>
+									:
+										<a><i className="icon-bookmark" onClick={this.navigate.bind(this, 16)}></i></a>
+									}
 									<a onClick={this.showHideMenu} className="dropdown-toggle primary" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 										<i className="icon-menu"></i>
 									</a>                 
 								</div> 
+							: null }
+							
+							{ this.props.currentPage == 107 ?
+								<PromoPageHeader />
 							: null }
 						</div> 
 					</nav>
@@ -109,7 +115,21 @@ var Header = (function() {
 							}.bind(this))}
 						</div>
 					</Menu>
+
 					<div onClick={this.filterOverlay} className={this.state.filterOverlay ? "filter-page-overlay active" : null} ></div>
+					
+
+				</div> 
+			)
+		}
+	});
+
+	var PromoPageHeader = React.createClass({
+		render: function() {
+			return(
+				<div className="promo-landing-header">
+					<button type="button" className="bg-primary white mar-l-md pull-right">Learn More</button>
+					<h3 className="pull-right">Need amazing music for your content?</h3>
 				</div>
 			)
 		}
@@ -138,8 +158,11 @@ var Header = (function() {
 		},
 		
 		render: function() {
+			var bannerImageStyle = {
+	            backgroundImage: 'url(' + this.context.userInfo.bannerImageUrl +')'
+	        };
 			return (
-				<div className="menu-header">
+				<div className="menu-header" style={bannerImageStyle}>
 					<a onClick={this.showHideMenu} className="close">
 						<i className="icon-cancel"></i>
 					</a>
@@ -188,6 +211,7 @@ var Header = (function() {
 	function mapStateToProps(state) {
 		return {
 			isLoggedIn: state.userState.isLoggedIn,
+			accountType: state.userState.userInfo.accountType,
 			currentPage: state.appState.currentPage,
 			searchTerms: state.appState.searchTerms
 		};
