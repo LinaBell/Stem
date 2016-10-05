@@ -42,10 +42,9 @@ var SubmitMusicAlbum = React.createClass({
 			albumName: ev.target.value
 		});
 	},
-	onAlbumArtChange: function(updatedImage, origImage) {
-		// TODO: Use the updated image and not the origImage
+	onAlbumArtChange: function(updatedImage) {
 		this.setState({
-			albumArt: origImage
+			albumArt: updatedImage
 		});
 	},
 	validate: function() {

@@ -110,15 +110,17 @@ var StemApi = (function () {
 	    });
     });
 
-    StemApi.prototype.upload = Promise.method(function (req) {
-    	var uploadResponse;    	
+    StemApi.prototype.upload = function (req) {
+    	var uploadResponse; 
+    	var fileName = req.file.name;
+    	var data = req.file.data || req.file;  	
 
         return Promise.resolve($.ajax({
             type: 'POST',
             url: this.baseUrl + 'files/upload',
             headers: { 'Authorization': this.authorization },
             contentType: 'application/json; charset=utf-8',
-            data: JSON.stringify({ fileName: req.file.name }),
+            data: JSON.stringify({ fileName: fileName }),
             dataType: 'json'
         }))
         .then((res) => {
@@ -132,7 +134,7 @@ var StemApi = (function () {
                 // this flag is important, if not set, it will try to send data as a form
                 processData: false,
                 // the actual file is sent raw
-                data: req.file
+                data: data
             });
         })
         .then((res) => {
@@ -155,7 +157,7 @@ var StemApi = (function () {
         		});
         	}
         });
-    })
+    }
 
     ///////////// Songs /////////////
     //
