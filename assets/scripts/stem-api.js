@@ -352,14 +352,14 @@ var StemApi = (function () {
     
     ///////////// Artists /////////////
     //
-    StemApi.prototype.getArtistsPopular = function (rse) {
+    StemApi.prototype.getArtistsPopular = Promise.method(function (req) {
         return $.ajax({
             type: 'GET',
             url: this.baseUrl + 'artists/popular',
             headers: { 'Authorization': this.authorization },
             contentType: 'application/json; charset=utf-8',
         });
-    }
+    });
     
     StemApi.prototype.getArtistDashboard = function (rse) {
         return $.ajax({
