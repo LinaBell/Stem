@@ -40,16 +40,15 @@ var PlaylistTable = React.createClass({
 					<tbody>
 						{songs.map((song, index) => {
 							return (
-									<PlaylistItem key={index} song={song} onBookmarkChange={this.props.onBookmarkChange} canToggleBookmarkIcon={this.props.canToggleBookmarkIcon} />
+								<PlaylistItem 
+									key={index} 
+									song={song} 
+									onBookmarkChange={this.props.onBookmarkChange} 
+									canToggleBookmarkIcon={this.props.canToggleBookmarkIcon} />
 							)
 						})}
 					</tbody>
 				</table>
-
-				<div>
-					<input type="text" value={ this.albumId } onChange={ this.onAlbumIdChange } placeholder="Album Id" />
-					<a onClick={ this.testAdminEdit }>Test Admin Edit</a>
-				</div>	
 			</div>
 		)
 	}
