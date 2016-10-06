@@ -48,6 +48,7 @@ var FilterNav = React.createClass({
     },
        
     showHideFilterMenu: function(tagType) {
+
     	if (!tagType) {
     		this.setState({
     			displayFilterMenu: false
@@ -75,14 +76,14 @@ var FilterNav = React.createClass({
 
         return (
             <div>
-                <div className="filter-nav">
+                <div className="filter-nav" ref="filterNav">
                     {filterNavWidth > windowWidth ? 
                         <span>
                             <a onClick={this.moveRight} className="filter-nav-next icon-right-open-big"></a>
                             <a onClick={this.moveLeft} className="filter-nav-prev icon-left-open-big"></a>
                         </span>
                     : null }
-                    <ul className="filter-nav-list" ref="filterNav">
+                    <ul className="filter-nav-list">
                         <li style={style}>
                             <a onClick={this.showHideFilterMenu.bind(this, TagSystemTypeEnum.Genre)}>
                                 <i className="icon-headphones-2"></i>
@@ -101,7 +102,7 @@ var FilterNav = React.createClass({
                         </li>
                         <li style={style}>
                             <a onClick={this.showHideFilterMenu.bind(this, TagSystemTypeEnum.Vocal)}>
-                                <i className="icon-user-pair"></i>
+                                <i className="icon-user-pair mar-r-sm"></i>
                                 <h6>
                                     Vocal Type
                                 </h6>
@@ -142,18 +143,22 @@ var FilterMenu = ReactRedux.connect(function(state, ownProps) {
 	}
 }, function(dispatch) {
 	return {
-		updateSearch: function(filterName, active, terms) {
+		updateSearch: function(searchTerm, active, terms) {
 			var newState;
 
 			if (active) {
-				newState = terms.concat(filterName);
+				newState = terms.concat({
+					text: searchTerm.name,
+					type: SearchTermType.Tag,
+					data: searchTerm
+				});
 			} else {
 				newState = terms.filter((item) => {
-					return item !== filterName.toLowerCase();
+					return item.text !== searchTerm.text && item.type === searchTerm.type;
 				});
 			}
 
-			dispatch(beginSearch(newState.join(' ')));
+			dispatch(beginSearch(newState));
 		},
 
 		refreshTags: function(tagTypeId) {
@@ -197,7 +202,7 @@ var FilterMenu = ReactRedux.connect(function(state, ownProps) {
         this.props.showHideFilterMenu();
     },
     onFilterChange: function(filter, active) {
-    	this.props.updateSearch(filter.name, active, this.props.searchTerms);
+    	this.props.updateSearch(filter, active, this.props.searchTerms);
     },
     render: function() {
         return (

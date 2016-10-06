@@ -6,7 +6,7 @@ var ArtistSearchSideBar = ReactRedux.connect(function(state) {
 		return {
 			removeTerm: function(term) {
 				var newSearchTerms = this.searchTerms.filter((item) => {
-					return item.text !== term.text && item.type === term.type;
+					return item.text !== term.text || item.type !== term.type;
 				});
 
 				dispatch(beginSearch(newSearchTerms));
