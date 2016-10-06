@@ -41,7 +41,7 @@ var FeaturedArtist = React.createClass({
             <h2>Listen to</h2>
             <span className="featured-artist-name">{selectedArtist.name}</span>
             <span className="featured-artist-song red"><h4>{selectedArtist.songName}</h4></span>
-            <div className="pad-t-sm pad-b-sm"><span className="icon-heart fa-2x red"></span> {selectedArtist.bookmarkCount} </div>
+            <div className="pad-t-sm pad-b-sm"><span className="icon-bookmark primary fa-2x"></span> {selectedArtist.bookmarkCount} </div>
             <div className="featured-description">
               <h4>{selectedArtist.bio}</h4>
             </div>
