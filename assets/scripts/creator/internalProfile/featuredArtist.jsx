@@ -1,4 +1,20 @@
-var FeaturedArtist = React.createClass({
+var FeaturedArtist = ReactRedux.connect(null,
+function (dispatch) {
+  return {
+    navigateToArtist: function(selectedArtist) {
+      dispatch({
+        type: 'GoToPage',
+        data: {
+          currentPage: 110,
+          pageParams: {
+            artistId: selectedArtist.id
+          }
+        }
+      });
+    }
+  };
+}
+)(React.createClass({
   getInitialState: function() {
     return {
       selectedArtist: []
@@ -41,14 +57,14 @@ var FeaturedArtist = React.createClass({
             <h2>Listen to</h2>
             <span className="featured-artist-name">{selectedArtist.name}</span>
             <span className="featured-artist-song red"><h4>{selectedArtist.songName}</h4></span>
-            <div className="pad-t-sm pad-b-sm"><span className="icon-bookmark primary fa-2x"></span> {selectedArtist.bookmarkCount} </div>
+            <div className="pad-t-sm pad-b-sm"><span className="icon-bookmark fa-2x primary"></span> {selectedArtist.bookmarkCount} </div>
             <div className="featured-description">
               <h4>{selectedArtist.bio}</h4>
             </div>
           </div>
           <div className="play">  
             <button className="play-btn"><h3 className="icon-play fa-2x pad-box-sm">PLAY NOW</h3></button>
-            <a><p>Go to artist page</p></a>
+            <a onClick={this.props.navigateToArtist.bind(this, selectedArtist)} ><p>Go to artist page</p></a>
           </div>
           <div className="large-desktop-space">
             <TopAlbums onTopArtistBackground={this.onTopArtistBackground} onTopArtistChange={this.onTopArtistChange} />
@@ -57,4 +73,4 @@ var FeaturedArtist = React.createClass({
       </div>
     )
   }
-});
+}));

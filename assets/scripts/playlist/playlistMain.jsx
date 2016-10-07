@@ -8,11 +8,11 @@ var PlaylistMain = React.createClass({
         var self = this;
 		
 		return (
-			<span>
+			<div className="content-vh">
 				<PlaylistHeader />
 				<PlaylistTable songs={this.state.songs} />
 				<PlaylistMobileView />
-			</span>	
+			</div>	
 		);
 	}
 });

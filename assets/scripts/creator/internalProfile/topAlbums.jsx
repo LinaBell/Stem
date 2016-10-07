@@ -32,17 +32,17 @@
 	    		transform: 'scale(1)',
 	    		transition: 'transform 100ms ease-in'
 		    }
-			if (currentSlide + 1 >= this.state.topArtists.length) {
-				this.props.onTopArtistBackground(this.state.topArtists[0]);
-				$('.slick-current').css(topArtistStyle);
-			} else {
-				this.props.onTopArtistBackground(this.state.topArtists[currentSlide + 1]);
-				$('.slick-current').css(topArtistStyle);
-			}
-	    });
-	    $(this.refs.slickRef).on('afterChange', (event, slick, currentSlide, nextSlide) => {
+      if (currentSlide + 1 >= this.state.topArtists.length) {
+        this.props.onTopArtistBackground(this.state.topArtists[0]);
+        $('.slick-current').css(topArtistStyle);
+      } else {
+        this.props.onTopArtistBackground(this.state.topArtists[currentSlide + 1]);
+        $('.slick-current').css(topArtistStyle);
+      }
+      });
+      $(this.refs.slickRef).on('afterChange', (event, slick, currentSlide, nextSlide) => {
 
-	    	var topArtistStyle = {
+        var topArtistStyle = {
 	    		transform: 'scale(1.2)',
 	    		transition: 'transform 100ms ease-in'
 	    	}
