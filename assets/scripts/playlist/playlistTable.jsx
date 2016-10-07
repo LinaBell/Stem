@@ -45,16 +45,16 @@ var PlaylistTable = ReactRedux.connect(function(state) {
 					<tbody>
 						{songs.map((song, index) => {
 							return (
-									<PlaylistItem key={index} song={song} userInfo={this.props.userInfo} onBookmarkChange={this.props.onBookmarkChange} canToggleBookmarkIcon={this.props.canToggleBookmarkIcon} />
+								<PlaylistItem 
+									key={index} 
+									song={song} 
+									userInfo={this.props.userInfo}
+									onBookmarkChange={this.props.onBookmarkChange} 
+									canToggleBookmarkIcon={this.props.canToggleBookmarkIcon} />
 							)
 						})}
 					</tbody>
 				</table>
-
-				<div>
-					<input type="text" value={ this.albumId } onChange={ this.onAlbumIdChange } placeholder="Album Id" />
-					<a onClick={ this.testAdminEdit }>Test Admin Edit</a>
-				</div>	
 			</div>
 		)
 	}

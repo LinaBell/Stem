@@ -2,9 +2,25 @@
     font-family: fancyfont;
     src: url(../fonts/SignPainter-HouseScript.ttf);
 }
-@font-reg: 'roboto-light';
-@font-md: 'roboto-medium';
-@font-bold: 'roboto-bold';
+@font-face {
+	font-family: 'Roboto-Light';
+	src: url(../fonts/Roboto-Light.ttf)
+}
+@font-face {
+	font-family: 'Roboto';
+	src: url(../fonts/Roboto-Regular.ttf)
+}
+@font-face {
+	font-family: 'Roboto-Medium';
+	src: url(../fonts/Roboto-Medium.ttf)
+}
+@font-face {
+	font-family: 'Roboto-Bold';
+	src: url(../fonts/Roboto-Bold.ttf)
+}
+@font-reg: 'Roboto-Light';
+@font-md: 'Roboto-Medium';
+@font-bold: 'Roboto-Bold';
 
 /* spacing */
 @space-sm: 10px;
@@ -40,6 +56,7 @@
 @drop-7: inset 1px 1px 3px rgba(0,0,0,.35);
 @drop-8: inset 0px 1px 2px rgba(0,0,0,.45);
 @drop-9: 2px 2px 5px rgba(0,0,0,0.6);
+@drop-10: 1px 1px 5px rgba(0, 0, 0, 0.5); /* for text-shadow */
 
 @bd-rad-sm: 3px;
 @bd-rad-md: 8px;
