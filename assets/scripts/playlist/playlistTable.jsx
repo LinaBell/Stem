@@ -1,4 +1,9 @@
-var PlaylistTable = React.createClass({
+var PlaylistTable = ReactRedux.connect(function(state) {
+	return {
+		userInfo: state.userState.userInfo
+	};
+}
+)(React.createClass({
 	getInitialState: function() {
 		return {
 			albumId: ''
@@ -34,13 +39,13 @@ var PlaylistTable = React.createClass({
 							<th className="col-md-1 pad-b-md"><h4>Downloads</h4></th>
 							<th className="col-md-1 pad-b-md"><h4>Lift</h4></th>
 							<th className="col-md-1 pad-b-md"><h4>Bookmark</h4></th>
-							<th className="col-md-1 pad-b-md"><h4>Download</h4></th>
+							{this.props.userInfo.accountType == "Artist" ? null : <th className="col-md-1 pad-b-md"><h4>Download</h4></th>}
 						</tr>	
 					</thead>
 					<tbody>
 						{songs.map((song, index) => {
 							return (
-									<PlaylistItem key={index} song={song} onBookmarkChange={this.props.onBookmarkChange} canToggleBookmarkIcon={this.props.canToggleBookmarkIcon} />
+									<PlaylistItem key={index} song={song} userInfo={this.props.userInfo} onBookmarkChange={this.props.onBookmarkChange} canToggleBookmarkIcon={this.props.canToggleBookmarkIcon} />
 							)
 						})}
 					</tbody>
@@ -53,7 +58,7 @@ var PlaylistTable = React.createClass({
 			</div>
 		)
 	}
-});
+}));
 
 var PlaylistItem = ReactRedux.connect(null,
 function (dispatch) {
@@ -131,14 +136,14 @@ function (dispatch) {
 					<td className="col-md-1">
 						<p>{song.bookmarkCount} <i className="icon-up-open"></i></p>
 					</td>
-
+			
 					<td className="col-md-1">
 						<span onClick={this.bookmarkSong} className={ isBookmarked ? "icon-bookmark-2 primary fa-2x" : "icon-bookmark-empty fa-2x"}></span>            
 					</td>
 
-					<td className="col-md-1">
+					{ this.props.userInfo.accountType == "Artist" ? null : <td className="col-md-1">
 						<a className="color-grey" ><span className="icon-down-circled fa-2x"></span></a>
-					</td>
+					</td> }
 				</tr>
 		)
 	}

@@ -21,7 +21,7 @@ function (dispatch) {
   },
   render: function() {
     return(
-      <div>
+      <div className="content-vh">
         <div className="tables-page pad-box-lg">
           <h2>Bookmarks</h2>
           <p className="font-light">The songs you've liked</p>

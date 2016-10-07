@@ -25,6 +25,12 @@ var ArtistAccountSettings = ReactRedux.connect(function(state) {
         }
     },
 
+    componentDidMount: function() {
+        this.setState({
+            characterCount: this.state.bio.length
+        });
+    },
+
     handleFieldChange: function (e) {
         var id = e.target.id;
         this.setState({

@@ -63,22 +63,28 @@ var TrackEditor = React.createClass({
 
 		return (
 			<div className="submit-track-wrapper">
-				<div className="submit-track-name col-lg-6">
+				<div className="submit-track-name col-lg-6 row no-gutters">
 					<p className="col-xs-12">Track Name</p>
-					<input name="trackName" value={ item.trackName } onChange={ this.onInputChange } />
-					<AudioUpload value={ item.audioFile } onUploadStarted={ this.onUploadStarted } onAudioChange={ this.onAudioChange } />
+					<div className="col-xs-12 row no-gutters no-margin">
+						<div className="col-xs-8">
+							<input name="trackName" value={ item.trackName } onChange={ this.onInputChange } />
+						</div>
+						<div className="col-xs-2 col-xs-offset-2">
+							<AudioUpload value={ item.audioFile } onUploadStarted={ this.onUploadStarted } onAudioChange={ this.onAudioChange } />
+						</div>
+					</div>	
 				</div>
 				<div className="col-lg-6">
 					<p>ISRC # <a className="info-tags">Whats an ISRC#?</a></p>
-					<input name="isrc" value={ item.isrc } onChange={ this.onInputChange } placeholder="( optional )" />
+					<input name="isrc" value={ item.isrc } onChange={ this.onInputChange } placeholder="optional" />
 				</div> 
 				<div className="col-lg-6">
 					<p>Release Date - MM/DD/YY</p>
-					<input name="releaseDate" value={ item.releaseDate } onChange={ this.onInputChange } placeholder="( optional )" />
+					<input name="releaseDate" value={ item.releaseDate } onChange={ this.onInputChange } placeholder="optional" />
 				</div>
 				<div className="col-lg-6">
 					<p>Additional Credits</p>
-					<input name="additionalCredits" value={ item.additionalCredits } onChange={ this.onInputChange } placeholder="( optional )" />
+					<input name="additionalCredits" value={ item.additionalCredits } onChange={ this.onInputChange } placeholder="optional" />
 				</div>
 				<div className="genre-tag-selector-wrapper mar-b-md col-lg-12">
 					<div className="col-lg-6 pad-l-sm">	
@@ -90,7 +96,7 @@ var TrackEditor = React.createClass({
 					</div>	
 					<div className="col-lg-6">
 						<p>YouTube Share Link</p>
-						<input name="youTubeVideoId" value={ item.youTubeVideoId } onChange={ this.onInputChange } placeholder="( optional )" />
+						<input name="youTubeVideoId" value={ item.youTubeVideoId } onChange={ this.onInputChange } placeholder="optional" />
 					</div>
 				</div>
 				<div className="pad-b-sm col-xs-12">
