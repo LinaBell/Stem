@@ -1,4 +1,10 @@
 var PromoLandingContent = React.createClass({
+	getInitialState: function() {
+		return {
+			hasPatreon: true,
+		}
+	},
+
 	render: function() {
 		var song = this.props.song;
 		var artist = this.props.artist;
@@ -6,8 +12,8 @@ var PromoLandingContent = React.createClass({
 			artist = ''
 		}
 		return(
-			<div className="promo-landing-content mar-t-lg pad-box-sm">
-				<div className="promo-artist-info">
+			<div className="promo-landing-content row mar-t-lg pad-box-sm">
+				<div className="promo-artist-info col-sm-12 col-md-6">
 					<img src={artist.profileImageUrl} className="header-img mar-b-lg" />
 					<h2 className="mar-t-md mar-b-md">{artist.name}</h2>
 					<p className="promo-artist-bio mar-b-lg">{artist.bio}</p>
