@@ -66,10 +66,10 @@ var TrackEditor = React.createClass({
 				<div className="submit-track-name col-lg-6 row no-gutters">
 					<p className="col-xs-12">Track Name</p>
 					<div className="col-xs-12 row no-gutters no-margin">
-						<div className="col-xs-8">
+						<div className="col-xs-9">
 							<input name="trackName" value={ item.trackName } onChange={ this.onInputChange } />
 						</div>
-						<div className="col-xs-2 col-xs-offset-2">
+						<div className="col-xs-2 col-xs-offset-1">
 							<AudioUpload value={ item.audioFile } onUploadStarted={ this.onUploadStarted } onAudioChange={ this.onAudioChange } />
 						</div>
 					</div>	
@@ -103,9 +103,9 @@ var TrackEditor = React.createClass({
 					<p>Lyrics <a className="info-tags"> Why upload lyrics?</a></p>
 					<textarea name="lyrics" value={ item.lyrics } onChange={ this.onInputChange } placeholder="Paste your lyrics here.." />
 				</div>
-				<div className="explicit-checkbox pad-b-lg col-xs-12 red">
+				<div className="explicit-checkbox pad-b-lg col-xs-12">
 					<input type="checkbox" name="isExplicit" onChange={ this.onCheckedChange } checked={ item.isExplicit } />
-				  	<h5 className="pad-l-sm">EXPLICIT</h5>
+				  	<h5 className="pad-l-sm red">EXPLICIT</h5>
 				</div>
 				{ this.props.isAdmin ? 
 					<StatusButtons isReadOnly={ false } value={ item.status } onStatusChange={ this.onStatusChange } /> : null 
