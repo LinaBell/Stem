@@ -64,7 +64,7 @@ function (dispatch) {
           </div>
           <div className="play">  
             <button className="play-btn"><h3 className="icon-play fa-2x pad-box-sm">PLAY NOW</h3></button>
-            <a onClick={this.props.navigateToArtist.bind(this, selectedArtist)} ><p>Go to artist page</p></a>
+            <span className="primary" onClick={this.props.navigateToArtist.bind(this, selectedArtist)} ><p>Go to artist page</p></span>
           </div>
           <div className="large-desktop-space">
             <TopAlbums onTopArtistBackground={this.onTopArtistBackground} onTopArtistChange={this.onTopArtistChange} />

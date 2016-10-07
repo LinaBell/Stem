@@ -73,7 +73,7 @@ var ArtistContactInfo = ReactRedux.connect(function(state) {
 					<input id="firstName" placeholder="First Name" onChange={this.handleFieldChange} value={this.state.firstName} /> 
 					<input id="phone" placeholder="Mobile Number" onChange={this.handleFieldChange} value={this.state.phone} /> 
 					<input id="address" placeholder="Street Address" onChange={this.handleFieldChange} value={this.state.address} /> 
-					<select id="state" className="btn btn-wide bg-grey-4" onChange={this.handleFieldChange} value={this.state.state}> 
+					<select id="state" className="btn btn-wide bg-primary" onChange={this.handleFieldChange} value={this.state.state}> 
 						<option value="AL">AL</option>
 						<option value="AK">AK</option>
 						<option value="AZ">AZ</option>
