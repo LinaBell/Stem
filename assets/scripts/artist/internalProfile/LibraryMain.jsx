@@ -65,8 +65,8 @@ var LibraryMain = ReactRedux.connect(function(state) {
 	},
 	render: function() {
 		return (
-			<span>
-				<div className="library-content-wrapper">  
+			<div className="content-vh">
+				<div className="library-content-wrapper content-vh">  
 					<div className="artist-internal-greeting">
 						<h3>Library</h3>
 						<p>Manage your library of available tracks</p>
@@ -88,7 +88,7 @@ var LibraryMain = ReactRedux.connect(function(state) {
 					</div>
 					{this.state.displayedSongs.length <= 0 ? <LibraryZeroState /> : <LibraryMainTable songs={this.state.displayedSongs} /> }	
 				</div>  
-			</span>
+			</div>
 		);
 	}
 }));
