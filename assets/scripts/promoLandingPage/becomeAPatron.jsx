@@ -1,7 +1,7 @@
 var BecomeAPatron = React.createClass({
 	render: function() {
 		return(
-			<div className="become-a-patron">
+			<div className="become-a-patron col-sm-12 col-md-5">
 				<div className="patreon-main-content bg-grey-6 pad-box-lg">
 					<h2 className="mar-t-sm mar-b-md">Become a Patron!</h2>
 					<p className="mar-b-lg">We've partnered with Patreon to make it easy to support this artist. If you love what you're hearing, consider becoming a patron!</p>
