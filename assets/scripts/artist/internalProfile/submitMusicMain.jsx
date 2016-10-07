@@ -53,7 +53,7 @@ var SubmitMusicMain = ReactRedux.connect(null, function(dispatch) {
 	},
     render: function () {
         return (
-            <div className="artist-internal-wrapper-fluid pad-b-lg">
+            <div className="artist-internal-wrapper-fluid content-vh pad-b-lg">
                 <div className="bg-white">  
                     <div>
                         <div className="pad-box-lg">

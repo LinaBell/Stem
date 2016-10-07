@@ -6,7 +6,7 @@ var StaffPicksMain = React.createClass({
   },
   render: function() {
     return(
-      <div>
+      <div className="content-vh">
         <StaffPicksHeader />
         <div className="pad-box-lg">
           <PlaylistTable songs={this.state.songs} />

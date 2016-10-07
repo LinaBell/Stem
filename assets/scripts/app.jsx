@@ -255,7 +255,7 @@ var App = React.createClass({
 				
 				{ this.props.currentPage == 3 ?
 					<div className="wrapper">
-						<ArtistProfile />
+						<ArtistProfile artistId={this.props.userInfo.id} />
 						<Footer />
 					</div>
 				: null } 
@@ -462,7 +462,7 @@ var artistMenu = [
 		icon: "icon-user"
 	},
 	{
-		pageID: 4,
+		pageID: 10,
 		text: "Browse Music",
 		icon: "icon-headphones-2"
 	},
