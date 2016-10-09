@@ -143,19 +143,31 @@ var FilterMenu = ReactRedux.connect(function(state, ownProps) {
 	}
 }, function(dispatch) {
 	return {
-		updateSearch: function(searchTerm, active, terms) {
-			var newState;
+		updateSearch: function(addQueue, removeQueue, terms) {
+			var newState = terms;
 
-			if (active) {
-				newState = terms.concat({
-					text: searchTerm.name,
-					type: SearchTermType.Tag,
-					data: searchTerm
-				});
-			} else {
-				newState = terms.filter((item) => {
-					return item.text !== searchTerm.text && item.type === searchTerm.type;
-				});
+			if (removeQueue.length > 0) {
+				var idsToRemove = removeQueue.map((item) => {
+					return item.id
+				})
+
+				newState = terms.reduce((prev, current) => {
+					if (current.type === SearchTermType.Tag && idsToRemove.includes(current.data.id)) {
+						return prev
+					} else {
+						return prev.concat(current)
+					}
+				}, [])
+			}
+
+			if (addQueue.length > 0) {
+				newState = newState.concat(addQueue.map((item) => {
+					return {
+						text: item.name,
+						type: SearchTermType.Tag,
+						data: item
+					}
+				}))
 			}
 
 			dispatch(beginSearch(newState));
@@ -166,6 +178,8 @@ var FilterMenu = ReactRedux.connect(function(state, ownProps) {
 		}
 	}
 })(React.createClass({
+	addQueue: [],
+	removeQueue: [],
 	getInitialState() {
 		return {
 			tagName: ''
@@ -189,6 +203,15 @@ var FilterMenu = ReactRedux.connect(function(state, ownProps) {
 		if (nextProps.tagType !== this.props.tagType) {
 			this.updateTagType(nextProps.tagType)
 		}
+
+		if (nextProps.displayFilterMenu !== this.props.displayFilterMenu && 
+			!nextProps.displayFilterMenu &&
+			(this.addQueue.length > 0 || this.removeQueue.length > 0)) {
+
+			this.props.updateSearch(this.addQueue, this.removeQueue, this.props.searchTerms)
+			this.addQueue = []
+			this.removeQueue = []
+		}
 	},
 	updateTagType(tagType) {
 
@@ -202,7 +225,35 @@ var FilterMenu = ReactRedux.connect(function(state, ownProps) {
         this.props.showHideFilterMenu();
     },
     onFilterChange: function(filter, active) {
-    	this.props.updateSearch(filter, active, this.props.searchTerms);
+    	var existingAddIndex = this.addQueue.findIndex((item) => {
+    		return item.id === filter.id
+    	})
+
+    	var existingRemoveIndex = this.removeQueue.findIndex((item) => {
+    		return item.id === filter.id
+    	})
+
+    	if (active) {
+    		if (existingAddIndex === -1) {
+    			this.addQueue.push(filter)
+    		}
+
+    		if (existingRemoveIndex !== -1) {
+    			this.removeQueue.splice(existingRemoveIndex, 1)
+    		}
+
+    		return
+    	}
+
+    	if (!active) {
+    		if (existingRemoveIndex === -1) {
+    			this.removeQueue.push(filter)
+    		}
+
+    		if (existingAddIndex !== -1) {
+    			this.addQueue.splice(existingAddIndex, 1)
+    		}
+    	} 
     },
     render: function() {
         return (
