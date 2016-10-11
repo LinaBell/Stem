@@ -1,7 +1,7 @@
 var ArtistSettings = React.createClass({
 	render: function() {
 	    return (
-	        <div>
+	        <div className="content-vh content-padding">
 				<ArtistAccountSettings />
 				<ArtistContactInfo />
 				<ArtistConnectedAccounts />

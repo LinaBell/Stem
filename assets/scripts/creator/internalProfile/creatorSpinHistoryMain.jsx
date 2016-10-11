@@ -17,8 +17,8 @@ var CreatorSpinHistoryMain = React.createClass({
   },
   render: function() {
     return(
-      <div className="content-vh">
-        <div className="tables-page pad-box-lg">
+      <div className="content-vh content-padding">
+        <div className="tables-page pad-b-md">
           <h2>Spin History</h2>
           <p className="font-light">The songs you've listened to recently</p>
         </div>

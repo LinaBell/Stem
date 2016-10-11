@@ -6,7 +6,7 @@ var LibraryMainTable = React.createClass({
 			);
 		});
 		return(
-	  		<div className="library-result-table mar-t-lg">
+	  		<div className="library-result-table tables-page mar-t-lg">
 	    		<table className="table no-borders">
 	      			<LibraryMainTableHeader />
 	      			<tbody>

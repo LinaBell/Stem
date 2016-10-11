@@ -204,7 +204,7 @@ var ArtistAccountSettings = ReactRedux.connect(function(state) {
         var self = this;
 
         return (
-            <div className="artist-account-settings pad-box-lg">
+            <div className="artist-account-settings">
 				<div className="col-xs-12 mar-b-md">
 					<h2 className="mar-b-sm">Account</h2>
 					<h5>Update your account settings</h5>
