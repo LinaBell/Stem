@@ -20,15 +20,18 @@ var CreatorDownloadsMain = ReactRedux.connect(function(state) {
 	},
 	render: function() {
 		return(
-			<div className="creator-downloads tables-page content-vh">
-				<header className="creator-downloads-header mar-t-lg mar-l-md mar-b-lg">
-					<h2 className="mar-b-sm">Downloads</h2>
-					<p className="font-light">Your history of downloads</p>
-				</header>
-					{this.state.downloads.length <= 0 ? <CreatorDownloadsZeroState /> : <CreatorDownloadsMap downloads={this.state.downloads} />
-					
-				}
-				
+			<div className="content-vh content-padding">
+				<div className="creator-downloads tables-page">
+					<header className="creator-downloads-header pad-b-md">
+						<h2 className="">Downloads</h2>
+						<p className="font-light">Your history of downloads</p>
+					</header>
+					<div className="creator-downloads-content">
+						{this.state.downloads.length <= 0 ? <CreatorDownloadsZeroState /> : <CreatorDownloadsMap downloads={this.state.downloads} />
+						
+					}
+					</div>
+				</div>
 			</div>
 		)
 	}

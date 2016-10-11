@@ -474,7 +474,7 @@ var artistMenu = [
 	{
 		pageID: 107,
 		text: "Promo Page",
-		icon: "icon-cog-2"
+		icon: "icon-star"
 	}
 ]; 
 
