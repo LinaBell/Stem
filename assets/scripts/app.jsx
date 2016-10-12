@@ -68,17 +68,14 @@ var Utilities = {
 	}
 };
 
-function refreshTags(tagTypeId) {
+function refreshTags() {
 	return function(dispatch) {
-		stemApi.getTagValues({
-			tagTypeId: tagTypeId
-		})
+		stemApi.getAllTags()
 		.then((res) => {
 			dispatch({
 				type: 'UpdateTags',
 				data: {
-					tags: res,
-					tagTypeId: tagTypeId
+					tags: res
 				}
 			});
 		})
@@ -197,12 +194,18 @@ var appReducer = function(state = initialAppState, action) {
 				creatorBookmarks: action.data.results
 			});
 		case 'UpdateTags': 
-			var tagTypeId = action.data.tagTypeId;
-			var newTags = Object.assign({}, state.tags);
-			newTags[tagTypeId] = action.data.tags;
+			var tagDict = action.data.tags.reduce((prev, current) => {
+				if (!prev[current.typeId]) {
+					prev[current.typeId] = []
+				}
+				
+				prev[current.typeId].push(current)
+
+				return prev
+			}, {})
 
 			return Object.assign({}, state, {
-				tags: newTags
+				tags: tagDict
 			});
 
 		default: 

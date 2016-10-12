@@ -188,8 +188,8 @@ var FilterMenu = ReactRedux.connect(function(state, ownProps) {
 			dispatch(beginSearch(newState));
 		},
 
-		refreshTags: function(tagTypeId) {
-			dispatch(refreshTags(tagTypeId));
+		refreshTags: function() {
+			dispatch(refreshTags());
 		}
 	}
 })(React.createClass({
@@ -207,12 +207,7 @@ var FilterMenu = ReactRedux.connect(function(state, ownProps) {
 	},
 	componentDidMount() {
 		this.updateTagType(this.props.tagType);
-
-		TagSystemTypeEnum.enums.forEach((item) => {
-			if (item.value > 0) {
-				this.props.refreshTags(item.value);
-			}
-		});
+		this.props.refreshTags();
 	},
 	componentWillReceiveProps(nextProps) {
 		if (nextProps.tagType !== this.props.tagType) {

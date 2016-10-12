@@ -277,6 +277,16 @@ var StemApi = (function () {
 
     ///////////// Tags /////////////
     //
+    
+    StemApi.prototype.getAllTags = Promise.method(function(req) {
+    	return $.ajax({
+    		type: 'GET',
+    		url: this.baseUrl + 'tags',
+    		headers: { 'Authorization': this.authorization },
+            contentType: 'application/json; charset=utf-8'
+    	})
+    })
+    
     StemApi.prototype.getAllTagTypes = Promise.method(function(req) {
     	return $.ajax({
     		type: 'GET',
