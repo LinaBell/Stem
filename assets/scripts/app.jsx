@@ -3,7 +3,7 @@ var createStore = Redux.createStore,
 	applyMiddleware = Redux.applyMiddleware,
 	Provider = ReactRedux.Provider,
 	connect = ReactRedux.connect,
-	stemApi = new StemApi("http://52.32.255.104/api/"),
+	stemApi = new StemApi("http://api.dev.hellothematic.com//api/"),
 	thunk = ReduxThunk.default;
 
 var TagSystemTypeEnum = new Enum({ None:0, Genre:1, Community:2, Vocal:3, Tempo:4, Mood:5 });

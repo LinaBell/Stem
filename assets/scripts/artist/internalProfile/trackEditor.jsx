@@ -62,7 +62,7 @@ var TrackEditor = React.createClass({
 		var item = this.props.item;
 
 		return (
-			<div className="submit-track-wrapper">
+			<div className="submit-track-wrapper col-xs-12">
 				<div className="submit-track-name col-lg-6 row no-gutters">
 					<p className="col-xs-12">Track Name</p>
 					<div className="col-xs-12 row no-gutters no-margin">
