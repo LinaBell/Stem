@@ -254,7 +254,6 @@ var SubmitMusicTrack = React.createClass({
 						);
 					})}
 				</ul>
-
 				{ this.props.isAdmin ? 
 					<div className="admin-state-btn-wrapper">
 						<button onClick={ this.props.onSubmitClicked } className="save-state">Save & Close</button>

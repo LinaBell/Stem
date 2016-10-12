@@ -297,12 +297,12 @@ var StemApi = (function () {
     });
 
     StemApi.prototype.getTagType = Promise.method(function(req) {
-   		return $.ajax({
-   			type: 'GET',
-   			url: this.baseUrl + 'tagtypes/' + req.id,
-   			headers: { Authorization: this.authorization },
-   			contentType: 'application/json; charset=utf-8'
-   		});
+        return $.ajax({
+            type: 'GET',
+            url: this.baseUrl + 'tagtypes/' + req.id,
+            headers: { Authorization: this.authorization },
+            contentType: 'application/json; charset=utf-8'
+        });
     })
 
     ///////////// Creators /////////////
