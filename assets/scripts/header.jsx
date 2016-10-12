@@ -12,8 +12,13 @@ var Header = (function() {
 
 	    search: function() {
 	    	this.setState({ displaySearch: true });
+	    	
+	    	this.props.search(this.props.searchTerms.concat({
+	    		text: this.state.searchInput,
+	    		type: SearchTermType.Text
+	    	}));
+
 	    	this.setState({ searchInput: '' });
-	    	this.props.search(this.props.searchTerms.join(' ') + ' ' + this.state.searchInput);
 
 	    },
 
@@ -89,7 +94,7 @@ var Header = (function() {
 									{ this.props.accountType === 'Artist' ?
 										<a><i className="icon-up-circle" onClick={this.navigate.bind(this, 1)}></i></a>
 									:
-										<a><i className="icon-bookmark" onClick={this.navigate.bind(this, 16)}></i></a>
+										<a><i className="icon-bookmark-2" onClick={this.navigate.bind(this, 16)}></i></a>
 									}
 									<a onClick={this.showHideMenu} className="dropdown-toggle primary" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 										<i className="icon-menu"></i>
@@ -220,7 +225,7 @@ var Header = (function() {
 	function mapDispatchToProps(dispatch, ownProps) {
 		return {
 			search: function(terms) {
-				dispatch(beginSearch(terms.trim()));
+				dispatch(beginSearch(terms));
 			}
 		};
 	}

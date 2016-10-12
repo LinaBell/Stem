@@ -3,7 +3,7 @@ var ArtistProfileTable = React.createClass({
 		var songs = this.props.songs
 
 		return (
-	  		<div className="artist-table-wrapper bg-white col-xs-12">
+	  		<div className="artist-table-wrapper col-xs-12">
 				<PlaylistTable songs={songs} />
 	  		</div>
 		);

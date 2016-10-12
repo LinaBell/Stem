@@ -32,8 +32,8 @@ var ArtistProfile = React.createClass({
 		return (
 		<div className="wrapper-content">
 			<ArtistProfileHeader artist={this.state.artist} />
-			<div className="artist-profile-wrapper col-xs-12 bg-white">
-		  		<div className="">
+			<div className="artist-profile-wrapper col-xs-12 content-padding">
+		  		<div className="tables-page">
 		    		<ArtistProfileTable songs={this.state.songs} />
 		  		</div> 
 			</div>   

@@ -13,6 +13,10 @@
 	font-size: 1.6em;
 	font-family: @font-reg;
 	border: none;
+	box-shadow: @drop-2;
+	&:hover {
+		background-color: @primary-lt;
+	}
 }
 .promo-landing-header h3 {
 	margin: 16px 0;
@@ -127,13 +131,17 @@
 	color: #e6461a;
 }
 .artist-donation-box button {
-	font-size: 1.75em;
-	padding: @space-md 0;
-	background-color: #e6461a;
-	color: white;
-	border: none;
 	width: 100%;
+	padding: @space-md 0;
 	margin: @space-lg 0 0;
+	color: white;
+	font-size: 1.75em;
+	background-color: #e6461a;
+	border: none;
+	&:hover {
+		background-color: #F45D38;
+		box-shadow: @drop-2;
+	}
 }
 .patreon-footer {
 	height: 50px;

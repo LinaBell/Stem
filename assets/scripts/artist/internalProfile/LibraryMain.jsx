@@ -65,10 +65,10 @@ var LibraryMain = ReactRedux.connect(function(state) {
 	},
 	render: function() {
 		return (
-			<div className="content-vh">
-				<div className="library-content-wrapper content-vh">  
+			<div className="content-vh content-padding">
+				<div className="library-content-wrapper">  
 					<div className="artist-internal-greeting">
-						<h3>Library</h3>
+						<h2>Library</h2>
 						<p>Manage your library of available tracks</p>
 					</div>
 					<div className="btn-wrapper pull-right">
