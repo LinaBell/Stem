@@ -137,9 +137,24 @@ var FilterNav = React.createClass({
 });
 
 var FilterMenu = ReactRedux.connect(function(state, ownProps) {
+	var tags = []
+	var selectedTagsIds = Utilities.getTagIds(state.appState.searchTerms)
+
+	if (ownProps.tagType.value > 0 && state.appState.tags[ownProps.tagType.value]) {
+		tags = state.appState.tags[ownProps.tagType.value].map((item) => {
+			if (selectedTagsIds.includes(item.id)) {
+				item.active = true;
+			} else {
+				item.active = false;
+			}
+
+			return item;
+		})
+	} 
+	
 	return {
 		searchTerms: state.appState.searchTerms,
-		filters: state.appState.tags[ownProps.tagType.value]
+		filters: tags
 	}
 }, function(dispatch) {
 	return {
@@ -213,6 +228,7 @@ var FilterMenu = ReactRedux.connect(function(state, ownProps) {
 			this.removeQueue = []
 		}
 	},
+
 	updateTagType(tagType) {
 
 		if (tagType !== TagSystemTypeEnum.None) {
@@ -271,7 +287,12 @@ var FilterMenu = ReactRedux.connect(function(state, ownProps) {
 
                         { this.props.filters.map((item, index) => {
                         	return (
-                        		<FilterItem key={ index } item={ item } onFilterChange={ this.onFilterChange } />
+                        		<FilterItem 
+                        			key={ index } 
+                        			item={ item } 
+                        			onFilterChange={ this.onFilterChange }
+                        			active={ item.active }
+                        		/>
                         	)
                         })}
                         
@@ -286,8 +307,15 @@ var FilterMenu = ReactRedux.connect(function(state, ownProps) {
 var FilterItem = React.createClass({
 	getInitialState() {
 		return {
-			active: false,
-			filterId: null
+			active: false
+		}
+	},
+	componentWillReceiveProps(nextProps) {
+
+		if (this.props.active !== nextProps.active) {
+			this.setState({
+				active: nextProps.active
+			})
 		}
 	},
     toggleFilter: function(filter) {

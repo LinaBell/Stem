@@ -3,7 +3,7 @@ var createStore = Redux.createStore,
 	applyMiddleware = Redux.applyMiddleware,
 	Provider = ReactRedux.Provider,
 	connect = ReactRedux.connect,
-	stemApi = new StemApi("http://52.32.255.104/api/"),
+	stemApi = new StemApi("http://api.dev.hellothematic.com/api/"),
 	thunk = ReduxThunk.default;
 
 var TagSystemTypeEnum = new Enum({ 
@@ -55,6 +55,16 @@ var Utilities = {
 				return error.message;
 			}
 		}
+	},
+
+	getTagIds(tags) {
+		return tags.reduce((prev, current) => {
+			if (current.type === SearchTermType.Tag) {
+				return prev.concat(current.data.id)
+			} else {
+				return prev;
+			}
+		}, []);
 	}
 };
 
@@ -99,13 +109,7 @@ function beginSearch(searchTerms) {
 			
 		}, '').trim();
 
-		var tagIds = searchTerms.reduce((prev, current) => {
-			if (current.type === SearchTermType.Tag) {
-				return prev.concat(current.data.id)
-			} else {
-				return prev;
-			}
-		}, []);
+		var tagIds = Utilities.getTagIds(searchTerms)
 
 		stemApi.searchSongs({
         	text: searchText,
