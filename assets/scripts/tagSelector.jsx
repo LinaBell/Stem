@@ -40,6 +40,10 @@ var TagSelector = React.createClass({
 				.data('selectize')
 				.clear(false);
 		}
+
+		if (nextProps.values && !this.props.values) {
+			this.populateSelectedItems(nextProps.values);
+		}
 	},
 	onChange: function(selections) {
 		if (this.props.onSelectionsChange) {

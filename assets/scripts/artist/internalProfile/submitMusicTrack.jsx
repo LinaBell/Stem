@@ -7,6 +7,7 @@ var SubmitMusicTrack = React.createClass({
 			genreTag: null,
 		  	genreTagValues: [],
 		  	addedTracks: [],
+		  	currentTrack: this.newTrack(),
 		  	statusMessage: statusMessage,
 		  	isAudioUploading: false
 		}
@@ -61,10 +62,6 @@ var SubmitMusicTrack = React.createClass({
 						};
 					})
 				});
-			} else {
-				this.setState({
-					addedTracks: this.state.addedTracks.concat(this.newTrack())
-				});
 			}
 		})
 		.catch((reason) => {
@@ -93,38 +90,27 @@ var SubmitMusicTrack = React.createClass({
 			isEditing: true
 		};
 	},
-	currentTrack: function() {
-		return this.state.addedTracks.find((item) => {
-			return item.isEditing;
-		});
-	},
 	onTrackChange: function(track) {
 
-		var currentIndex = this.state.addedTracks.findIndex((item) => {
-			return item.isEditing;
-		});
-
-		var newState = [].concat(this.state.addedTracks);
-		newState[currentIndex] = Object.assign({}, this.state.addedTracks[currentIndex], track);
+		var currentTrack = this.state.currentTrack;
+		currentTrack = Object.assign({}, currentTrack, track);
 
 		this.setState({
-			addedTracks: newState,
+			currentTrack: currentTrack,
 			isAudioUploading: track.isAudioUploading
 		});
 	},
 
 	onAddClicked: function() {
-		var currentIndex = this.state.addedTracks.findIndex((item) => {
-			return item.isEditing;
-		});
+		var currentTrack = this.state.currentTrack;
 
-		if (currentIndex === -1 || this.validate(this.state.addedTracks[currentIndex])) {
+		if (this.validate(currentTrack)) {
 			var newState = [].concat(this.state.addedTracks);
-			newState[currentIndex] = Object.assign({}, this.state.addedTracks[currentIndex], { isEditing: false });
-			newState.push(this.newTrack());
+			newState.push(Object.assign({}, currentTrack, { isEditing: false }));
 
 			this.setState({
 				addedTracks: newState,
+				currentTrack: this.newTrack(),
 				statusMessage: ''
 			});
 		} else {
@@ -135,16 +121,11 @@ var SubmitMusicTrack = React.createClass({
 	},
 
 	onEditTrack: function(index) {
-		var currentIndex = this.state.addedTracks.findIndex((item) => {
-			return item.isEditing;
-		});
-
-		var newState = [].concat(this.state.addedTracks);
-		newState[currentIndex] = Object.assign({}, this.state.addedTracks[currentIndex], { isEditing: false });
-		newState[index] = Object.assign({}, this.state.addedTracks[index], { isEditing: true });
+		var selectedTrack = this.state.addedTracks[index];
+		selectedTrack.isEditing = true;
 		
 		this.setState({
-			addedTracks: newState,
+			currentTrack: selectedTrack,
 			statusMessage: ''
 		});
 	},
@@ -235,25 +216,26 @@ var SubmitMusicTrack = React.createClass({
 									<i onClick={ this.onDecreaseOrder.bind(this, index) } className="icon-up-open fa-2x"></i> : null }
 								</div>
 
-								{ item.isEditing ? 
-									<TrackEditor 
-										item={ item }
-										genreTag={ this.state.genreTag } 
-										genreTagValues={ this.state.genreTagValues }
-										onChange={ this.onTrackChange }
-										isAdmin={ this.props.isAdmin }
-									/>
-									:
-									<TrackItem 
-										item={ item }
-										index={ index }
-										onEditTrack={ this.onEditTrack } 
-										isAdmin={ this.props.isAdmin } />
-								}
+								<TrackItem 
+									item={ item }
+									isEditing={ item.isEditing }
+									index={ index }
+									onEditTrack={ this.onEditTrack } 
+									isAdmin={ this.props.isAdmin } />
+								
 							</li> 
 						);
 					})}
 				</ul>
+
+				<TrackEditor 
+					item={ this.state.currentTrack }
+					genreTag={ this.state.genreTag } 
+					genreTagValues={ this.state.genreTagValues }
+					onChange={ this.onTrackChange }
+					isAdmin={ this.props.isAdmin }
+				/>
+
 				{ this.props.isAdmin ? 
 					<div className="admin-state-btn-wrapper">
 						<button onClick={ this.props.onSubmitClicked } className="save-state">Save & Close</button>
