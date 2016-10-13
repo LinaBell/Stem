@@ -48,6 +48,7 @@ var FilterNav = React.createClass({
     },
        
     showHideFilterMenu: function(tagType) {
+
     	if (!tagType) {
     		this.setState({
     			displayFilterMenu: false
@@ -75,14 +76,14 @@ var FilterNav = React.createClass({
 
         return (
             <div>
-                <div className="filter-nav">
+                <div className="filter-nav" ref="filterNav">
                     {filterNavWidth > windowWidth ? 
                         <span>
                             <a onClick={this.moveRight} className="filter-nav-next icon-right-open-big"></a>
                             <a onClick={this.moveLeft} className="filter-nav-prev icon-left-open-big"></a>
                         </span>
                     : null }
-                    <ul className="filter-nav-list" ref="filterNav">
+                    <ul className="filter-nav-list">
                         <li style={style}>
                             <a onClick={this.showHideFilterMenu.bind(this, TagSystemTypeEnum.Genre)}>
                                 <i className="icon-headphones-2"></i>
@@ -101,7 +102,7 @@ var FilterNav = React.createClass({
                         </li>
                         <li style={style}>
                             <a onClick={this.showHideFilterMenu.bind(this, TagSystemTypeEnum.Vocal)}>
-                                <i className="icon-user-pair"></i>
+                                <i className="icon-user-pair mar-r-sm"></i>
                                 <h6>
                                     Vocal Type
                                 </h6>
@@ -136,32 +137,64 @@ var FilterNav = React.createClass({
 });
 
 var FilterMenu = ReactRedux.connect(function(state, ownProps) {
+	var tags = []
+	var selectedTagsIds = Utilities.getTagIds(state.appState.searchTerms)
 
+	if (ownProps.tagType.value > 0 && state.appState.tags[ownProps.tagType.value]) {
+		tags = state.appState.tags[ownProps.tagType.value].map((item) => {
+			if (selectedTagsIds.includes(item.id)) {
+				item.active = true;
+			} else {
+				item.active = false;
+			}
+
+			return item;
+		})
+	} 
+	
 	return {
 		searchTerms: state.appState.searchTerms,
-		filters: state.appState.tags[ownProps.tagType.value]
+		filters: tags
 	}
 }, function(dispatch) {
 	return {
-		updateSearch: function(filterName, active, terms) {
-			var newState;
+		updateSearch: function(addQueue, removeQueue, terms) {
+			var newState = terms;
 
-			if (active) {
-				newState = terms.concat(filterName);
-			} else {
-				newState = terms.filter((item) => {
-					return item !== filterName.toLowerCase();
-				});
+			if (removeQueue.length > 0) {
+				var idsToRemove = removeQueue.map((item) => {
+					return item.id
+				})
+
+				newState = terms.reduce((prev, current) => {
+					if (current.type === SearchTermType.Tag && idsToRemove.includes(current.data.id)) {
+						return prev
+					} else {
+						return prev.concat(current)
+					}
+				}, [])
 			}
 
-			dispatch(beginSearch(newState.join(' ')));
+			if (addQueue.length > 0) {
+				newState = newState.concat(addQueue.map((item) => {
+					return {
+						text: item.name,
+						type: SearchTermType.Tag,
+						data: item
+					}
+				}))
+			}
+
+			dispatch(beginSearch(newState));
 		},
 
-		refreshTags: function(tagTypeId) {
-			dispatch(refreshTags(tagTypeId));
+		refreshTags: function() {
+			dispatch(refreshTags());
 		}
 	}
 })(React.createClass({
+	addQueue: [],
+	removeQueue: [],
 	getInitialState() {
 		return {
 			tagName: ''
@@ -174,16 +207,23 @@ var FilterMenu = ReactRedux.connect(function(state, ownProps) {
 	},
 	componentDidMount() {
 		this.updateTagType(this.props.tagType);
-
-		for (var i = 1; i <= 5; i++) {
-			this.props.refreshTags(i);
-		}
+		this.props.refreshTags();
 	},
 	componentWillReceiveProps(nextProps) {
 		if (nextProps.tagType !== this.props.tagType) {
 			this.updateTagType(nextProps.tagType)
 		}
+
+		if (nextProps.displayFilterMenu !== this.props.displayFilterMenu && 
+			!nextProps.displayFilterMenu &&
+			(this.addQueue.length > 0 || this.removeQueue.length > 0)) {
+
+			this.props.updateSearch(this.addQueue, this.removeQueue, this.props.searchTerms)
+			this.addQueue = []
+			this.removeQueue = []
+		}
 	},
+
 	updateTagType(tagType) {
 
 		if (tagType !== TagSystemTypeEnum.None) {
@@ -196,7 +236,35 @@ var FilterMenu = ReactRedux.connect(function(state, ownProps) {
         this.props.showHideFilterMenu();
     },
     onFilterChange: function(filter, active) {
-    	this.props.updateSearch(filter.name, active, this.props.searchTerms);
+    	var existingAddIndex = this.addQueue.findIndex((item) => {
+    		return item.id === filter.id
+    	})
+
+    	var existingRemoveIndex = this.removeQueue.findIndex((item) => {
+    		return item.id === filter.id
+    	})
+
+    	if (active) {
+    		if (existingAddIndex === -1) {
+    			this.addQueue.push(filter)
+    		}
+
+    		if (existingRemoveIndex !== -1) {
+    			this.removeQueue.splice(existingRemoveIndex, 1)
+    		}
+
+    		return
+    	}
+
+    	if (!active) {
+    		if (existingRemoveIndex === -1) {
+    			this.removeQueue.push(filter)
+    		}
+
+    		if (existingAddIndex !== -1) {
+    			this.addQueue.splice(existingAddIndex, 1)
+    		}
+    	} 
     },
     render: function() {
         return (
@@ -214,7 +282,12 @@ var FilterMenu = ReactRedux.connect(function(state, ownProps) {
 
                         { this.props.filters.map((item, index) => {
                         	return (
-                        		<FilterItem key={ index } item={ item } onFilterChange={ this.onFilterChange } />
+                        		<FilterItem 
+                        			key={ index } 
+                        			item={ item } 
+                        			onFilterChange={ this.onFilterChange }
+                        			active={ item.active }
+                        		/>
                         	)
                         })}
                         
@@ -229,8 +302,15 @@ var FilterMenu = ReactRedux.connect(function(state, ownProps) {
 var FilterItem = React.createClass({
 	getInitialState() {
 		return {
-			active: false,
-			filterId: null
+			active: false
+		}
+	},
+	componentWillReceiveProps(nextProps) {
+
+		if (this.props.active !== nextProps.active) {
+			this.setState({
+				active: nextProps.active
+			})
 		}
 	},
     toggleFilter: function(filter) {

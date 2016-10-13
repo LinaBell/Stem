@@ -1,99 +1,89 @@
 var CreatorProfileYouTube = React.createClass({
   getInitialState: function() {
     return {
-      windowWidth: 1,
-      cVideoWidth: 0,
-      videoItemWidth: 300,
+      videos: []
     };
   },
-
   componentDidMount: function() {
-    this.slideShow();
-
-    var l = $('.creator-youtube-wrapper ul li').length,
-      w = $('.creator-youtube-wrapper ul li').width(),
-      windowWidth = window.innerWidth,
-      cVideoWidth = l * w,
-      videoItemWidth = this.state.videoItemWidth;
-
-    if(windowWidth > cVideoWidth) {
-      videoItemWidth = windowWidth / l;
-    };
-
-    this.setState({
-      windowWidth: windowWidth,
-      cVideoWidth: cVideoWidth,
-      style: {width: videoItemWidth}
+    stemApi.getCreatorProfile({
+      creatorId: this.props.creator.id
+    })
+    .then(function(res) {
+      this.setState({ videos: res.latestVideos });
+    }.bind(this), function(error) {
+      console.error('Creator Video Error: ' + JSON.stringify(error));
     });
-  },
 
-  slideShow: function(){
-    var self = this;
-    setInterval(this.moveRight, 3000);
-  },
-  moveLeft: function() {
-    var w = this.state.videoItemWidth;
-    $('.creator-youtube-wrapper ul').animate({
-      left: w
-    }, "slow", function () {
-      $('.creator-youtube-wrapper ul li:last-child').prependTo('.creator-youtube-wrapper ul');
-      $('.creator-youtube-wrapper ul').css('left', '');
-    });
-  },
-
-  moveRight: function() {
-    var w = this.state.videoItemWidth;
-    $('.creator-youtube-wrapper ul').animate({
-      left: -w
-    }, "slow", function () {
-      $('.creator-youtube-wrapper ul li:first-child').appendTo('.creator-youtube-wrapper ul');
-      $('.creator-youtube-wrapper ul').css('left', '');
-    });
   },
   render: function () {
+    var videos = this.state.videos;
     return (
       <div className="creator-youtube-wrapper pad-t-lg pad-b-lg">
-        <a onClick={this.moveLeft} className="video-nav-prev icon-left-open-big mar-t-sm"></a>
-        <a onClick={this.moveRight} className="video-nav-next icon-right-open-big mar-t-sm mar-r-lg"></a>
         <ul className="creator-youtube-list row no-gutters">
-          <li>
-            <iframe className="creator-youtube-video" src="https://www.youtube.com/embed/E9w3yDrWilY" frameBorder="0" allowFullScreen></iframe>
-            <a><h4>video title</h4></a>
-            <p>Laura Sanchez</p>
-            <p>237,409 views - 1 year ago</p>
-          </li>
-          <li>
-            <iframe className="creator-youtube-video" src="https://www.youtube.com/embed/0tyGn8wYbzc" frameBorder="0" allowFullScreen></iframe>
-            <a><h4>video title</h4></a>
-            <p>Laura Sanchez</p>
-            <p>237,409 views - 1 year ago</p>
-          </li>
-          <li>
-            <iframe className="creator-youtube-video" src="https://www.youtube.com/embed/FH6pGv6LGNY" frameBorder="0" allowFullScreen></iframe>
-            <a><h4>video title</h4></a>
-            <p>Laura Sanchez</p>
-            <p>237,409 views - 1 year ago</p>
-          </li>
-          <li>
-            <iframe className="creator-youtube-video" src="https://www.youtube.com/embed/6yVT8mrEfLI" frameBorder="0" allowFullScreen></iframe>
-            <a><h4>video title</h4></a>
-            <p>Laura Sanchez</p>
-            <p>237,409 views - 1 year ago</p>
-          </li>
-          <li>
-            <iframe className="creator-youtube-video" src="https://www.youtube.com/embed/E9w3yDrWilY" frameBorder="0" allowFullScreen></iframe>
-            <a><h4>video title</h4></a>
-            <p>Laura Sanchez</p>
-            <p>237,409 views - 1 year ago</p>
-          </li>
-          <li>
-            <iframe className="creator-youtube-video" src="https://www.youtube.com/embed/CvtJR_GFrB4" frameBorder="0" allowFullScreen></iframe>
-            <a><h4>video title</h4></a>
-            <p>Laura Sanchez</p>
-            <p>237,409 views - 1 year ago</p>
-          </li>
+        {videos.map((video, index) => {
+          return(
+            <YoutubeVideoItem key={index} video={video} />
+          )
+        })}
         </ul>
       </div>
+    )
+  }
+});
+
+var YoutubeVideoItem = React.createClass({
+  getInitialState: function() {
+    return {
+      videoDetails: [],
+      videoStatistics: []
+    }
+  },
+  componentDidMount: function() {
+    var YoutubeKey = 'AIzaSyCZfdWXAhC11UgPUzsbVkcEYbx7zU-J3Ic';
+    var youTubeURL = 'https://www.googleapis.com/youtube/v3/videos?id=KEbFtMgGhPY&key=' + YoutubeKey;
+    var youTubeURLViewCount = 'https://www.googleapis.com/youtube/v3/videos?part=statistics&id=KEbFtMgGhPY&key=' + YoutubeKey; 
+
+    $.ajax({
+      method: 'GET',
+      url: youTubeURL,
+      data: { 
+        part: 'snippet',
+      },
+      dataType: 'json',
+      success: function(res) {
+        this.setState({ videoDetails: res.items[0].snippet });
+        console.log(this.state.videoDetails.title);
+      }.bind(this),
+      error: function(error) {
+        console.error('Youtube API Error: ' + JSON.stringify(error));
+      }
+    });
+    $.ajax({
+      method: 'GET',
+      url: youTubeURLViewCount,
+      data: { 
+        part: 'statistics',
+      },
+      dataType: 'json',
+      success: function(res) {
+        this.setState({ videoStatistics: res.items[0].statistics.viewCount });
+        console.log(this.state.videoStatistics);
+      }.bind(this),
+      error: function(error) {
+        console.error('Youtube API Error: ' + JSON.stringify(error));
+      }
+    });
+  },
+  render: function() {
+    var videoEmbed = this.props.video;
+
+    return(
+      <li>
+        <iframe className="creator-youtube-video" src={videoEmbed} frameBorder="0" allowFullScreen></iframe>
+        <a><h4>{this.state.videoDetails.title}</h4></a>
+        <p>{this.state.videoDetails.channelTitle}</p>
+        <p>{this.state.videoStatistics} views</p>
+      </li>
     )
   }
 });

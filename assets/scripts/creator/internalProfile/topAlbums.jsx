@@ -24,14 +24,14 @@
 			speed: 800,
 			variableWidth: true,
 			slidesToScroll: 1,
-			waitForAnimate: false,
 			cssEase: 'ease-in-out'
 		});
 		$(this.refs.slickRef).on('beforeChange', (event, slick, currentSlide, nextSlide) => {
 			var topArtistStyle = {
-	    		transform: 'scale(1)',
-	    		transition: 'transform 100ms ease-in'
-		    }
+          transform: 'scale(1)',
+          transition: 'transform 100ms ease-in'
+        }
+        
       if (currentSlide + 1 >= this.state.topArtists.length) {
         this.props.onTopArtistBackground(this.state.topArtists[0]);
         $('.slick-current').css(topArtistStyle);
@@ -39,8 +39,9 @@
         this.props.onTopArtistBackground(this.state.topArtists[currentSlide + 1]);
         $('.slick-current').css(topArtistStyle);
       }
-      });
-      $(this.refs.slickRef).on('afterChange', (event, slick, currentSlide, nextSlide) => {
+    });
+
+    $(this.refs.slickRef).on('afterChange', (event, slick, currentSlide, nextSlide) => {
 
         var topArtistStyle = {
 	    		transform: 'scale(1.2)',
@@ -65,7 +66,7 @@
         
         
           <div ref="slickRef" >
-	          {this.state.topArtists.map((topArtist, index) => {
+	          {topArtists.map((topArtist, index) => {
 	            return(
 	              <TopArtistsList key={index} topArtist={topArtist} onTopArtistChange={this.props.onTopArtistChange} />
 	            );

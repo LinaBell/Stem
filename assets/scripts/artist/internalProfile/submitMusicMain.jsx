@@ -1,20 +1,21 @@
 var SubmitMusicMain = ReactRedux.connect(null, function(dispatch) { 
 	return {
 		navigateTagsPage: function() {
-				dispatch({
-					type: 'GoToPage',
-					data: {
-						currentPage: 6
-					}
-				});
-			}
+			dispatch({
+				type: 'GoToPage',
+				data: {
+					currentPage: 6
+				}
+			});
+		}
 	};
 })
 (React.createClass({
 	getInitialState: function() {
 		return {
 			isSubmitting: false,
-			statusMessage: ''
+			statusMessage: '',
+			showConfirm: false
 		};
 	},
 	onSubmitClicked: function() {
@@ -36,10 +37,9 @@ var SubmitMusicMain = ReactRedux.connect(null, function(dispatch) {
 				console.log('Album created successfully: ' + JSON.stringify(res));
 				this.setState({
 					isSubmitting: false,
-					statusMessage: ''
+					statusMessage: '',
+					showConfirm: true
 				});
-
-				this.props.navigateTagsPage();
 			})
 			.catch((reason) => {
 				var errorMessage = Utilities.normalizeError(reason);
@@ -66,6 +66,7 @@ var SubmitMusicMain = ReactRedux.connect(null, function(dispatch) {
                         	onSubmitClicked={ this.onSubmitClicked } 
                         	isSubmitting={ this.state.isSubmitting } 
                         	statusMessage={ this.state.statusMessage } />
+                        <SubmitTrackConfirm show={ this.state.showConfirm } onConfirmed={ this.props.navigateTagsPage } />
                     </div>    
                 </div>     
             </div>

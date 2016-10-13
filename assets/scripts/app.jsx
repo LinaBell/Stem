@@ -3,10 +3,22 @@ var createStore = Redux.createStore,
 	applyMiddleware = Redux.applyMiddleware,
 	Provider = ReactRedux.Provider,
 	connect = ReactRedux.connect,
-	stemApi = new StemApi("http://52.32.255.104/api/"),
+	stemApi = new StemApi("http://api.dev.hellothematic.com/api/"),
 	thunk = ReduxThunk.default;
 
-var TagSystemTypeEnum = new Enum({ None:0, Genre:1, Community:2, Vocal:3, Tempo:4, Mood:5 });
+var TagSystemTypeEnum = new Enum({ 
+	None: 0, 
+	Genre: 1, 
+	Community: 2, 
+	Vocal: 3, 
+	Tempo: 4, 
+	Mood: 5 
+});
+
+var SearchTermType = new Enum({
+	Text: 0,
+	Tag: 1
+})
 
 // This should be moved to it's own file at some point
 var TrackStatus = {
@@ -32,29 +44,38 @@ var Utilities = {
 			return error;
 		}
 
-		// These are jQuery AJAX errors
-		if (typeof error === 'object' && error.hasOwnProperty('responseJSON')) {
-			return error.responseJSON.message;
-		}
+		if (typeof error === 'object') {
+			// These are jQuery AJAX errors
+			if (error.hasOwnProperty('responseJSON')) {
+				return error.responseJSON.message;
+			}
 
-		// These are Blue Bird errors
-		if (typeof error === 'object' && error.hasOwnProperty('message')) {
-			return error.message;
+			// These are Blue Bird errors
+			if (error.hasOwnProperty('message')) {
+				return error.message;
+			}
 		}
+	},
+
+	getTagIds(tags) {
+		return tags.reduce((prev, current) => {
+			if (current.type === SearchTermType.Tag) {
+				return prev.concat(current.data.id)
+			} else {
+				return prev;
+			}
+		}, []);
 	}
 };
 
-function refreshTags(tagTypeId) {
+function refreshTags() {
 	return function(dispatch) {
-		stemApi.getTagValues({
-			tagTypeId: tagTypeId
-		})
+		stemApi.getAllTags()
 		.then((res) => {
 			dispatch({
 				type: 'UpdateTags',
 				data: {
-					tags: res,
-					tagTypeId: tagTypeId
+					tags: res
 				}
 			});
 		})
@@ -64,17 +85,50 @@ function refreshTags(tagTypeId) {
 	}
 }
 
+/* The structure of the search terms:
+
+{
+	text: '',
+	type: SearchTermType,
+	data: { ... } // Extra data, i.e. The associated tag
+}
+
+*/
+
 function beginSearch(searchTerms) {
 	return function(dispatch) {
+		var searchText = searchTerms.reduce((prev, current) => {
+			if (current.type === SearchTermType.Text) {
+				return prev + ' ' + current.text;
+			} else {
+				return prev;
+			}
+			
+		}, '').trim();
+
+		var tagIds = Utilities.getTagIds(searchTerms)
+
 		stemApi.searchSongs({
-        	text: searchTerms
+        	text: searchText,
+        	tagIds: tagIds
         })
 		.then(function(response) {
 			dispatch({
 	        	type: 'UpdateSearch',
     	    	data: {
         			results: response.songs,
-        			terms: response.terms
+        			terms: response.terms.map((item) => {
+        				return {
+        					text: item,
+        					type: SearchTermType.Text
+        				}
+        			}).concat(response.tags.map((item) => {
+        				return {
+        					text: item.name,
+        					type: SearchTermType.Tag,
+        					data: item
+        				}
+        			}))
         		}
         	});
 
@@ -140,12 +194,18 @@ var appReducer = function(state = initialAppState, action) {
 				creatorBookmarks: action.data.results
 			});
 		case 'UpdateTags': 
-			var tagTypeId = action.data.tagTypeId;
-			var newTags = Object.assign({}, state.tags);
-			newTags[tagTypeId] = action.data.tags;
+			var tagDict = action.data.tags.reduce((prev, current) => {
+				if (!prev[current.typeId]) {
+					prev[current.typeId] = []
+				}
+				
+				prev[current.typeId].push(current)
+
+				return prev
+			}, {})
 
 			return Object.assign({}, state, {
-				tags: newTags
+				tags: tagDict
 			});
 
 		default: 
