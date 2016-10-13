@@ -336,7 +336,6 @@ var App = React.createClass({
 
 				{ this.props.currentPage == 20 ?
 					<div className="wrapper">
-						<AdminHeader />
 						<AdminMain />
 						<Footer />
 					</div>
@@ -344,7 +343,6 @@ var App = React.createClass({
 
 				{ this.props.currentPage == 21 ?
 					<div className="wrapper">
-						<AdminHeader />
 						<AdminNewCreators />
 						<Footer />
 					</div>
@@ -352,7 +350,6 @@ var App = React.createClass({
 
 				{ this.props.currentPage == 22 ?
 					<div className="wrapper">
-						<AdminHeader />
 						<AdminNewArtistMain />
 						<Footer />
 					</div>
@@ -360,7 +357,6 @@ var App = React.createClass({
 
 				{ this.props.currentPage == 23.3 ?
 					<div className="wrapper">
-						<AdminHeader />
 						<AdminNewSubmissions />
 						<Footer />
 					</div>

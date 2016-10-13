@@ -59,6 +59,9 @@ var Header = (function() {
 				<div>   
 					<nav className="header">
 						<div className="header-content">
+							{ this.props.accountType == "Admin" ?
+								<AdminHeader />
+							:
 							<div className="header-brand pull-left">         
 								<a onClick={this.navigate.bind(this, 0)} className="brand">
 									Thematic
@@ -66,7 +69,8 @@ var Header = (function() {
 								<a href="http://d2pziso4zk2lvf.cloudfront.net/fontdemo.html"><i className="icon-star pad-l-sm"></i></a>
 								<a href="http://d2pziso4zk2lvf.cloudfront.net/stylesheet.html"><i className="icon-rocket error"></i></a>
 							</div>
-							{ this.props.isLoggedIn && this.props.currentPage !== 107 ?  
+							}
+							{ this.props.isLoggedIn && this.props.currentPage !== 107 && this.props.accountType !== "Admin" ?  
 								<div className="nav header-nav header-right pull-right">										
 									<a onClick={this.showHideSearch}>
 										{ this.state.displaySearch ? 
@@ -100,6 +104,7 @@ var Header = (function() {
 							{ this.props.currentPage == 107 ?
 								<PromoPageHeader />
 							: null }
+						
 						</div> 
 					</nav>
 
