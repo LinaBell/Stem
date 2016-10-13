@@ -20,7 +20,7 @@
 .featured-overlay {
   margin-top: -60px;
   background: white;
-  opacity: 0.65;
+  opacity: 0.88;
   overflow: hidden;
   position: fixed;
   z-index: 1001;
@@ -39,19 +39,27 @@
   }
 }
 .featured-artist-name {
-  font-size: @font-bold;
+  font-family: @font-bold;
   font-weight: bold;
   text-transform: uppercase;
-  font-size: 70px;
+  font-size: 80px;
+  &:hover {
+    cursor: pointer;
+  }
 }
-.featured-artist-song {
+.featured-artist-song{
+  font-size: 28px;
+  margin-top: -@space-md;
+  &:hover {
+    cursor: pointer;
+  }
 }
 .featured-description {
-  max-width: 500px;
-  min-width: 500px;
-  max-height: 100px;
-  // min-height: 100px;
+  width: 600px;
+  height: 100px;
+  margin: 30px 0 @space-sm;
   line-height: 15px;
+  overflow: hidden;
 }
 .play {
   position: relative;
@@ -63,8 +71,8 @@
   padding-right: 50px;
   float: right;
 }
-  .play p {
-    margin: 10px 55px !important;
+  .play h4 {
+    margin: @space-md 0 !important;
     text-align: center;
   }
   .play span:hover {
