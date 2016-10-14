@@ -65,8 +65,11 @@ var SubmitMusicAlbum = React.createClass({
 		}
 
 		if (this.validate()) {
+			var imageData = this.state.albumArt;
+			imageData.data = Utilities.parseImageUriToBlob(imageData.data);
+
 			return stemApi.upload({
-				file: this.state.albumArt
+				file: imageData
 			})
 			.then((res) => {
 				return stemApi.createAlbum({

@@ -133,7 +133,8 @@ var SubmitMusicTrack = React.createClass({
 			currentTrack: null,
 			addedTracks: updatedAddedTracks,
 			isAudioUploading: track.isAudioUploading,
-			trackStatusMessage: ''
+			trackStatusMessage: '',
+			statusMessage: ''
 		});
 
 		this.closeEditor();
@@ -273,7 +274,7 @@ var SubmitMusicTrack = React.createClass({
 				        	disabled={ this.state.isAudioUploading }
 				        	className="additional-track-btn mar-r-md" 
 				        	onClick={ this.onAddClicked }>
-				        	<i className="icon-plus-circled"></i> Add Additional Track
+				        	<i className="icon-plus-circled"></i> Add Track
 				        </button>
 
 				        { this.props.isSubmitting ? <LoadingButton /> : 

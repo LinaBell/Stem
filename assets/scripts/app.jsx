@@ -55,6 +55,19 @@ var Utilities = {
 				return prev;
 			}
 		}, []);
+	},
+
+	parseImageUriToBlob(dataUri) {
+		var matches =  /^data:(.+?);base64,(.+?)$/.exec(dataUri);
+		var mimeType = matches[1];
+		var byteString = atob(matches[2]);
+    	var data = new Uint8Array(byteString.length);
+    	
+    	for (var i = 0; i < byteString.length; i++) {
+        	data[i] = byteString.charCodeAt(i);
+    	}
+
+    	return new Blob([data], { type: mimeType });
 	}
 };
 
