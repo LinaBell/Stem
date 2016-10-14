@@ -17,11 +17,13 @@ var TagSelector = React.createClass({
 
 	populateSelectedItems: function(values) {
 		var selectize = $(this.refs.selectElement).data('selectize');
-		selectize.clear(false);
+		selectize.clear(true);
 
-		values.forEach(function(item) {
-			selectize.addItem(item.id.toString(), false);
-		});
+		if (values) {
+			values.forEach(function(item) {
+				selectize.addItem(item.id.toString(), true);
+			});
+		}
 	},
 	
 	componentWillReceiveProps: function(nextProps) {
@@ -41,7 +43,7 @@ var TagSelector = React.createClass({
 				.clear(false);
 		}
 
-		if (nextProps.values && !this.props.values) {
+		if (nextProps.values !== this.props.values) {
 			this.populateSelectedItems(nextProps.values);
 		}
 	},

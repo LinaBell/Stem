@@ -10,32 +10,26 @@ var TrackEditor = React.createClass({
 			additionalCredits: '',
 			selectedGenres: null,
 			lyrics: '',
-			youTubeVideoId: ''
+			youTubeVideoId: '',
+			statusMessage: ''
 		}
 	},
 	componentWillReceiveProps(nextProps) {
 		if (nextProps.item) {
 			var newState = {}
 			for (var prop in nextProps.item) {
-				if (this.state[prop] !== undefined) {
-					newState[prop] = nextProps.item[prop];
-				}
+				newState[prop] = nextProps.item[prop];
 			}
 
 			this.setState(newState);
 		}
 	},
-	propagateState: function(newState) {
-		if (this.props.onChange) {
-			this.props.onChange(Object.assign({}, this.state, newState));
-		}
-	},
+
 	onInputChange: function(ev) {
 		var newState = {};
 		newState[ev.target.name] = ev.target.value;
 
 		this.setState(newState);
-		this.propagateState(newState);
 	},
 	onAudioChange: function(file) {
 		
@@ -45,7 +39,6 @@ var TrackEditor = React.createClass({
 		};
 
 		this.setState(newState);
-		this.propagateState(newState);
 	},
 
 	onUploadStarted() {
@@ -54,7 +47,6 @@ var TrackEditor = React.createClass({
 		}
 
 		this.setState(newState)
-		this.propagateState(newState)
 	},
 	
 	onCheckedChange: function(ev) {		
@@ -62,7 +54,6 @@ var TrackEditor = React.createClass({
 		newState[ev.target.name] = ev.target.checked;
 
 		this.setState(newState);
-		this.propagateState(newState);
 	},
 	onGenresChange: function(selections) {
 		var newState = {
@@ -70,7 +61,6 @@ var TrackEditor = React.createClass({
 		};
 
 		this.setState(newState);
-		this.propagateState(newState);
 	},
 	onStatusChange: function(status) {
 		var newState = {
@@ -78,7 +68,9 @@ var TrackEditor = React.createClass({
 		};
 
 		this.setState(newState);
-		this.propagateState(newState);
+	},
+	onSave() {
+		this.props.onSave(Object.assign({}, this.state))
 	},
 	render: function() {
 
@@ -124,13 +116,18 @@ var TrackEditor = React.createClass({
 					<p>Lyrics <a className="info-tags"> Why upload lyrics?</a></p>
 					<textarea name="lyrics" value={ this.state.lyrics } onChange={ this.onInputChange } placeholder="Paste your lyrics here.." />
 				</div>
-				<div className="explicit-checkbox pad-b-lg col-xs-12">
+				<div className="explicit-checkbox col-xs-12">
 					<input type="checkbox" name="isExplicit" onChange={ this.onCheckedChange } checked={ this.state.isExplicit } />
 				  	<h5 className="pad-l-sm red">EXPLICIT</h5>
 				</div>
 				{ this.props.isAdmin ? 
 					<StatusButtons isReadOnly={ false } value={ this.state.status } onStatusChange={ this.onStatusChange } /> : null 
 				}
+
+				<button className="btn-primary" onClick={ this.onSave }>Save</button>
+				<p className="bg-danger">
+					{ this.props.trackStatusMessage }
+				</p>
 			</div>
 		);
 	}
