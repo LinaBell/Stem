@@ -25,6 +25,7 @@ var StaffPicksHeader = React.createClass({
           <li><img src="http://illusion.scene360.com/wp-content/uploads/2014/11/computergraphics-album-covers-2014-18.jpg" /></li>
           <li><img src="http://www.whudat.de/images/graffiti_streetart_album_covers_02.jpg" /></li>
           <li><img src="http://illusion.scene360.com/wp-content/uploads/2014/11/computergraphics-album-covers-2014-18.jpg" /></li>
+          <li><img src="https://s-media-cache-ak0.pinimg.com/736x/26/66/6c/26666cbad6a2b74b4fd1a1b8016ec7ab.jpg" /></li>
         </ul>
         <div className="staff-picks-overlay"></div>
       </div>

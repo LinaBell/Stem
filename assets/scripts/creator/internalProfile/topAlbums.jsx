@@ -15,7 +15,7 @@
 		$(this.refs.slickRef).slick({
 			centerMode: true,
 			centerPadding: '30px',
-			slidesToShow: 5,
+			slidesToShow: 3,
 			autoplay: true,
 			autoplaySpeed: 5000,
 			slidesToShow: 3,

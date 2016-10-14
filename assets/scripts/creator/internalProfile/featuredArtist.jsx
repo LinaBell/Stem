@@ -55,16 +55,15 @@ function (dispatch) {
           <div className="featured-overlay"></div>
           <div className="featured-content">
             <h2>Listen to</h2>
-            <span className="featured-artist-name">{selectedArtist.name}</span>
-            <span className="featured-artist-song red"><h4>{selectedArtist.songName}</h4></span>
-            <div className="pad-t-sm pad-b-sm"><span className="icon-bookmark-2 fa-2x primary"></span> {selectedArtist.bookmarkCount} </div>
+            <span className="featured-artist-name" onClick={this.props.navigateToArtist.bind(this, selectedArtist)}>{selectedArtist.name}</span>
+            <h4 className="featured-artist-song">{selectedArtist.songName}</h4>
             <div className="featured-description">
               <h4>{selectedArtist.bio}</h4>
             </div>
           </div>
           <div className="play">  
             <button className="play-btn"><h3 className="icon-play fa-2x pad-box-sm">PLAY NOW</h3></button>
-            <span className="primary" onClick={this.props.navigateToArtist.bind(this, selectedArtist)} ><p>Go to artist page</p></span>
+            <h4>Download Now</h4>
           </div>
           <div className="large-desktop-space">
             <TopAlbums onTopArtistBackground={this.onTopArtistBackground} onTopArtistChange={this.onTopArtistChange} />

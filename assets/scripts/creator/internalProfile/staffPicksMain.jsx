@@ -8,7 +8,7 @@ var StaffPicksMain = React.createClass({
     return(
       <div className="content-vh">
         <StaffPicksHeader />
-        <div className="pad-box-lg">
+        <div className="content-padding">
           <PlaylistTable songs={this.state.songs} />
         </div>  
       </div>
