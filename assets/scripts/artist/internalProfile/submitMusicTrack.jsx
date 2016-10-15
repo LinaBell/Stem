@@ -24,7 +24,13 @@ var SubmitMusicTrack = React.createClass({
 			resizable: false,
 			width: 1000,
 			height: 700
-		})
+		});
+
+		$(this.refs.trackList).sortable({
+			placeholder: 'ui-state-highlight',
+			cursor: 'move',
+			tolerance: 'pointer'
+		});
 
 		stemApi.getAllTagTypes({
 			systemType: TagSystemTypeEnum.Genre.value
@@ -96,7 +102,7 @@ var SubmitMusicTrack = React.createClass({
 			selectedGenres: null,
 			lyrics: '',
 			youTubeVideoId: '',
-			clientId: ++lastClientTrackId
+			clientId: lastClientTrackId++
 		};
 	},
 	openEditor() {
@@ -105,10 +111,21 @@ var SubmitMusicTrack = React.createClass({
 	closeEditor() {
 		$(this.refs.editorDiv).dialog('close');
 	},
+	getSortedTracks() {
+		return $(this.refs.trackList).sortable('toArray')
+		.map((item) => {
+			return parseInt(item.slice(5), 10);
+		})
+		.reduce((prev, current) => {
+			prev.push(this.state.addedTracks[current]);
+			return prev;
+		}, [])
+	},
 	onSave: function(track) {
 
 		if (!this.validate(track)) {
 			this.setState({
+				currentTrack: track,
 				trackStatusMessage: 'The track is not valid, please add an audio file, title, and genre before adding the track'
 			});
 
@@ -159,30 +176,6 @@ var SubmitMusicTrack = React.createClass({
 		this.openEditor();
 	},
 	
-	onIncreaseOrder: function(index) {
-		var newArray = [].concat(this.state.addedTracks);
-		
-		var temp = newArray[index];
-		newArray[index] = newArray[index + 1];
-		newArray[index + 1] = temp;
-
-		this.setState({
-			addedTracks: newArray
-		});
-	},
-
-	onDecreaseOrder: function(index) {
-		var newArray = [].concat(this.state.addedTracks);
-		
-		var temp = newArray[index];
-		newArray[index] = newArray[index - 1];
-		newArray[index - 1] = temp;
-
-		this.setState({
-			addedTracks: newArray
-		});
-	},
-	
 	validate: function(track) {
 		
 		return track.trackName && track.trackName.length > 0 && 
@@ -195,7 +188,9 @@ var SubmitMusicTrack = React.createClass({
 			return Promise.reject('At least one track must be added to an album');
 		}
 
-		return Promise.map(this.state.addedTracks, (track, index) => {
+		var sortedTracks = this.getSortedTracks();
+
+		return Promise.map(sortedTracks, (track, index) => {
 			if (!this.validate(track)) {
 				return Promise.reject('The track is not valid, please add an audio file, title, and genre before adding the track');
 			}
@@ -220,28 +215,17 @@ var SubmitMusicTrack = React.createClass({
 		});
 	},
 	render: function() {
-		var numTracks = this.state.addedTracks.length;
-		var canIncreaseOrDecrease = numTracks >= 2 && !this.state.isAudioUploading;
-
 		return (	
-			<div className="submit-track-edit-wrapper col-xs-12">
+			<div className="submit-track-edit-wrapper pad-box-lg col-xs-12">
 				{ this.state.addedTracks.length > 1 ? 
 					<div className="submit-edit-track-header">
-						<p className="order-track">{ !this.props.isAdmin ? "Order" : null }</p>
 						<p>Track Name</p>
 					</div> : null
 				}
-				<ul className="tag-list">
+				<ul ref="trackList" className="tag-list">
 					{ this.state.addedTracks.map((item, index) => {
 						return ( 
-							<li key={ index } className="pad-b-sm">
-								<div className="col-xs-12">
-								{ canIncreaseOrDecrease && index < numTracks - 1 ?
-									<i onClick={ this.onIncreaseOrder.bind(this, index) } className="icon-down-open fa-2x"></i> : null }
-								{ canIncreaseOrDecrease && index > 0 ?
-									<i onClick={ this.onDecreaseOrder.bind(this, index) } className="icon-up-open fa-2x"></i> : null }
-								</div>
-
+							<li id={ 'track' + index } key={ index } className="pad-b-sm ui-state-default">
 								<TrackItem 
 									item={ item }
 									index={ index }

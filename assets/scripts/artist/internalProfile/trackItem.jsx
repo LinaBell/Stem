@@ -6,9 +6,11 @@ var TrackItem = React.createClass({
 		var item = this.props.item;
 
 		return (
-			<div className="col-xs-12">
+			<div className="grey-bg-lt pad-t-sm">
 				
-				<span className="loaded-track-name"><p>{ item.trackName }</p></span>
+				<div className="loaded-trank-name-margin">
+ 					{ item.trackName }
+ 				</div>
 
 				<div className="loaded-track mar-l-md">
 					{ item.audioFile ? <p>{ item.audioFile.name } </p> : 'No file' }
