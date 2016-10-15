@@ -23,7 +23,8 @@ var SubmitMusicTrack = React.createClass({
 			modal: true,
 			resizable: false,
 			width: 1000,
-			height: 700
+			height: 700,
+			position: { my: 'top', at: 'top', of: '.artist-internal-wrapper-fluid' }
 		});
 
 		$(this.refs.trackList).sortable({
