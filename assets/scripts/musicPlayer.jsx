@@ -18,9 +18,14 @@ var MusicPlayer = React.createClass({
     		return
     	}
 
-    	var isUnitialized = (this.player === null);
+    	var isInitialized = this.player !== null;
 
-    	if (isUnitialized || this.props.songId !== nextProps.songId) {
+    	// HACK: Tearing down each time the song changes can't be good for performance but otherwise can't get the track to change
+    	if (isInitialized) {
+    		this.player.remove();
+    	}
+
+    	if (isInitialized || this.props.songId !== nextProps.songId) {
     		stemApi.getSong({
     			id: nextProps.songId
     		})
@@ -35,22 +40,19 @@ var MusicPlayer = React.createClass({
 	    		id: nextProps.songId
 	    	})
 	    	.then((res) => {
+	    		// HACK: We setup the jwplayer each time the song is changed (including tearing it down causing an ugly flicker)
+	    		// this should definitely be changed, but is the best solution I could find at the moment
+	    		var player = jwplayer('music-player').setup({
+			    	file: res.url,
+			    	// A height of 40 puts this in audio mode
+			    	height: 40,
+			    	width: 500,
+			    	type: 'mp3'
+				});
 
-	    		if (isUnitialized) {
-		    		var player = jwplayer('music-player').setup({
-				    	file: res.url,
-				    	// A height of 40 puts this in audio mode
-				    	height: 40,
-				    	width: 500,
-				    	type: 'mp3'
-					});
+				this.player = player;
 
-					this.player = player;
-		    	} else {
-		    		this.player.load(res.url);
-		    	}
-
-		    	this.player.on('ready', (ev) => {
+		    	this.player.on('playlist', (ev) => {
 		    		this.player.play();
 		    	})
 
@@ -62,7 +64,9 @@ var MusicPlayer = React.createClass({
     },
 
     componentWillUnmount() {
-    	this.player.remove();
+    	if (this.player) {
+    		this.player.remove();
+    	}
     },
 
 	render: function() {
