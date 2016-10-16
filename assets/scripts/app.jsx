@@ -50,10 +50,10 @@ var Utilities = {
 	getTagIds(tags) {
 		return tags.reduce((prev, current) => {
 			if (current.type === SearchTermType.Tag) {
-				return prev.concat(current.data.id)
-			} else {
-				return prev;
+				prev.push(current.data.id);
 			}
+			
+			return prev;	
 		}, []);
 	},
 
