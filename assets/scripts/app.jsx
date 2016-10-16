@@ -152,8 +152,8 @@ function beginSearch(searchTerms) {
 function beginBookmarkRefresh(creatorId) {
 	return function(dispatch) {
 		stemApi.getCreatorBookmarks({
-      creatorId: creatorId
-    })
+      		creatorId: creatorId
+    	})
 		.then(function(res) {
 			dispatch({
 	        	type: 'UpdateCreatorBookmarks',
@@ -170,16 +170,20 @@ function beginBookmarkRefresh(creatorId) {
 
 // This should be moved to it's own file at some point
 const initialAppState = {
-	baseAPI: 'http://52.32.255.104/api',
 	currentPage: 0,
 	pageParams: {},
 	searchTerms: [],
 	searchResults: [],
 	creatorBookmarks: [],
-	tags: {}
+	tags: {},
+	playingSongId: null
 };
 var appReducer = function(state = initialAppState, action) {
 	switch (action.type) {
+		case 'PlaySong':
+			return Object.assign({}, state, {
+				playingSongId: action.data.songId
+			});
 		case 'GoToPage':
 			return Object.assign({}, state, {
 				pageParams: action.data.pageParams || {},
@@ -493,7 +497,6 @@ var App = React.createClass({
 						<Footer />
 					</div>
 				: null}
-
 			</div>
 		);
 	}

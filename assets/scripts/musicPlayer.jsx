@@ -10,6 +10,14 @@ var MusicPlayer = React.createClass({
 
     componentWillReceiveProps(nextProps) {
 
+    	if (!nextProps.songId) {
+    		this.setState({
+    			canPlay: false
+    		})
+
+    		return
+    	}
+
     	var isUnitialized = (this.player === null);
 
     	if (isUnitialized || this.props.songId !== nextProps.songId) {
@@ -40,7 +48,11 @@ var MusicPlayer = React.createClass({
 					this.player = player;
 		    	} else {
 		    		this.player.load(res.url);
-		    	} 
+		    	}
+
+		    	this.player.on('ready', (ev) => {
+		    		this.player.play();
+		    	})
 
 	    		this.setState({
 	    			canPlay: true
@@ -57,13 +69,14 @@ var MusicPlayer = React.createClass({
 		
 		return(
 			<div className="promo-song-info">
+				{ this.state.canPlay ? 
                 <div className="right-side-content">
 					<h2 className="mar-t-sm">{ this.state.artistName } - { this.state.songName }</h2>
 					<div id="waveform" className="mar-t-sm mar-b-sm"></div>
 					<h3 className="display-inlb">Follow this artist:</h3>
 					<FollowThisArtistLinks />
-					<div id="music-player"></div>
-				</div>
+				</div> : null }
+				<div id="music-player"></div>
 			</div>
 		);
 	}

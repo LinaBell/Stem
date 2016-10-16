@@ -1,6 +1,7 @@
 var PlaylistTable = ReactRedux.connect(function(state) {
 	return {
-		userInfo: state.userState.userInfo
+		userInfo: state.userState.userInfo,
+		playingSongId: state.appState.playingSongId
 	};
 }
 )(React.createClass({
@@ -8,17 +9,6 @@ var PlaylistTable = ReactRedux.connect(function(state) {
 		return {
 			albumId: ''
 		}
-	},
-	testAdminEdit: function() {
-		store.dispatch({
-			type: 'GoToPage',
-			data: {
-				currentPage: 105,
-				pageParams: {
-					albumId: this.state.albumId
-				}
-			}
-		});
 	},
 	onAlbumIdChange: function(ev) {
 		this.setState({
@@ -55,6 +45,7 @@ var PlaylistTable = ReactRedux.connect(function(state) {
 						})}
 					</tbody>
 				</table>
+				<MusicPlayer songId={ this.props.playingSongId } />
 			</div>
 		)
 	}
@@ -64,16 +55,24 @@ var PlaylistItem = ReactRedux.connect(null,
 function (dispatch) {
   return {
     navigateToArtist: function(song) {
-			dispatch({
-				type: 'GoToPage',
-				data: {
-					currentPage: 110,
-					pageParams: {
-						artistId: song.artistId
-					}
+		dispatch({
+			type: 'GoToPage',
+			data: {
+				currentPage: 110,
+				pageParams: {
+					artistId: song.artistId
 				}
-			});
-		}
+			}
+		});
+	},
+	playSong(songId) {
+		dispatch({
+			type: 'PlaySong',
+			data: {
+				songId: songId
+			}
+		});
+	}
   };
 }
 )(React.createClass({	
@@ -105,6 +104,9 @@ function (dispatch) {
 			});	
 		}
 	},
+	playSong() {
+		this.props.playSong(this.props.song.id);
+	},
 	render: function() {
 		var song = this.props.song;
 		var isBookmarked = song.isBookmarked || !this.props.canToggleBookmarkIcon;
@@ -113,7 +115,9 @@ function (dispatch) {
 				<tr>
 					<td className="playlist-track-artist col-md-3">
 						<div className="col-sm-4">
-							<img className="mobile-img-thumbnail mar-r-md" src={song.albumArtUrl} />
+							<a onClick={ this.playSong }>
+								<img className="mobile-img-thumbnail mar-r-md" src={song.albumArtUrl} />
+							</a>
 						</div>
 						<div className="playlist-detail-info col-sm-8">
 							<h4>{song.name}</h4>
