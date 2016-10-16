@@ -2,7 +2,9 @@ var MusicPlayer = React.createClass({
 	player: null,
 	getInitialState: function() {
 		return {
-			canPlay: false
+			canPlay: false,
+			artistName: '',
+			songName: ''
 		};
 	},
 
@@ -11,6 +13,16 @@ var MusicPlayer = React.createClass({
     	var isUnitialized = (this.player === null);
 
     	if (isUnitialized || this.props.songId !== nextProps.songId) {
+    		stemApi.getSong({
+    			id: nextProps.songId
+    		})
+    		.then((res) => {
+    			this.setState({
+    				artistName: res.artistName,
+    				songName: res.name
+    			})
+    		})
+
 	    	stemApi.streamSong({
 	    		id: nextProps.songId
 	    	})
@@ -46,7 +58,7 @@ var MusicPlayer = React.createClass({
 		return(
 			<div className="promo-song-info">
                 <div className="right-side-content">
-					<h2 className="mar-t-sm">InMemory - Never forget</h2>
+					<h2 className="mar-t-sm">{ this.state.artistName } - { this.state.songName }</h2>
 					<div id="waveform" className="mar-t-sm mar-b-sm"></div>
 					<h3 className="display-inlb">Follow this artist:</h3>
 					<FollowThisArtistLinks />
