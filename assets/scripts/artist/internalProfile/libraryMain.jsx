@@ -65,7 +65,7 @@ var LibraryMain = ReactRedux.connect(function(state) {
 	},
 	render: function() {
 		return (
-			<div className="content-vh content-padding">
+			<div className="content-vh">
 				<div className="library-content-wrapper">  
 					<div className="artist-internal-greeting">
 						<h2>Library</h2>
