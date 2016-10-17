@@ -2,7 +2,6 @@ var MusicPlayer = React.createClass({
 	player: null,
 	getInitialState: function() {
 		return {
-			canPlay: false,
 			artistName: '',
             songName: '',
             albumArtUrl: '',
@@ -14,7 +13,7 @@ var MusicPlayer = React.createClass({
 
     	if (!nextProps.songId) {
     		this.setState({
-    			canPlay: false,
+
                 playerVisible: false
     		})
 
@@ -61,7 +60,7 @@ var MusicPlayer = React.createClass({
 		    	})
 
 	    		this.setState({
-	    			canPlay: true,
+
                     playerVisible: true
 	    		})
 	    	})
@@ -101,8 +100,8 @@ var MusicPlayer = React.createClass({
 		
 		return(
 			<div ref="draggable" className="ui-widget-content mar-box-md music-player-wrapper bg-white" >
-				{ this.state.canPlay ? 
-                <div className="music-player-show display-inlb">
+				{ this.state.playerVisible ? 
+                <div className="music-player-show di">
                     <img className="display-inlb mobile-img-thumbnail mar-r-md" src={this.state.albumArtUrl} />
                     <div className="player-detail display-inlb">
     					<h3 className="music-player-header display-inlb mar-t-sm">{ this.state.artistName } - { this.state.songName }</h3>
