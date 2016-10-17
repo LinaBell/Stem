@@ -4,9 +4,9 @@ var MusicPlayer = React.createClass({
 		return {
 			canPlay: false,
 			artistName: '',
-			songName: '',
+            songName: '',
             playerVisible: false
-		};
+        };
 	},
 
     componentWillReceiveProps(nextProps) {
@@ -66,7 +66,7 @@ var MusicPlayer = React.createClass({
     	}
     },
     componentDidMount: function() {
-        $( "#draggable" ).draggable();
+        $( this.refs.draggable ).draggable();
     },
     componentWillUnmount() {
     	if (this.player) {
@@ -98,7 +98,7 @@ var MusicPlayer = React.createClass({
 	render: function() {
 		
 		return(
-			<div id="draggable" className="ui-widget-content mar-box-md music-player-wrapper bg-white" >
+			<div ref="draggable" className="ui-widget-content mar-box-md music-player-wrapper bg-white" >
 				{ this.state.canPlay ? 
                 <div>
 					<h3 className="music-player-header display-inlb mar-t-sm">{ this.state.artistName } - { this.state.songName }</h3>
