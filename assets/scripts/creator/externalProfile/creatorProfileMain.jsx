@@ -26,7 +26,7 @@ var CreatorProfileMain = React.createClass({
           <CreatorProfileTags creator={this.props.creator} />
           <div className="pad-t-md section-label">
             <h3>My Activity</h3>
-            <p>My latest plays and loves</p>
+            <p>My latest plays and bookmarks</p>
           </div>
           <PlaylistTable songs={this.state.songs} />
           <div className="text-center">

@@ -1,4 +1,16 @@
-var AdminSideNav = React.createClass({
+var AdminSideNav = ReactRedux.connect(function(state) {
+	return {
+		currentPage: state.appState.currentPage
+	};
+})(React.createClass({
+	navigate: function(id) {
+		store.dispatch({
+			type: 'GoToPage',
+			data: { currentPage: id }
+		});
+		this.showHideNav();
+	},
+
 	showHideNav: function() {
 		this.props.showHideNav();
 	},
@@ -11,7 +23,7 @@ var AdminSideNav = React.createClass({
 					<img className="admin-side-nav-image" src="http://static.communitytable.parade.com/wp-content/uploads/2013/11/slowcooker-meatloaf-ftr.jpg?ggnoads=1"></img>
 					<div className="admin-nav-items">
 						<ul>
-							<li className="pad-b-md pad-t-md pad-l-lg"><h4>Dashboard</h4></li>
+							<li className="pad-b-md pad-t-md pad-l-lg" onClick={this.navigate.bind(this, 20)}><h4>Dashboard</h4></li>
 							<li className="pad-b-md pad-t-md pad-l-lg"><h4>Creators</h4></li>
 							<li className="pad-b-md pad-t-md pad-l-lg"><h4>Artists</h4></li>
 							<li className="pad-b-md pad-t-md pad-l-lg"><h4>Music Admin</h4></li>
@@ -22,7 +34,7 @@ var AdminSideNav = React.createClass({
 								<li className="admin-nav-sub-items pad-b-md pad-t-md"><h4>Top Downloads</h4></li>
 								<li className="admin-nav-sub-items pad-b-md pad-t-md"><h4>Top Creators</h4></li>
 								<li className="admin-nav-sub-items pad-b-md pad-t-md"><h4>Top Artists</h4></li>
-							<li className="pad-b-md pad-t-md pad-l-lg"><h4>Settings</h4></li>
+							<li className="pad-b-lg pad-t-md pad-l-lg mar-b-lg"><h4>Settings</h4></li>
 						</ul>
 					</div>
 				</nav>
@@ -31,4 +43,4 @@ var AdminSideNav = React.createClass({
 		)
 
 	}
-})
+}));
