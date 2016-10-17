@@ -45,7 +45,7 @@ var PlaylistTable = ReactRedux.connect(function(state) {
 						})}
 					</tbody>
 				</table>
-				<MusicPlayer songId={ this.props.playingSongId } />
+
 			</div>
 		)
 	}
@@ -72,6 +72,11 @@ function (dispatch) {
 				songId: songId
 			}
 		});
+		$('.music-player-wrapper').animate({
+			opacity: "1",
+			width: "100%",
+			height: "170px"
+		}, 400);
 	}
   };
 }

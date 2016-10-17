@@ -4,7 +4,8 @@ var MusicPlayer = React.createClass({
 		return {
 			canPlay: false,
 			artistName: '',
-			songName: ''
+			songName: '',
+            playerVisible: false
 		};
 	},
 
@@ -12,7 +13,8 @@ var MusicPlayer = React.createClass({
 
     	if (!nextProps.songId) {
     		this.setState({
-    			canPlay: false
+    			canPlay: false,
+                playerVisible: false
     		})
 
     		return
@@ -57,7 +59,8 @@ var MusicPlayer = React.createClass({
 		    	})
 
 	    		this.setState({
-	    			canPlay: true
+	    			canPlay: true,
+                    playerVisible: true
 	    		})
 	    	})
     	}
@@ -68,17 +71,51 @@ var MusicPlayer = React.createClass({
     		this.player.remove();
     	}
     },
+    closePlayer: function() {
+
+        if (this.state.playerVisible) {
+            $('.music-player-wrapper').animate({
+                opacity: "0",
+                width: "0",
+                height: "0"
+            }, 400);
+            this.setState({
+                playerVisible: false
+            });
+        } else {
+            $('.music-player-wrapper').animate({
+                opacity: "0",
+                width: "0",
+                height: "0"
+            }, 400);
+            this.setState({
+                playerVisible: false
+            }); 
+        }
+    },
 
 	render: function() {
 		
 		return(
-			<div className="promo-song-info">
+			<div className="mar-box-md music-player-wrapper bg-white" >
 				{ this.state.canPlay ? 
-                <div className="right-side-content">
-					<h2 className="mar-t-sm">{ this.state.artistName } - { this.state.songName }</h2>
+                <div>
+					<h3 className="music-player-header display-inlb mar-t-sm">{ this.state.artistName } - { this.state.songName }</h3>
+                    <div className="display-inlb pull-right">
+                        <span onClick={this.closePlayer} className="icon-cancel cancel-hover"></span>
+                    </div>    
 					<div id="waveform" className="mar-t-sm mar-b-sm"></div>
-					<h3 className="display-inlb">Follow this artist:</h3>
-					<FollowThisArtistLinks />
+                    <div className="mar-b-sm">
+					    <h4 className="display-inlb">Follow this artist:</h4>
+    					<ul className="display-inlb mar-l-md">
+                            <li className="icon-spotify"></li>
+                            <li className="icon-soundcloud-2"></li>
+                            <li className="icon-youtube-1"></li>
+                            <li className="icon-facebook-4"></li>
+                            <li className="icon-twitter-bird"></li>
+                            <li className="icon-instagram-3"></li>
+                        </ul>
+                    </div>    
 				</div> : null }
 				<div id="music-player"></div>
 			</div>
