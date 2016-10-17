@@ -74,7 +74,7 @@ function (dispatch) {
 		});
 		$('.music-player-wrapper').animate({
 			opacity: "1",
-			width: "100%",
+			width: "530px",
 			height: "170px"
 		}, 400);
 	}

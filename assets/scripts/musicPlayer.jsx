@@ -5,6 +5,7 @@ var MusicPlayer = React.createClass({
 			canPlay: false,
 			artistName: '',
             songName: '',
+            albumArtUrl: '',
             playerVisible: false
         };
 	},
@@ -34,7 +35,8 @@ var MusicPlayer = React.createClass({
     		.then((res) => {
     			this.setState({
     				artistName: res.artistName,
-    				songName: res.name
+    				songName: res.name,
+                    albumArtUrl: res.albumArtUrl
     			})
     		})
 
@@ -48,7 +50,7 @@ var MusicPlayer = React.createClass({
 			    	file: res.url,
 			    	// A height of 40 puts this in audio mode
 			    	height: 40,
-			    	width: 500,
+			    	width: 485,
 			    	type: 'mp3'
 				});
 
@@ -100,23 +102,26 @@ var MusicPlayer = React.createClass({
 		return(
 			<div ref="draggable" className="ui-widget-content mar-box-md music-player-wrapper bg-white" >
 				{ this.state.canPlay ? 
-                <div>
-					<h3 className="music-player-header display-inlb mar-t-sm">{ this.state.artistName } - { this.state.songName }</h3>
-                    <div className="display-inlb pull-right">
-                        <span onClick={this.closePlayer} className="icon-cancel cancel-hover"></span>
-                    </div>    
-					<div id="waveform" className="mar-t-sm mar-b-sm"></div>
-                    <div className="mar-b-sm">
-					    <h4 className="display-inlb">Follow this artist:</h4>
-    					<ul className="display-inlb mar-l-md">
-                            <li className="icon-spotify"></li>
-                            <li className="icon-soundcloud-2"></li>
-                            <li className="icon-youtube-1"></li>
-                            <li className="icon-facebook-4"></li>
-                            <li className="icon-twitter-bird"></li>
-                            <li className="icon-instagram-3"></li>
-                        </ul>
-                    </div>    
+                <div className="music-player-show display-inlb">
+                    <img className="display-inlb mobile-img-thumbnail mar-r-md" src={this.state.albumArtUrl} />
+                    <div className="player-detail display-inlb">
+    					<h3 className="music-player-header display-inlb mar-t-sm">{ this.state.artistName } - { this.state.songName }</h3>
+                        <div className="display-inlb pull-right">
+                            <span onClick={this.closePlayer} className="icon-cancel cancel-hover"></span>
+                        </div>    
+    					<div id="waveform" className="mar-t-sm mar-b-sm"></div>
+                        <div className="mar-b-sm">
+    					    <h4 className="display-inlb">Follow this artist:</h4>
+        					<ul className="display-inlb mar-l-md">
+                                <li className="icon-spotify"></li>
+                                <li className="icon-soundcloud-2"></li>
+                                <li className="icon-youtube-1"></li>
+                                <li className="icon-facebook-4"></li>
+                                <li className="icon-twitter-bird"></li>
+                                <li className="icon-instagram-3"></li>
+                            </ul>
+                        </div> 
+                    </div>       
 				</div> : null }
 				<div id="music-player"></div>
 			</div>
