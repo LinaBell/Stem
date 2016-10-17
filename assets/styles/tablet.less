@@ -26,9 +26,6 @@
 	.library-result-table table td:nth-child(4), .library-result-table table td:nth-child(7) {
 		display: none;
 	}
-	.library-result-table table th:nth-child(4), .library-result-table table th:nth-child(7) {
-		display: none;
-	}
 	// -- creator profile --
 	.playlist-wrapper table th:nth-child(3), .playlist-wrapper table th:nth-child(4), .playlist-wrapper table th:nth-child(6) {
 		display: none;
@@ -576,6 +573,11 @@
 		}
 	} 
 	
+	/* -- Artist Dashboard -- */
+	.pick-ups li {
+		padding-left: 0;
+	}
+
 	/*-- Payment Options --*/ 
     .payment-options-page {
       padding: 9% 3%
@@ -829,6 +831,11 @@
 		width: 85px;
 		height: 85px;
 		margin-top: @space-sm;
+	}
+
+	/* -- Artist Dashboard -- */
+	.pick-ups li {
+		padding-left: @space-sm;
 	}
 
 	/* -- PROMO LANDING -- */
