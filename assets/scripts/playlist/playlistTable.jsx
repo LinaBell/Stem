@@ -19,7 +19,7 @@ var PlaylistTable = ReactRedux.connect(function(state) {
 		var songs = this.props.songs;
 
 		return(
-			<div className="playlist-wrapper">
+			<div className="playlist-wrapper tables-page">
 				<table className="col-xs-12 table no-borders">
 					<thead>
 						<tr>
