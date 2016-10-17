@@ -13,6 +13,9 @@
 	.content-with-sidebar-settings {
 		margin-left: 0;
 	}
+	.content-padding {
+	    padding: @space-lg !important;
+	}
 	.hide-mobile {
 		display: none;
 	}
@@ -21,9 +24,6 @@
 		display: none;
 	}
 	.library-result-table table td:nth-child(4), .library-result-table table td:nth-child(7) {
-		display: none;
-	}
-	.library-result-table table th:nth-child(4), .library-result-table table th:nth-child(7) {
 		display: none;
 	}
 	// -- creator profile --
@@ -36,22 +36,24 @@
 
 	/* Artist Profile */
 	.header-wrapper {
-		height: 500px;
+		height: 450px;
 	}
 	.header-banner {
 		background-position: center -100px;
-		height: 150px;
+		height: 300px;
 	}
 	.header-content-wrapper {
 		padding: @space-md 0 0;
 	}
 	.header-content-detail {
 		padding: @space-md;
-		text-align: center;
+		margin: 30px auto @space-sm;
+		width: 100%;
 	}
 	.header-content-detail, 
 	.header-content-detail h1, 
 	.header-social-media li {
+		text-align: center;
 		color: @grey-2;
 	}
 	.header-img {
@@ -60,13 +62,18 @@
 		display: block;
 		margin: auto;
 	}
+	.header-content-detail h4 {
+		margin: 0 auto;
+	}
 	.header-content-detail button {
 		display: block;
 		margin: auto;
 	}
 	.header-social-media {
 		float: none !important;
+		display: block;
 		text-align: center;
+		padding: 0;
 	}
 	.artist-table-wrapper table th:nth-child(4),
 	.artist-table-wrapper table th:nth-child(5),
@@ -80,7 +87,7 @@
 		width: 100%;
 		padding: 0 @space-md @space-md;
 		text-align: center;
-    position: relative;
+    	position: relative;
 	}
 
 	/*-- Admin table --*/    
@@ -431,7 +438,9 @@
 		margin-left: 0;
 		width: 100%;
 	}
-
+	.content-padding {
+	    padding: 30px 70px;
+	}
 	.artist-featured-badge-icon {
 		margin-left: -60px;
 	}
@@ -564,6 +573,11 @@
 		}
 	} 
 	
+	/* -- Artist Dashboard -- */
+	.pick-ups li {
+		padding-left: 0;
+	}
+
 	/*-- Payment Options --*/ 
     .payment-options-page {
       padding: 9% 3%
@@ -817,6 +831,11 @@
 		width: 85px;
 		height: 85px;
 		margin-top: @space-sm;
+	}
+
+	/* -- Artist Dashboard -- */
+	.pick-ups li {
+		padding-left: @space-sm;
 	}
 
 	/* -- PROMO LANDING -- */
