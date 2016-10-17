@@ -21,7 +21,7 @@ var CreatorDownloadsMain = ReactRedux.connect(function(state) {
 	render: function() {
 		return(
 			<div className="content-vh content-padding">
-				<div className="creator-downloads tables-page">
+				<div className="creator-downloads">
 					<header className="creator-downloads-header pad-b-md">
 						<h2 className="">Downloads</h2>
 						<p className="font-light">Your history of downloads</p>

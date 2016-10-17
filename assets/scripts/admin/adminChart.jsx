@@ -4,7 +4,6 @@ var AdminNewSubmissionsChart = React.createClass({
           days: 1
         })
         .then( (res) =>  {
-            debugger;
             c3.generate({
                 bindto: '.admin-chart',
                 data: {

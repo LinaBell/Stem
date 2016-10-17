@@ -22,7 +22,7 @@ function (dispatch) {
   render: function() {
     return(
       <div className="content-vh content-padding">
-        <div className="tables-page pad-b-md">
+        <div className="pad-b-md">
           <h2>Bookmarks</h2>
           <p className="font-light">The songs you've liked</p>
         </div>

@@ -26,14 +26,14 @@ var AdminNewSubmissions = React.createClass({
 	},
 	render: function() {
 		return(
-			<div className="pad-box-lg">
+			<div className="mar-t-lg">
 				<TimespanSelector onChange={this.onTimespanChange} />
-				<h3 className="admin-new-submissions-title top-title primary">Submissions</h3>
-				<div className="admin-new-submissions-chart">
+				<h3 className="admin-data-pages-title top-title primary">Submissions</h3>
+				<div className="admin-data-pages-chart">
 					<AdminNewSubmissionsChart onChange={this.onTimespanChange} />
 				</div>
-				<h3 className="admin-new-submissions-title display-inlb primary">Songs</h3>
-				<h4 className="admin-new-submissions-export-link display-inlb secondary">Export All</h4>
+				<h3 className="admin-data-pages-title display-inlb primary">Songs</h3>
+				<h4 className="admin-data-pages-export-link display-inlb secondary">Export All</h4>
 				<AdminNewSubmissionsTable artists={this.state.artist} />
 			</div>
 		)

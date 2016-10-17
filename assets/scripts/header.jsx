@@ -118,7 +118,7 @@ var Header = (function() {
 							<MenuHeader showHideMenu={this.showHideMenu} />
 							{ this.props.menu.map(function(item) {
 								return (
-									<MenuItem showHideMenu={this.showHideMenu} hash={item.text} key={item.pageID} meunItemID={item.pageID} level={item.level}>
+									<MenuItem showHideMenu={this.showHideMenu} hash={item.text} key={item.pageID} menuItemID={item.pageID} level={item.level}>
 										<i className={item.icon}></i> {item.text}
 									</MenuItem>
 								)
@@ -199,14 +199,14 @@ var Header = (function() {
 
 		render: function() {
 			var itemClass = 'menu-item';
-			if(this.props.meunItemID == this.context.currentPage) {
+			if(this.props.menuItemID == this.context.currentPage) {
 				itemClass += ' active'
 			}
 			if(this.props.level == 2) {
 				itemClass += ' level-2'
 			}
 			return (
-				<div onClick={this.navigate.bind(this, this.props.meunItemID)} key={this.props.meunItemID} className={itemClass}>{this.props.children}</div>
+				<div onClick={this.navigate.bind(this, this.props.menuItemID)} key={this.props.menuItemID} className={itemClass}>{this.props.children}</div>
 			);
 		}
 	});
