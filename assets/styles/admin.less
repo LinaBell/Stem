@@ -3,6 +3,7 @@
 /* -- Admin Header -- */
 .admin-header {
 	z-index: 3000;
+	height: 60px;
 	h2 {
 		display: inline-block;
 	}
@@ -12,6 +13,9 @@
 }
 .thematic-title {
 	font-family: fancyfont;
+	&:hover {
+		cursor: pointer;
+	}
 }
 
 /* -- Admin Nav -- */
@@ -20,6 +24,7 @@
 }
 .admin-side-nav {
 	width: 300px;
+	height: 100vh;
 	position: absolute;
 	top: 0;
 	right: 0;
@@ -27,20 +32,25 @@
 	background: white;
 	color: @grey-2;
 	z-index: 4000;
+	overflow: scroll;
 }
 .admin-cancel {
 	position: absolute;
 	top: 0;
 	right: 0;
 	cursor: pointer;
+	text-shadow: @drop-10;
 }
 .admin-side-nav-image {
 	width: 340px;
 }
-.admin-nav-items li:hover {
+.admin-nav-items li {
+	border-left: 6px solid white;
+	&:hover {
 	background: @grey-6;
-	border-left: 5px solid @primary;
+	border-left: 6px solid @primary;
 	cursor: pointer;
+	}
 }
 .admin-nav-items span {
 	width: 20px;
@@ -75,8 +85,13 @@
 	width: 430px;
 	height: 160px;
 	margin: 20px;
+	vertical-align: top;
 	border-radius: 0.05rem;
 	box-shadow: @drop-4;
+	&:hover {
+		box-shadow: @drop-9;
+		cursor: pointer;
+	}
 }
 .admin-dashboard-box .icon {
 	margin: 15px 20px 15px 10px;
