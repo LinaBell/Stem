@@ -35,6 +35,40 @@
 .promo-song-info a {
 	float: left;
 }
+.small-font {
+	font-size: 10px;
+	li {
+		margin-right: 10px;
+	}
+}
+.music-player-wrapper {
+	opacity: 0;
+	width: 0;
+	height: 0;
+	position: fixed;
+  width: 530px;
+  border: 2px solid @grey-2;
+  padding: 20px;
+  border-radius: 15px;
+  z-index: 5000;
+  bottom: 100px;
+	ul li {
+		display: inline-block;
+	}
+}
+.music-player-show {
+	width: 530px;
+}
+
+.cancel-hover:hover {
+	cursor: pointer;
+}
+.music-player-header {
+  width: 370px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
 .promo-song-info .play-pause {
 	position: absolute;
 	font-size: 14em;
