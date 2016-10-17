@@ -25,25 +25,11 @@ var ImageUpload = React.createClass({
 
 		var base64File = {
 			name: this.state.originalImage.name,
-			data: this.parseImageUriToBlob(imageData)
+			data: imageData
 		}
 
 		this.props.onImageChange(base64File, this.state.originalImage);
-	},
-
-	// We write our own parsing function because .toBlob is not cross-browser compatible and this seems to be
-	parseImageUriToBlob: function(dataUri) {
-		var matches =  /^data:(.+?);base64,(.+?)$/.exec(dataUri);
-		var mimeType = matches[1];
-		var byteString = atob(matches[2]);
-    	var data = new Uint8Array(byteString.length);
-    	
-    	for (var i = 0; i < byteString.length; i++) {
-        	data[i] = byteString.charCodeAt(i);
-    	}
-
-    	return new Blob([data], { type: mimeType });
-	},
+	},	
 
 	componentWillReceiveProps: function(nextProps) {
 

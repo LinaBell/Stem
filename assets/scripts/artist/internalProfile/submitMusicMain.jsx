@@ -34,7 +34,6 @@ var SubmitMusicMain = ReactRedux.connect(null, function(dispatch) {
 				return track.upsertTracks(res, album.state.artistName);
 			})
 			.then((res) => {
-				console.log('Album created successfully: ' + JSON.stringify(res));
 				this.setState({
 					isSubmitting: false,
 					statusMessage: '',
@@ -44,7 +43,6 @@ var SubmitMusicMain = ReactRedux.connect(null, function(dispatch) {
 			.catch((reason) => {
 				var errorMessage = Utilities.normalizeError(reason);
 
-				console.error('Error while creating album/track: ' + errorMessage);
 				this.setState({
 					isSubmitting: false,
 					statusMessage: errorMessage

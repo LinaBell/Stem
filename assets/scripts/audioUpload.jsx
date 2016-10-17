@@ -30,27 +30,24 @@ var AudioUpload = React.createClass({
 		stemApi.upload({
 			file: ev.target.files[0]
 		})
-		.then(function(response) {
+		.then((response) => {
 			var fileInfo = {
-				data: { 
-					name: ev.target.files[0].name,
-					size: ev.target.files[0].size
-				},
+				name: ev.target.files[0].name,
 				response: response
 			};
 			
 			if (this.props.onAudioChange) {
 				this.props.onAudioChange(fileInfo);
 			}
-		}.bind(this))
-		.catch(function(error) {
+		})
+		.catch((error) => {
 			console.error('Audio Upload Error: ' + Utilities.normalizeError(error));
 		})
-		.finally(function() {
+		.finally(() => {
 			this.setState({
 				isUploading: false
 			});
-		}.bind(this));
+		});
 	},
 	reset: function() {
 		if (this.props.onAudioChange) {
@@ -68,14 +65,14 @@ var AudioUpload = React.createClass({
 			zIndex: '-1'
 		};
 
-		var element = <label htmlFor={ this.getId() } className="btn-primary browse-btn">Browse for file</label>;
+		var element = <label htmlFor={ this.getId() } className="btn-primary browse-btn">Browse for file</label>
 
 		if (this.state.isUploading) {
 			element = <LoadingButton />;
 		} else if (this.props.value) {
-			var file = this.props.value.data;
-			var fileLabel = Formatter.formatFileLabel(file);
-			element = <div className="loaded-track pull-right"><p>{ fileLabel }</p> 
+			var fileName = this.props.value.name;
+
+			element = <div className="loaded-track pull-right"><p>{ fileName }</p> 
         			  <i onClick={ this.reset.bind(this, true) } className="icon-cancel pull-right"></i></div> ;
 		}
 

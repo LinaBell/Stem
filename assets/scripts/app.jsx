@@ -27,16 +27,6 @@ var TrackStatus = {
 	Live: 2
 };
 
-// This should be moved to it's own file or use a third party library
-var Formatter = {
-	formatFileLabel: function(file) {
-		if (file) {
-			var size =  (file.size / (1000000)).toFixed(2) + ' MB';
-			return file.name + ' ' + '(' + size + ')';
-		}
-	}
-};
-
 // This should be moved to it's own file at some point
 var Utilities = {
 	normalizeError: function(error) {
@@ -60,11 +50,24 @@ var Utilities = {
 	getTagIds(tags) {
 		return tags.reduce((prev, current) => {
 			if (current.type === SearchTermType.Tag) {
-				return prev.concat(current.data.id)
-			} else {
-				return prev;
+				prev.push(current.data.id);
 			}
+			
+			return prev;	
 		}, []);
+	},
+
+	parseImageUriToBlob(dataUri) {
+		var matches =  /^data:(.+?);base64,(.+?)$/.exec(dataUri);
+		var mimeType = matches[1];
+		var byteString = atob(matches[2]);
+    	var data = new Uint8Array(byteString.length);
+    	
+    	for (var i = 0; i < byteString.length; i++) {
+        	data[i] = byteString.charCodeAt(i);
+    	}
+
+    	return new Blob([data], { type: mimeType });
 	}
 };
 
@@ -149,8 +152,8 @@ function beginSearch(searchTerms) {
 function beginBookmarkRefresh(creatorId) {
 	return function(dispatch) {
 		stemApi.getCreatorBookmarks({
-      creatorId: creatorId
-    })
+      		creatorId: creatorId
+    	})
 		.then(function(res) {
 			dispatch({
 	        	type: 'UpdateCreatorBookmarks',
@@ -167,16 +170,20 @@ function beginBookmarkRefresh(creatorId) {
 
 // This should be moved to it's own file at some point
 const initialAppState = {
-	baseAPI: 'http://52.32.255.104/api',
 	currentPage: 0,
 	pageParams: {},
 	searchTerms: [],
 	searchResults: [],
 	creatorBookmarks: [],
-	tags: {}
+	tags: {},
+	playingSongId: null
 };
 var appReducer = function(state = initialAppState, action) {
 	switch (action.type) {
+		case 'PlaySong':
+			return Object.assign({}, state, {
+				playingSongId: action.data.songId
+			});
 		case 'GoToPage':
 			return Object.assign({}, state, {
 				pageParams: action.data.pageParams || {},
@@ -490,7 +497,6 @@ var App = React.createClass({
 						<Footer />
 					</div>
 				: null}
-
 			</div>
 		);
 	}

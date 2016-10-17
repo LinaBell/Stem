@@ -159,6 +159,15 @@ var StemApi = (function () {
         });
     }
 
+    StemApi.prototype.streamSong = Promise.method(function(req) {
+    	return $.ajax({
+    		type: 'GET',
+    		url: this.baseUrl + 'songs/' + req.id + '/stream',
+    		headers: { 'Authorization': this.authorization },
+	        contentType: 'application/json; charset=utf-8',
+    	})
+    })
+
     ///////////// Songs /////////////
     //
     StemApi.prototype.createSong = Promise.method(function (req) {

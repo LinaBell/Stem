@@ -84,7 +84,7 @@
     padding-right: 30px;
 }
 .browse-btn {
-	width: 170px;
+	width: 120px;
 	text-align: center;
 }
 // -- genre selector -- 
@@ -124,12 +124,20 @@
 	width: 100%;
 	text-align: center;
 }
-.submit-track-wrapper {
-	padding: @space-lg 80px;
+
+.loaded-trank-name-margin {
+	display: inline-block;
+	width: 170px;
+    margin-left: 120px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    vertical-align: middle;
+    overflow: hidden;
 }
+
 	.submit-track-wrapper input {
 		font-family: @font-reg;
-		margin-bottom: @space-lg;
+		margin-bottom: @space-md;
 	}
 	.submit-track-name input, .submit-track-name button{
 		display: inline-block;
@@ -196,13 +204,16 @@
 		text-overflow: ellipsis;
 		white-space: nowrap;
 		background-color: @grey-5;
-		padding: @space-sm @space-md;
+		padding: 5px @space-md;
+		vertical-align: middle;
 		p {
 	    width: 125px;
 	    float: left;
 	    white-space: nowrap;
 	    overflow: hidden;
 	    text-overflow: ellipsis;
+	    vertical-align: middle;
+	    margin-top: 5px;
 		}
 		i {
 			float: right;
@@ -289,7 +300,6 @@
 }
 // -- submit edit --
 .submit-track-edit-wrapper {
-	padding: @space-md 0;
 	margin-bottom: @space-md;
 	p {
 		display: inline-block;

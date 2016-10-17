@@ -1,91 +1,86 @@
 var MusicPlayer = React.createClass({
+	player: null,
 	getInitialState: function() {
-		return{
-			audioSource: "http://ejb.github.io/progressor.js/demos/echoplex.mp3",
-			player: undefined,
-			isPlaying: false
+		return {
+			canPlay: false,
+			artistName: '',
+			songName: ''
 		};
 	},
 
-	componentDidMount: function() {
-		var wavesurfer = WaveSurfer.create({
-		    container: '#waveform',
-		    height: 110,
-		    barWidth: 2,
-		    cursorWidth: 2,
-		    cursorColor: "rgba(82, 84, 95, 0.5)",
-		    scrollParent: true,
-		    hideScrollbar: true,
-		    waveColor: "#00D8D7",
-		    progressColor: "#c9c9c9",
-		});
-		this.setState({player: wavesurfer});
-		wavesurfer.load(this.state.audioSource);
+    componentWillReceiveProps(nextProps) {
+
+    	if (!nextProps.songId) {
+    		this.setState({
+    			canPlay: false
+    		})
+
+    		return
+    	}
+
+    	var isInitialized = this.player !== null;
+
+    	// HACK: Tearing down each time the song changes can't be good for performance but otherwise can't get the track to change
+    	if (isInitialized) {
+    		this.player.remove();
+    	}
+
+    	if (isInitialized || this.props.songId !== nextProps.songId) {
+    		stemApi.getSong({
+    			id: nextProps.songId
+    		})
+    		.then((res) => {
+    			this.setState({
+    				artistName: res.artistName,
+    				songName: res.name
+    			})
+    		})
+
+	    	stemApi.streamSong({
+	    		id: nextProps.songId
+	    	})
+	    	.then((res) => {
+	    		// HACK: We setup the jwplayer each time the song is changed (including tearing it down causing an ugly flicker)
+	    		// this should definitely be changed, but is the best solution I could find at the moment
+	    		var player = jwplayer('music-player').setup({
+			    	file: res.url,
+			    	// A height of 40 puts this in audio mode
+			    	height: 40,
+			    	width: 500,
+			    	type: 'mp3'
+				});
+
+				this.player = player;
+
+		    	this.player.on('playlist', (ev) => {
+		    		this.player.play();
+		    	})
+
+	    		this.setState({
+	    			canPlay: true
+	    		})
+	    	})
+    	}
     },
 
-    playPause: function() {
-    	var wavesurfer = this.state.player;
-    	wavesurfer.playPause();
-
-        if (this.state.isPlaying == false) {
-        	$('.icon-pause').css("display", "inline");
-        	$('.icon-play').css("display", "none");
-            this.setState({isPlaying: true});
-        } else {
-        	$('.icon-play').css("display", "inline");
-        	$('.icon-pause').css("display", "none");
-            this.setState({isPlaying: false});
-        }
+    componentWillUnmount() {
+    	if (this.player) {
+    		this.player.remove();
+    	}
     },
-
-    // playPauseClick: function() {
-        // var audio = document.getElementsByTagName('audio')[0];
-
-        // if (audio.paused == true) {
-        //     audio.play();
-        //     $('.pause').css("display","inline");
-        //     $('.play').css("display","none");
-        // } else {
-        //     audio.pause();
-        //     $('.pause').css("display","none");
-        //     $('.play').css("display","inline");
-        // }
-    // },
-
-    // muteClick: function() {
-    //     var audio = document.getElementsByTagName('audio')[0];
-
-    //     if (audio.muted == false) {
-    //         audio.muted = true;
-    //         $('#muted').css("display","inline");
-    //         $('#unmuted').css("display","none");
-    //     } else {
-    //         audio.muted = false;
-    //         $('#muted').css("display","none");
-    //         $('#unmuted').css("display","inline");
-    //     }
-    // },
-
-    // volumeChange: function() {
-    //     var audio = document.getElementsByTagName('audio')[0];
-    //     audio.volume = volumeBar.value;
-    // },
 
 	render: function() {
 		
 		return(
 			<div className="promo-song-info">
-                <a onClick={this.playPause} className="promo-artist-img-a mar-r-lg">
-					<img className="promo-artist-img" src="https://a4-images.myspacecdn.com/images03/33/588cae99266a4ae2a9c49c909b02781c/600x600.jpg"/>
-					<span className="play-pause icon-pause"></span>
-					<span className="play-pause icon-play"></span>
-                </a>
+				{ this.state.canPlay ? 
                 <div className="right-side-content">
-					<h2 className="mar-t-sm">InMemory - Never forget</h2>
+					<h2 className="mar-t-sm">{ this.state.artistName } - { this.state.songName }</h2>
 					<div id="waveform" className="mar-t-sm mar-b-sm"></div>
 					<h3 className="display-inlb">Follow this artist:</h3>
-					<FollowThisArtistLinks/>
-				</div>
+					<FollowThisArtistLinks />
+				</div> : null }
+				<div id="music-player"></div>
 			</div>
 		);
 	}
