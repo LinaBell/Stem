@@ -49,14 +49,13 @@ var MusicPlayer = React.createClass({
 				    	file: res.url,
 				    	// A height of 40 puts this in audio mode
 				    	height: 40,
-				    	width: 500,
+				    	width: 485,
 				    	type: 'mp3',
 				    	autostart: true
 					});
 				}
 
 	    		this.setState({
-
                     playerVisible: true
 	    		})
 	    	})
@@ -74,18 +73,18 @@ var MusicPlayer = React.createClass({
 
         if (this.state.playerVisible) {
             $('.music-player-wrapper').animate({
-                opacity: "0",
-                width: "0",
-                height: "0"
+                opacity: '0',
+                width: '0',
+                height: '0'
             }, 400);
             this.setState({
                 playerVisible: false
             });
         } else {
             $('.music-player-wrapper').animate({
-                opacity: "0",
-                width: "0",
-                height: "0"
+                opacity: '0',
+                width: '0',
+                height: '0'
             }, 400);
             this.setState({
                 playerVisible: false
