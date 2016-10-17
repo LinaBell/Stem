@@ -1,5 +1,5 @@
 var AdminNewCreators = React.createClass({
-		getInitialState: function() {
+	getInitialState: function() {
 		return{
 			creators: []
 
@@ -26,7 +26,7 @@ var AdminNewCreators = React.createClass({
 	},
 	render: function() {
 		return(
-			<div className="">
+			<div className="mar-t-lg">
 				<TimespanSelector onChange={this.onTimespanChange} />
 				<h3 className="admin-data-pages-title top-title primary">Creator Sign Ups</h3>
 				<div className="admin-data-pages-chart">
