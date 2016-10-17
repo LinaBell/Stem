@@ -20,14 +20,7 @@ var MusicPlayer = React.createClass({
     		return
     	}
 
-    	var isInitialized = this.player !== null;
-
-    	// HACK: Tearing down each time the song changes can't be good for performance but otherwise can't get the track to change
-    	if (isInitialized) {
-    		this.player.remove();
-    	}
-
-    	if (isInitialized || this.props.songId !== nextProps.songId) {
+    	if (this.props.songId !== nextProps.songId) {
     		stemApi.getSong({
     			id: nextProps.songId
     		})
@@ -43,21 +36,24 @@ var MusicPlayer = React.createClass({
 	    		id: nextProps.songId
 	    	})
 	    	.then((res) => {
-	    		// HACK: We setup the jwplayer each time the song is changed (including tearing it down causing an ugly flicker)
-	    		// this should definitely be changed, but is the best solution I could find at the moment
-	    		var player = jwplayer('music-player').setup({
-			    	file: res.url,
-			    	// A height of 40 puts this in audio mode
-			    	height: 40,
-			    	width: 485,
-			    	type: 'mp3'
-				});
 
-				this.player = player;
-
-		    	this.player.on('playlist', (ev) => {
-		    		this.player.play();
-		    	})
+	    		if (this.player !== null) {
+	    			this.player.load([{
+	    				sources: [{
+	    					file: res.url,
+	    					type: 'mp3'
+	    				}]
+	    			}])
+	    		} else {
+		    		this.player = jwplayer('music-player').setup({
+				    	file: res.url,
+				    	// A height of 40 puts this in audio mode
+				    	height: 40,
+				    	width: 500,
+				    	type: 'mp3',
+				    	autostart: true
+					});
+				}
 
 	    		this.setState({
 
@@ -97,7 +93,6 @@ var MusicPlayer = React.createClass({
         }
     },
 	render: function() {
-		
 		return(
 			<div ref="draggable" className="ui-widget-content mar-box-md music-player-wrapper bg-white" >
 				{ this.state.playerVisible ? 
