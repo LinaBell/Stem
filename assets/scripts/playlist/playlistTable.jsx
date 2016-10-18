@@ -71,11 +71,6 @@ function (dispatch) {
 				songId: songId
 			}
 		});
-		$('.music-player-wrapper').animate({
-			opacity: "1",
-			width: "530px",
-			height: "170px"
-		}, 400);
 	}
   };
 }

@@ -1,4 +1,15 @@
-var LibraryMainTableRow = React.createClass({
+var LibraryMainTableRow = ReactRedux.connect(null, function(dispatch) {
+	return {
+		playSong: function(songId) {
+			dispatch({
+				type: 'PlaySong',
+				data: {
+					songId: songId
+				}
+			})
+		}
+	}
+})(React.createClass({
 	edit: function() {
 		// TODO: Do the thing where we edit
 	},
@@ -8,7 +19,9 @@ var LibraryMainTableRow = React.createClass({
 		return (
 			<tr>
             	<td className="img-td col-xs-1 row no-gutters">
-                	<img className="mobile-img-thumbnail mar-r-xs" src={song.albumArtUrl} />
+                	<a onClick={ this.props.playSong.bind(this, song.id) }>
+                		<img className="mobile-img-thumbnail mar-r-xs" src={song.albumArtUrl} />
+                	</a>
               	</td>
               	<td className="col-xs-1 col-md-2"><p>{song.name}</p></td>
               	<td className="col-xs-1 col-md-2"><p>{song.albumName}</p></td>
@@ -20,4 +33,4 @@ var LibraryMainTableRow = React.createClass({
             </tr>
 		);
 	}
-});
+}));
