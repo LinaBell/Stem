@@ -11,6 +11,14 @@ function (dispatch) {
           }
         }
       });
+    },
+    playSong: function(songId) {
+    	dispatch({
+    		type: 'PlaySong',
+    		data: {
+    			songId: songId
+    		}
+    	})
     }
   };
 }
@@ -62,7 +70,11 @@ function (dispatch) {
             </div>
           </div>
           <div className="play">  
-            <button className="play-btn"><h3 className="icon-play fa-2x pad-box-sm">PLAY NOW</h3></button>
+            <button 
+            	onClick={ this.props.playSong.bind(this, selectedArtist.songId) }
+            	className="play-btn">
+            	<h3 className="icon-play fa-2x pad-box-sm">PLAY NOW</h3>
+            </button>
             <h4>Download Now</h4>
           </div>
           <div className="large-desktop-space">
