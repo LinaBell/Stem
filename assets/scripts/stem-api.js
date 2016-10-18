@@ -164,7 +164,16 @@ var StemApi = (function () {
     		type: 'GET',
     		url: this.baseUrl + 'songs/' + req.id + '/stream',
     		headers: { 'Authorization': this.authorization },
-	        contentType: 'application/json; charset=utf-8',
+	        contentType: 'application/json; charset=utf-8'
+    	})
+    })
+
+    StemApi.prototype.downloadSong = Promise.method(function(req) {
+    	return $.ajax({
+    		type: 'GET',
+    		url: this.baseUrl + 'songs/' + req.id + '/download',
+    		headers: { 'Authorization': this.authorization },
+    		contentType: 'application/json; charset=utf-8'
     	})
     })
 
