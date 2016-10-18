@@ -1,7 +1,6 @@
 var PlaylistTable = ReactRedux.connect(function(state) {
 	return {
-		userInfo: state.userState.userInfo,
-		playingSongId: state.appState.playingSongId
+		userInfo: state.userState.userInfo
 	};
 }
 )(React.createClass({
