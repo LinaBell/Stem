@@ -39,11 +39,11 @@ var YoutubeVideoItem = React.createClass({
     }
   },
   componentDidMount: function() {
-    var YoutubeKey = 'AIzaSyCZfdWXAhC11UgPUzsbVkcEYbx7zU-J3Ic';
-    var YoutubeId = this.props.video;
-    var youTubeURL = 'https://www.googleapis.com/youtube/v3/videos?id=' + YoutubeId + '&key=' + YoutubeKey;
-    var youTubeURLViewCount = 'https://www.googleapis.com/youtube/v3/videos?part=statistics&id=' + YoutubeId + '&key=' + YoutubeKey; 
-    
+    var youtubeKey = 'AIzaSyCZfdWXAhC11UgPUzsbVkcEYbx7zU-J3Ic';
+    var youtubeId = this.props.video;
+    var youTubeURL = 'https://www.googleapis.com/youtube/v3/videos?id=' + youtubeId + '&key=' + youtubeKey;
+    var youTubeURLViewCount = 'https://www.googleapis.com/youtube/v3/videos?part=statistics&id=' + youtubeId + '&key=' + youtubeKey; 
+
     $.ajax({
       method: 'GET',
       url: youTubeURL,
@@ -75,7 +75,6 @@ var YoutubeVideoItem = React.createClass({
   },
   render: function() {
     var videoEmbed = this.props.video;
-    var YoutubeKey = 'AIzaSyCZfdWXAhC11UgPUzsbVkcEYbx7zU-J3Ic';
     var youTubeURL = 'https://www.youtube.com/embed/' + videoEmbed;
 
     return(
