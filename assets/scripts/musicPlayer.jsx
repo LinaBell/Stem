@@ -1,4 +1,20 @@
-var MusicPlayer = React.createClass({
+var MusicPlayer = ReactRedux.connect((state) => {
+	return {
+		songId: state.appState.playingSongId
+	}
+}, (dispatch) => {
+	return {
+		playSong: function(songId) {
+			dispatch({
+				type: 'PlaySong',
+				data: {
+					songId: songId
+				}
+			})
+		}
+	}
+})(
+React.createClass({
 	player: null,
 	getInitialState: function() {
 		return {
@@ -9,87 +25,83 @@ var MusicPlayer = React.createClass({
         };
 	},
 
-    componentWillReceiveProps(nextProps) {
-
-    	if (!nextProps.songId) {
-    		this.setState({
-
-                playerVisible: false
-    		})
-
-    		return
-    	}
-
-    	var isInitialized = this.player !== null;
-
-    	// HACK: Tearing down each time the song changes can't be good for performance but otherwise can't get the track to change
-    	if (isInitialized) {
-    		this.player.remove();
-    	}
-
-    	if (isInitialized || this.props.songId !== nextProps.songId) {
-    		stemApi.getSong({
-    			id: nextProps.songId
-    		})
-    		.then((res) => {
-    			this.setState({
-    				artistName: res.artistName,
-    				songName: res.name,
-                    albumArtUrl: res.albumArtUrl
-    			})
-    		})
-
-	    	stemApi.streamSong({
-	    		id: nextProps.songId
-	    	})
-	    	.then((res) => {
-	    		// HACK: We setup the jwplayer each time the song is changed (including tearing it down causing an ugly flicker)
-	    		// this should definitely be changed, but is the best solution I could find at the moment
-	    		var player = jwplayer('music-player').setup({
-			    	file: res.url,
-			    	// A height of 40 puts this in audio mode
-			    	height: 40,
-			    	width: 485,
-			    	type: 'mp3'
-				});
-
-				this.player = player;
-
-		    	this.player.on('playlist', (ev) => {
-		    		this.player.play();
-		    	})
-
-	    		this.setState({
-
-                    playerVisible: true
-	    		})
-	    	})
-    	}
-    },
-    componentDidMount: function() {
+	componentDidMount() {
         $( this.refs.draggable ).draggable();
+        this.initializePlayer(this.props.songId)
+    },
+    componentWillReceiveProps(nextProps) {
+    	if (nextProps.songId !== this.props.songId) {
+    		this.initializePlayer(nextProps.songId);
+    	}
     },
     componentWillUnmount() {
     	if (this.player) {
     		this.player.remove();
     	}
     },
+
+	initializePlayer(songId) {
+
+		stemApi.getSong({
+			id: songId
+		})
+		.then((res) => {
+			this.setState({
+				artistName: res.artistName,
+				songName: res.name,
+                albumArtUrl: res.albumArtUrl
+			})
+		})
+
+    	stemApi.streamSong({
+    		id: songId
+    	})
+    	.then((res) => {
+
+    		if (this.player !== null) {
+    			this.player.load([{
+    				sources: [{
+    					file: res.url,
+    					type: 'mp3'
+    				}]
+    			}])
+    		} else {
+	    		this.player = jwplayer('music-player').setup({
+			    	file: res.url,
+			    	// A height of 40 puts this in audio mode
+			    	height: 40,
+			    	width: 485,
+			    	type: 'mp3',
+			    	autostart: true
+				});
+			}
+
+    		this.setState({
+                playerVisible: true
+    		})
+    	})
+	},
+
     closePlayer: function() {
 
         if (this.state.playerVisible) {
             $('.music-player-wrapper').animate({
-                opacity: "0",
-                width: "0",
-                height: "0"
+                opacity: '0',
+                width: '0',
+                height: '0'
             }, 400);
             this.setState({
                 playerVisible: false
             });
+            
+            this.props.playSong(null);
+            this.player.stop();
+
         } else {
             $('.music-player-wrapper').animate({
-                opacity: "0",
-                width: "0",
-                height: "0"
+                opacity: '0',
+                width: '0',
+                height: '0'
             }, 400);
             this.setState({
                 playerVisible: false
@@ -97,7 +109,6 @@ var MusicPlayer = React.createClass({
         }
     },
 	render: function() {
-		
 		return(
 			<div ref="draggable" className="ui-widget-content mar-box-md music-player-wrapper bg-white" >
 				{ this.state.playerVisible ? 
@@ -108,7 +119,7 @@ var MusicPlayer = React.createClass({
                         <div className="display-inlb pull-right">
                             <span onClick={this.closePlayer} className="icon-cancel cancel-hover"></span>
                         </div>    
-    					<div id="waveform" className="mar-t-sm mar-b-sm"></div>
+    					<div className="mar-t-sm mar-b-sm"></div>
                         <div className="mar-b-sm">
     					    <h4 className="display-inlb">Follow this artist:</h4>
         					<ul className="display-inlb mar-l-md">
@@ -126,4 +137,4 @@ var MusicPlayer = React.createClass({
 			</div>
 		);
 	}
-})
+}))

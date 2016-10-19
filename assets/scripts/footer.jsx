@@ -1,14 +1,8 @@
-var Footer = ReactRedux.connect(function(state) {
-  return {
-    userInfo: state.userState.userInfo,
-    playingSongId: state.appState.playingSongId
-  };
-}
-)(React.createClass({
+var Footer = React.createClass({
   render: function() {
     return (
       <div>
-        <MusicPlayer songId={ this.props.playingSongId } />
+        <MusicPlayer />
         <div className="footer-wrapper pad-box-sm">
           <ul>
             <li><a className="brand">Thematic</a></li>
@@ -30,4 +24,4 @@ var Footer = ReactRedux.connect(function(state) {
       </div>
     )
   }
-}));
+})
