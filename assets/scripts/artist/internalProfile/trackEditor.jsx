@@ -124,7 +124,7 @@ var TrackEditor = React.createClass({
 					<StatusButtons isReadOnly={ false } value={ this.state.status } onStatusChange={ this.onStatusChange } /> : null 
 				}
 
-				<button className="btn-primary" onClick={ this.onSave }>Save</button>
+				<button className="btn-primary pull-right mar-t-md mar-b-md mar-r-sm" onClick={ this.onSave }>Save</button>
 				<p className="bg-danger">
 					{ this.props.trackStatusMessage }
 				</p>

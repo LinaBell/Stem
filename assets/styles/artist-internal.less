@@ -102,7 +102,26 @@
 .selectize-control.plugin-remove_button [data-value] .remove {
     top: 3px;
     border-left: none;
+}
+.no-close .ui-dialog-titlebar-close {
+  display: none;
+}
 
+.track-editor-dialog {
+	width: 700px;
+	position: absolute;
+	z-index: 5000;
+}
+.ui-dialog-titlebar.ui-corner-all.ui-widget-header.ui-helper-clearfix.ui-draggable-handle {
+    background: white;
+    border: none;
+}
+button.ui-button.ui-corner-all.ui-widget.ui-button-icon-only.ui-dialog-titlebar-close {
+    background: white;
+    border: none;
+}
+div#ui-id-1 {
+    overflow: hidden;
 }
 // -- genre selector end --
 .upload-album-art-detail {
@@ -200,14 +219,14 @@
 	.loaded-track {
 		display: inline-block;
 		height: 40px;
-		width: 170px;
+		width: 140px;
 		text-overflow: ellipsis;
 		white-space: nowrap;
 		background-color: @grey-5;
-		padding: 5px @space-md;
+		padding: 5px 15px;
 		vertical-align: middle;
 		p {
-	    width: 125px;
+	    width: 90px;
 	    float: left;
 	    white-space: nowrap;
 	    overflow: hidden;
@@ -217,16 +236,22 @@
 		}
 		i {
 			float: right;
-		}
+
+			}
 		p, i {
 			display: inline-block;
 		}
 	}
+		[class^="icon-"]:before, [class*=" icon-"]:before {
+			margin-top: 8px;
+		}
 	.song-edit-tags {
 		vertical-align: top;
 		display: inline-block;
+		width: 500px;
+		white-space: nowrap;
+		overflow-x: scroll;
 		margin-left: 40px;
-	    max-width: 730px;
 	    li {
 	    	padding-bottom: @space-sm;
 	    }

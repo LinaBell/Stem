@@ -39,7 +39,6 @@ function (dispatch) {
         </div>
         { this.state.songs.length <= 0 ? <SpinHistoryZeroState /> : 
         	<PlaylistTable songs={this.state.songs} onBookmarkChange={ this.onBookmarkChange } /> }  
-        
       </div>
     )
   }
