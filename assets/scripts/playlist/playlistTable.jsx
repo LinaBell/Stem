@@ -76,25 +76,13 @@ function (dispatch) {
   };
 }
 )(React.createClass({
-	getInitialState: function() {
-		return{
-			bookmarked: false
-		}
-	},	
-	bookmarkSong: function (song) {
-
-		// if (song.currentTarget.className == "icon-bookmark-empty fa-2x" ) {
-	 //  		song.currentTarget.className = "icon-bookmark-2 primary fa-2x";
-		// }
-
+	bookmarkSong: function () {
 		if (!this.props.song.isBookmarked) {
 			stemApi.bookmarkSong({
 				song: this.props.song.id
 			})
 			.then((res) => {
 					this.props.onBookmarkChange();
-					this.setState({ bookmarked: true });
-					console.log(this.state.bookmarked);
 					console.log('bookmarked song');
 			})
 			.catch((reason) => {
@@ -106,8 +94,6 @@ function (dispatch) {
 			})
 			.then((res) => {
 					this.props.onBookmarkChange();
-					this.setState({ bookmarked: false });
-					console.log(this.state.bookmarked);
 					console.log('deleted bookmark');
 			})
 			.catch((reason) => {

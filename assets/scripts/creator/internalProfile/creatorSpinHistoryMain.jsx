@@ -1,10 +1,4 @@
-var CreatorSpinHistoryMain = ReactRedux.connect(function(state) {
-  return {
-    creatorId: state.userState.userInfo.id,
-    creatorBookmarks: state.appState.creatorBookmarks
-
-  };
-},
+var CreatorSpinHistoryMain = ReactRedux.connect(null,
 function (dispatch) {
   return {
     refreshBookmarks: function(creatorId) {
@@ -19,30 +13,21 @@ function (dispatch) {
     }
   },
   componentDidMount: function() {
-    stemApi.getSpinHistory({
-      id: this.props.creator.id
-    })
-    .then((response) => {
-      this.setState({songs: response})
-    })
-    .catch((reason) => {
-      console.error('Spin History Error: ' + Utilities.normalizeError(reason));
-    });
+    this.refreshSpinHistory();
   },
   refreshSpinHistory: function() {
     stemApi.getSpinHistory({
       id: this.props.creator.id
     })
     .then((response) => {
-    debugger;
-      this.setState({songs: response})
+      this.setState({ songs: response }) 
     })
     .catch((reason) => {
       console.error('Spin History Error: ' + Utilities.normalizeError(reason));
     });
   },
   onBookmarkChange: function() {
-    this.props.refreshBookmarks(this.props.creatorId);
+    this.props.refreshBookmarks(this.props.creator.id);
     this.refreshSpinHistory();
   },
   render: function() {
@@ -52,8 +37,8 @@ function (dispatch) {
           <h2>Spin History</h2>
           <p className="font-light">The songs you've listened to recently</p>
         </div>
-        <PlaylistTable songs={this.state.songs} onBookmarkChange={this.onBookmarkChange} />  
-        
+        { this.state.songs.length <= 0 ? <SpinHistoryZeroState /> : 
+        	<PlaylistTable songs={this.state.songs} onBookmarkChange={ this.onBookmarkChange } /> }  
       </div>
     )
   }
