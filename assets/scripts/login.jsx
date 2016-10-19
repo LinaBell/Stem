@@ -11,12 +11,40 @@ var Login = React.createClass({
 	
 	componentDidMount: function() {
 		var self = this;
+
+        stemApi.getProvider({
+            request: {
+                providerName: 'Facebook'
+            },
+            success: function (data) {
+                console.log(JSON.stringify(data, null, 2));
+                self.facebookInit(data.appId);
+            },
+            error: function (response) {
+                console.log(JSON.stringify(response, null, 2));
+            }
+        });
 		
-		this.oauthInit();
-		
+		this.googleInit();
+	},
+	
+	/////// BEGIN Google+ login
+	googleInit: function() {		
+		gapi.signin2.render('g-signin2', {
+			'scope': 'profile email',
+			'width': 250,
+			'height': 45,
+			'longtitle': true,
+			'theme': 'light',
+			'onsuccess': this.onSignIn
+		});		
+	},
+	
+	/////// BEGIN Facebook login
+	facebookInit: function(appId) {		
 		window.fbAsyncInit = function() {
 			FB.init({
-				appId      : '1687096358206984',
+				appId      : appId,
 				cookie     : true,  // enable cookies to allow the server to access the session
 				xfbml      : true,  // parse social plugins on this page
 				version    : 'v2.1' // use version 2.1
@@ -40,32 +68,18 @@ var Login = React.createClass({
 			var js, fjs = d.getElementsByTagName(s)[0];
 			if (d.getElementById(id)) return;
 			js = d.createElement(s); js.id = id;
-			js.src = "//connect.facebook.net/en_US/sdk.js";
+            js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.7&appId=" + appId;
 			fjs.parentNode.insertBefore(js, fjs);
 		}(document, 'script', 'facebook-jssdk'));
 	},
 	
-	
-	/////// BEGIN Google+ login
-	oauthInit: function() {		
-		gapi.signin2.render('g-signin2', {
-			'scope': 'profile email',
-			'width': 250,
-			'height': 45,
-			'longtitle': true,
-			'theme': 'light',
-			'onsuccess': this.onSignIn
-		});		
-	},
-	
 	onSignIn: function(googleUser) {
-		let profile = googleUser.getBasicProfile();
-		console.log('Successful login for: ' + profile.getName);
-		console.log(JSON.stringify(profile, null, 2));
-		
-		this.upsertUser({ 
-			UserName: profile.getEmail()
-		});
+		var profile = googleUser.getBasicProfile(),
+			userName = profile.getEmail(),
+			authResponse = googleUser.getAuthResponse(),
+			id_token = googleUser.getAuthResponse().id_token;
+
+        this.loginExternal(userName, 'Google', id_token);	
 	},
 	/////// END Google+ login
 	
@@ -81,50 +95,59 @@ var Login = React.createClass({
 	},
 	
 	statusChangeCallback: function(response) {
-		var self = this;
-		console.log('response.status = ' + response.status);
-		if (response.status === 'connected') {
-			console.log('Welcome!  Fetching your information.... ');
-			FB.api('me?fields=id,name,first_name,last_name,email,picture,friends', function(response) {
-				console.log('Successful login for: ' + response.name);
-				console.log(JSON.stringify(response, null, 2));
+        console.log(JSON.stringify(response, null, 2));	
+		var self = this,
+			accessToken = response.authResponse.accessToken;	
 
-				self.upsertUser({ 
-					//FirstName: response.first_name, 
-					//LastName: response.last_name, 
-					UserName: response.email
-				});
-			}); 
+		if (response.status === 'connected') {
+            FB.api('me?fields=id,name,first_name,last_name,email,picture,friends', function(response) {
+                console.log(JSON.stringify(response, null, 2));
+                self.loginExternal(response.email, 'Facebook', accessToken);
+            });
 		} 
 	},
 	/////// END Facebook login  
 	
-	/////// BEGIN Upsert User with successful Facebook or Google sign in
-	upsertUser: function(user) {
-		var self = this,
-			cleanEmail = encodeURIComponent(user.Email);
-			auth = $('#tokenType').val() + ' ' + $('#token').val();
-
-        $.ajax({
-            type: 'GET', // rest verb (GET, POST, PUT, DEL)
-            url: this.context.baseAPI + '/api/account/test',
-            headers: { 'Authorization': auth },
-            dataType: 'json',
-            success: function (response) {
-				console.log('success!');
-				console.log(JSON.stringify(response, null, 2));
-				this.setState({ 
-					currentUser: true
-				});
-				self.handleCommitSubmit(response);
-            },
-			error: function(response) {
-				console.log(JSON.stringify(response, null, 2));
-				self.handleCommitSubmit(response);
-            }
-        })
+	/////// BEGIN login with successful Facebook or Google sign in
+	loginExternal: function(userName, provider, token) {
+    	var self = this;
+    	
+	    stemApi.loginExternal({
+	        request: {
+	            provider: provider,
+	            externalAccessToken: token
+	        },
+	        success: function (data) { 
+	        	console.log("User Logged in!" + JSON.stringify(data));
+				self.getAccountInfo(data.token_type, data.access_token);
+	        },
+	        error: function (response) {
+	            if (response.status = '401') {
+	                self.registerExternal(userName, provider, token);
+	            }
+	        }
+	    });
 	},
-	/////// END Upsert User
+	/////// END loginExternal
+
+	/////// BEGIN auto register if Facebook or Google user not in system
+    registerExternal: function(userName, provider, token) {
+    	var self = this;
+
+        stemApi.registerExternal({
+            request: {
+                userName: userName,
+                provider: provider,
+                externalAccessToken: token
+            },
+            success: function (data) { 
+            	console.log("User Registered. " + JSON.stringify(data));
+				self.getAccountInfo(data.token_type, data.access_token);
+        	},
+            error: function (response) { console.log("Failed to register. " + JSON.stringify(response)) }
+        });
+    },
+	/////// END registerExternal
 	
 	/////// BEGIN Registration Form  
 	handleClick: function(currentUser) {

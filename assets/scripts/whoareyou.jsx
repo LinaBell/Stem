@@ -18,7 +18,7 @@ var WhoAreYou = React.createClass({
 				}
 				self.updateLoginStatus(true, response, page);
 			},
-			error: function() {
+			error: function(response) {
 				console.error(JSON.stringify(response, null, 2));
 			}
 		});

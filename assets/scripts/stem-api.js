@@ -11,12 +11,46 @@ var StemApi = (function () {
         _this.authorization = token_type + ' ' + access_token;
     };
 
+    StemApi.prototype.getProvider = function (rse) {
+        var _this = this;
+        $.ajax({
+            type: 'GET',
+            url: _this.baseUrl + 'authentication/Provider',
+            data: {
+                providerName: rse.request.providerName
+            },
+            success: function (response) {
+                rse.success(response);
+            },
+            error: function (response) {
+                rse.error(response);
+            }
+        });
+    };
+
     StemApi.prototype.register = function (rse) {
         var _this = this;
         $.ajax({
             type: 'POST',
             url: _this.baseUrl + 'authentication/register',
             contentType: 'application/json; charset=utf-8',
+            data: JSON.stringify(rse.request),
+            dataType: 'json',
+            success: function (response) {
+                rse.success(response);
+            },
+            error: function (response) {
+                rse.error(response);
+            }
+        });
+    };
+    
+    StemApi.prototype.registerExternal = function (rse) {
+        var _this = this;
+        $.ajax({
+            type: 'POST',
+            url: _this.baseUrl + 'authentication/registerExternal',
+            contentType: "application/json; charset=utf-8",
             data: JSON.stringify(rse.request),
             dataType: 'json',
             success: function (response) {
@@ -34,6 +68,24 @@ var StemApi = (function () {
             type: 'POST',
             url: _this.baseUrl + 'authentication/login',
             data: rse.request.form.serialize(),
+            success: function (response) {
+                rse.success(response);
+            },
+            error: function (response) {
+                rse.error(response);
+            }
+        });
+    };
+
+    StemApi.prototype.loginExternal = function (rse) {
+        var _this = this;
+        $.ajax({
+            type: 'GET',
+            url: _this.baseUrl + 'authentication/ObtainLocalAccessToken',
+            data: {
+                provider:  rse.request.provider,
+                externalAccessToken: rse.request.externalAccessToken
+            },
             success: function (response) {
                 rse.success(response);
             },
