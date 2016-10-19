@@ -128,7 +128,7 @@ function (dispatch) {
 	},
 	render: function() {
 		var song = this.props.song;
-		var isBookmarked = song.isBookmarked || !this.props.canToggleBookmarkIcon;
+		var isBookmarked = song.isBookmarked;
 
 		return(
 				<tr>
@@ -161,7 +161,7 @@ function (dispatch) {
 					</td>
 			
 					<td className="col-md-1">
-						<span onClick={this.bookmarkSong} className={ isBookmarked ? "icon-bookmark-2 primary fa-2x" : "icon-bookmark-empty fa-2x"}></span>            
+						<a onClick={this.bookmarkSong} className={ isBookmarked ? "icon-bookmark-2 primary fa-2x" : "icon-bookmark-empty fa-2x"}></a>            
 					</td>
 
 					{ this.props.userInfo.accountType == "Artist" ? null : <td className="col-md-1">

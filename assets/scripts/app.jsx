@@ -168,27 +168,6 @@ function beginBookmarkRefresh(creatorId) {
 	};
 }
 
-function beginSpinHistory(id) {
-			debugger;
-	return function(dispatch) {
-		stemApi.getSpinHistory({
-      		id: id
-    	})
-		.then(function(res) {
-			debugger;
-			dispatch({
-	        	type: 'UpdateSpinHistory',
-    	    	data: {
-        			results: res
-        		}
-        	});
-		})
-		.catch(function(reason) {
-			console.error('Spin History Error: ' + Utilities.normalizeError(reason));
-		});
-	};
-}
-
 // This should be moved to it's own file at some point
 const initialAppState = {
 	currentPage: 0,
@@ -222,11 +201,6 @@ var appReducer = function(state = initialAppState, action) {
 				creatorBookmarks: action.data.results
 			});
 
-		case 'UpdateSpinHistory':
-			return Object.assign({}, state, {
-				spinHistory: action.data.results
-			});
-			
 		case 'UpdateTags': 
 			var tagDict = action.data.tags.reduce((prev, current) => {
 				if (!prev[current.typeId]) {
