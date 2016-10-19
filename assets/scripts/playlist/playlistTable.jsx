@@ -72,11 +72,6 @@ function (dispatch) {
 				songId: songId
 			}
 		});
-		$('.music-player-wrapper').animate({
-			opacity: "1",
-			width: "530px",
-			height: "170px"
-		}, 400);
 	}
   };
 }
@@ -123,6 +118,14 @@ function (dispatch) {
 	playSong() {
 		this.props.playSong(this.props.song.id);
 	},
+	download() {
+		stemApi.downloadSong({
+			id: this.props.song.id
+		})
+		.then((res) => {
+			downloadFile(res.url)
+		})
+	},
 	render: function() {
 		var song = this.props.song;
 		var isBookmarked = song.isBookmarked || !this.props.canToggleBookmarkIcon;
@@ -162,7 +165,7 @@ function (dispatch) {
 					</td>
 
 					{ this.props.userInfo.accountType == "Artist" ? null : <td className="col-md-1">
-						<a className="color-grey" ><span className="icon-down-circled fa-2x"></span></a>
+						<a onClick={ this.download } className="color-grey" ><span className="icon-down-circled fa-2x"></span></a>
 					</td> }
 				</tr>
 		)

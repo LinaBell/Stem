@@ -27,10 +27,13 @@ React.createClass({
 
 	componentDidMount() {
         $( this.refs.draggable ).draggable();
-        this.initializePlayer(this.props.songId)
+
+        if (this.props.songId) {
+        	this.initializePlayer(this.props.songId)
+        }
     },
     componentWillReceiveProps(nextProps) {
-    	if (nextProps.songId !== this.props.songId) {
+    	if (nextProps.songId && nextProps.songId !== this.props.songId) {
     		this.initializePlayer(nextProps.songId);
     	}
     },
@@ -79,6 +82,12 @@ React.createClass({
     		this.setState({
                 playerVisible: true
     		})
+
+    		$('.music-player-wrapper').animate({
+				opacity: "1",
+				width: "530px",
+				height: "170px"
+			}, 400);
     	})
 	},
 
