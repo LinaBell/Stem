@@ -1,19 +1,34 @@
-var CreatorSpinHistoryMain = React.createClass({
+var CreatorSpinHistoryMain = ReactRedux.connect(null,
+function (dispatch) {
+  return {
+    refreshBookmarks: function(creatorId) {
+      dispatch(beginBookmarkRefresh(creatorId));
+    }
+  };
+}
+)(React.createClass({
   getInitialState: function() {
     return {
       songs: []
     }
   },
   componentDidMount: function() {
+    this.refreshSpinHistory();
+  },
+  refreshSpinHistory: function() {
     stemApi.getSpinHistory({
       id: this.props.creator.id
     })
-    .then(function(res) {
-      this.setState( { songs: res } );
-    }.bind(this))
-    .catch(function(error) {
-      console.error('Error occured while fetching spin history: ' + Utilities.normalizeError(error));
+    .then((response) => {
+      this.setState({ songs: response }) 
+    })
+    .catch((reason) => {
+      console.error('Spin History Error: ' + Utilities.normalizeError(reason));
     });
+  },
+  onBookmarkChange: function() {
+    this.props.refreshBookmarks(this.props.creator.id);
+    this.refreshSpinHistory();
   },
   render: function() {
     return(
@@ -22,9 +37,10 @@ var CreatorSpinHistoryMain = React.createClass({
           <h2>Spin History</h2>
           <p className="font-light">The songs you've listened to recently</p>
         </div>
-        {this.state.songs.length <= 0 ? <SpinHistoryZeroState /> : <PlaylistTable songs={this.state.songs} /> }  
+        { this.state.songs.length <= 0 ? <SpinHistoryZeroState /> : 
+        	<PlaylistTable songs={this.state.songs} onBookmarkChange={ this.onBookmarkChange } /> }  
         
       </div>
     )
   }
-});
+}));
