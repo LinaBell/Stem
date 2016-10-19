@@ -223,10 +223,10 @@ var SubmitMusicTrack = React.createClass({
 						<p>Track Name</p>
 					</div> : null
 				}
-				<ul ref="trackList" className="tag-list">
+				<ul ref="trackList" className="tag-list mar-b-md">
 					{ this.state.addedTracks.map((item, index) => {
 						return ( 
-							<li id={ 'track' + index } key={ index } className="pad-b-sm ui-state-default">
+							<li id={ 'track' + index } key={ index } className="pad-b-sm mar-b-sm col-xs-12 row no-gutters ui-state-default">
 								<TrackItem 
 									item={ item }
 									index={ index }
