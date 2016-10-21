@@ -39,9 +39,10 @@ var YoutubeVideoItem = React.createClass({
     }
   },
   componentDidMount: function() {
-    var YoutubeKey = 'AIzaSyCZfdWXAhC11UgPUzsbVkcEYbx7zU-J3Ic';
-    var youTubeURL = 'https://www.googleapis.com/youtube/v3/videos?id=KEbFtMgGhPY&key=' + YoutubeKey;
-    var youTubeURLViewCount = 'https://www.googleapis.com/youtube/v3/videos?part=statistics&id=KEbFtMgGhPY&key=' + YoutubeKey; 
+    var youtubeKey = 'AIzaSyCZfdWXAhC11UgPUzsbVkcEYbx7zU-J3Ic';
+    var youtubeId = this.props.video;
+    var youTubeURL = 'https://www.googleapis.com/youtube/v3/videos?id=' + youtubeId + '&key=' + youtubeKey;
+    var youTubeURLViewCount = 'https://www.googleapis.com/youtube/v3/videos?part=statistics&id=' + youtubeId + '&key=' + youtubeKey; 
 
     $.ajax({
       method: 'GET',
@@ -52,7 +53,6 @@ var YoutubeVideoItem = React.createClass({
       dataType: 'json',
       success: function(res) {
         this.setState({ videoDetails: res.items[0].snippet });
-        console.log(this.state.videoDetails.title);
       }.bind(this),
       error: function(error) {
         console.error('Youtube API Error: ' + JSON.stringify(error));
@@ -67,7 +67,6 @@ var YoutubeVideoItem = React.createClass({
       dataType: 'json',
       success: function(res) {
         this.setState({ videoStatistics: res.items[0].statistics.viewCount });
-        console.log(this.state.videoStatistics);
       }.bind(this),
       error: function(error) {
         console.error('Youtube API Error: ' + JSON.stringify(error));
@@ -76,10 +75,11 @@ var YoutubeVideoItem = React.createClass({
   },
   render: function() {
     var videoEmbed = this.props.video;
+    var youTubeURL = 'https://www.youtube.com/embed/' + videoEmbed;
 
     return(
       <li>
-        <iframe className="creator-youtube-video" src={videoEmbed} frameBorder="0" allowFullScreen></iframe>
+        <iframe className="creator-youtube-video" src={ youTubeURL } frameBorder="0" allowFullScreen></iframe>
         <a><h4>{this.state.videoDetails.title}</h4></a>
         <p>{this.state.videoDetails.channelTitle}</p>
         <p>{this.state.videoStatistics} views</p>
