@@ -8,13 +8,13 @@ var AdminNewSubmissions = React.createClass({
 	componentDidMount: function() {
 		stemApi.getArtistSubmissions({
 			days: 1
-    })
-    .then(function(res) {
-      this.setState({artist: res.songs});
-    }.bind(this))
-    .catch(function(error) {
-      console.log('New Submissions Error: ' + Utilities.normalizeError(error));
-    });
+	    })
+	    .then(function(res) {
+	      this.setState({artist: res.songs});
+	    }.bind(this))
+	    .catch(function(error) {
+	      console.log('New Submissions Error: ' + Utilities.normalizeError(error));
+	    });
 	},
 	onTimespanChange: function(days) {
 		stemApi.getArtistSubmissions({
@@ -22,14 +22,13 @@ var AdminNewSubmissions = React.createClass({
     })
     .then((res)=> {
 
-    })
+	    })
 	},
 	render: function() {
 		return(
-			<div className="mar-t-lg">
+			<div className="">
 				<TimespanSelector onChange={this.onTimespanChange} />
-				<h3 className="admin-data-pages-title top-title primary">Submissions</h3>
-				<div className="admin-data-pages-chart">
+				<div className="admin-data-pages-chart mar-b-lg">
 					<AdminNewSubmissionsChart onChange={this.onTimespanChange} />
 				</div>
 				<h3 className="admin-data-pages-title display-inlb primary">Songs</h3>

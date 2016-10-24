@@ -14,7 +14,7 @@ var TimespanSelector = React.createClass({
   },
   render: function() {
     return(
-      <ul className="timeline-nav mar-t-lg mar-b-lg">
+      <ul className="timeline-nav">
         <li className="mar-l-md" onClick={this.setTimespan.bind(this, 0)}>Today</li>
         <li className="mar-l-md" onClick={this.setTimespan.bind(this, 1)}>Last 7</li>
         <li className="mar-l-md" onClick={this.setTimespan.bind(this, 2)}>Last 30</li>

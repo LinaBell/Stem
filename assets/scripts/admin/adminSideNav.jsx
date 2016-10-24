@@ -15,6 +15,7 @@ var AdminSideNav = ReactRedux.connect(function(state) {
 		this.props.showHideNav();
 	},
 
+
 	render: function() {
 		return(
 			<div className={(this.props.displayAdminNav ? "admin-side-nav-main" : "admin-side-nav-main-hidden")}>
@@ -24,8 +25,8 @@ var AdminSideNav = ReactRedux.connect(function(state) {
 					<div className="admin-nav-items">
 						<ul>
 							<li className="pad-b-md pad-t-md pad-l-lg" onClick={this.navigate.bind(this, 20)}><h4>Dashboard</h4></li>
-							<li className="pad-b-md pad-t-md pad-l-lg"><h4>Creators</h4></li>
-							<li className="pad-b-md pad-t-md pad-l-lg"><h4>Artists</h4></li>
+							<li className="pad-b-md pad-t-md pad-l-lg" onClick={this.navigate.bind(this, 21)}><h4>Creators</h4></li>
+							<li className="pad-b-md pad-t-md pad-l-lg" onClick={this.navigate.bind(this, 22)}><h4>Artists</h4></li>
 							<li className="pad-b-md pad-t-md pad-l-lg"><h4>Music Admin</h4></li>
 								<li className="admin-nav-sub-items pad-b-md pad-t-md"><h4>Approved Music</h4></li>
 								<li className="admin-nav-sub-items pad-b-md pad-t-md"><h4>Live Music</h4></li>
@@ -38,7 +39,7 @@ var AdminSideNav = ReactRedux.connect(function(state) {
 						</ul>
 					</div>
 				</nav>
-				<div className="modal-background dark-modal-bg"></div>
+				<div className="modal-background dark-modal-bg" onClick={this.showHideNav}></div>
 			</div>
 		)
 

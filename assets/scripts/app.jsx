@@ -425,7 +425,7 @@ var App = React.createClass({
 
 				{ this.props.currentPage == 23.3 ?
 					<div className="wrapper">
-						<AdminNewSubmissions />
+						<AdminSubmissionsMain />
 						<Footer />
 					</div>
 				: null}

@@ -62,11 +62,12 @@
 
 /* -- Admin Time Line -- */
 .timeline-nav {
-  margin-right: 10%;
-  cursor: pointer;
-  display: inline-block;
-  width: 370px;
-  float: right;
+	margin-top: -100px;
+	margin-right: 10%;
+	cursor: pointer;
+	display: inline-block;
+	width: 370px;
+	float: right;
 }
 
 .timeline-nav li {
@@ -113,6 +114,21 @@
 /*-- Admin data pages (new submissions, creators, artists) --*/
 .admin-data-pages-title {
 	margin-left: 150px;
+}
+.submissions-status-selector {
+	margin: @space-md 0 @space-md 145px;
+}
+.submissions-status-selector li{
+	font-family: @font-reg;
+	padding: 5px;
+	margin-right: @space-md;
+	text-align: center;
+	display: inline-block;
+	border-bottom: 2px solid white;
+	&:hover {
+		border-bottom: 2px solid @primary;
+		cursor: pointer;
+	}
 }
 .admin-data-pages-export-link {
 	float: right;
