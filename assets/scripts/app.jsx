@@ -200,6 +200,7 @@ var appReducer = function(state = initialAppState, action) {
 			return Object.assign({}, state, {
 				creatorBookmarks: action.data.results
 			});
+
 		case 'UpdateTags': 
 			var tagDict = action.data.tags.reduce((prev, current) => {
 				if (!prev[current.typeId]) {

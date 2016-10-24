@@ -1,4 +1,12 @@
-var CreatorProfileMain = React.createClass({
+var CreatorProfileMain = ReactRedux.connect(null,
+function (dispatch) {
+  return {
+    refreshBookmarks: function(creatorId) {
+      dispatch(beginBookmarkRefresh(creatorId));
+    }
+  };
+}
+)(React.createClass({
   getInitialState: function() {
     return {
       creator: [],
@@ -15,6 +23,21 @@ var CreatorProfileMain = React.createClass({
       console.error('Creator Profile Error: ' + JSON.stringify(error));
     });
   },
+  refreshSpinHistory: function() {
+    stemApi.getSpinHistory({
+      id: this.props.creator.id
+    })
+    .then((response) => {
+      this.setState({ songs: response }) 
+    })
+    .catch((reason) => {
+      console.error('Spin History Error: ' + Utilities.normalizeError(reason));
+    });
+  },
+  onBookmarkChange: function() {
+    this.props.refreshBookmarks(this.props.creator.id);
+    this.refreshSpinHistory();
+  },
   render: function () {
      return (
       <div>
@@ -28,7 +51,7 @@ var CreatorProfileMain = React.createClass({
             <h3>My Activity</h3>
             <p>My latest plays and bookmarks</p>
           </div>
-          <PlaylistTable songs={this.state.songs} />
+          <PlaylistTable songs={this.state.songs} onBookmarkChange={ this.onBookmarkChange } />
           <div className="text-center">
             <a><h3>Load More</h3></a>
           </div>  
@@ -36,4 +59,4 @@ var CreatorProfileMain = React.createClass({
       </div>
     )
   }
-});
+}));

@@ -45,7 +45,7 @@ var PlaylistTable = ReactRedux.connect(function(state) {
 						})}
 					</tbody>
 				</table>
-				<MusicPlayer songId={ this.props.playingSongId } />
+
 			</div>
 		)
 	}
@@ -75,11 +75,8 @@ function (dispatch) {
 	}
   };
 }
-)(React.createClass({	
-	bookmarkSong: function (song) {
-		if (song.currentTarget.className == "icon-bookmark-empty fa-2x" ) {
-	  		song.currentTarget.className = "icon-bookmark-2 primary fa-2x";
-		}
+)(React.createClass({
+	bookmarkSong: function () {
 		if (!this.props.song.isBookmarked) {
 			stemApi.bookmarkSong({
 				song: this.props.song.id
@@ -107,9 +104,17 @@ function (dispatch) {
 	playSong() {
 		this.props.playSong(this.props.song.id);
 	},
+	download() {
+		stemApi.downloadSong({
+			id: this.props.song.id
+		})
+		.then((res) => {
+			downloadFile(res.url)
+		})
+	},
 	render: function() {
 		var song = this.props.song;
-		var isBookmarked = song.isBookmarked || !this.props.canToggleBookmarkIcon;
+		var isBookmarked = song.isBookmarked;
 
 		return(
 				<tr>
@@ -142,11 +147,11 @@ function (dispatch) {
 					</td>
 			
 					<td className="col-md-1">
-						<span onClick={this.bookmarkSong} className={ isBookmarked ? "icon-bookmark-2 primary fa-2x" : "icon-bookmark-empty fa-2x"}></span>            
+						<a onClick={this.bookmarkSong} className={ isBookmarked ? "icon-bookmark-2 primary fa-2x" : "icon-bookmark-empty fa-2x"}></a>            
 					</td>
 
 					{ this.props.userInfo.accountType == "Artist" ? null : <td className="col-md-1">
-						<a className="color-grey" ><span className="icon-down-circled fa-2x"></span></a>
+						<a onClick={ this.download } className="color-grey" ><span className="icon-down-circled fa-2x"></span></a>
 					</td> }
 				</tr>
 		)

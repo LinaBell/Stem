@@ -1,10 +1,24 @@
-var CreatorDownloadsCard = React.createClass({
+var CreatorDownloadsCard = ReactRedux.connect(null, function(dispatch) {
+	return {
+		playSong(songId) {
+			dispatch({
+				type: 'PlaySong',
+				data: {
+					songId: songId
+				}
+			})
+		}
+	}
+})
+(React.createClass({
 	render: function() {
 		var download = this.props.download;
 		return(
 			<div className="creator-downloaded-songs">
 				<li className="downloaded-individual-song">
-					<img className="downloaded-song-img display-inlb" src={download.albumArtUrl}></img>
+					<a onClick={ this.props.playSong.bind(this, download.songId) }>
+						<img className="downloaded-song-img display-inlb" src={download.albumArtUrl}></img>
+					</a>
 					<ul className="downloaded-song-details display-inlb">
 						<li className="downloaded-song-title">
 							<h4 className="title font-light light-grey mar-b-sm">Song Title</h4>
@@ -32,4 +46,4 @@ var CreatorDownloadsCard = React.createClass({
 			</div>
 		)
 	}
-});
+}));
